@@ -18,35 +18,41 @@ My personal need and why I'm doing this, is a Map with String keys and string or
 
 User provides a stack of data and operations. Operations always work on top 2 stack entries, which are removed by an operation and operation result is added.
 
-### Operations ( ... )
+### Operations ( /... )
 
-- equals (==)
+- **/=** _equals _
 
-- not equals (!=)
+-  **/!=** _not equals_
 
-- contains ({})
+- **/{}** _contains_
 
-- does not contain (}{)
+- **/}{** _ does not contain_ 
 
-- less than (\<)
+- **/<** _less than_ 
 
-- less than or equals (\<=)
+- **/<=** _less than or equals_
+ 
+- **/>** _greater  than_ 
 
-- greater  than (\>)
+- **/>=** _greater than or equals_
+ 
+- **/T** _True  (Only true & true)_
 
-- greater than or equals (\>=)
+- **/F** _False  (Anything but true & true)_
 
-### Values [ ... ]
+### Values
 
-- **\[true\]**
+- **T** _True_
 
-- **\[false\]**
+- **F** _False_
 
-- String constant **\['...'\]**
+- **'...'** _String constant_
 
-- Field value reference **\[name\]**
+- **name** _Field value reference_
 
-- Any number: **\[1\], \[100]\, \[5.8\], \[78.3f\], \[9843275677723.4567658d\], ...**  
+- **1, 100, 5.8, 78.3f, 9843275677723.4567658d, ...** _Any number_ 
+
+<!-- @PageBreak -->
 
 ### Example
 
@@ -63,36 +69,38 @@ I use JSON as example format, but data can be a simple java.util.Map, java.util.
 
 #### Sample Query
 
-    "[name]['MyServiceId'](==)[qwe][100](<)(==)[rty][100](>)(==)"
+    "name 'MyServiceId' /= qwe 100 /< /= rty 100 /> /T"
+    
     
 Slightly longer version:
     
-    "[name]['MyServiceId'](==)[qwe][100](<)(==)[rty][100](>)(==)[type]['service'](==)(==)"
+    "name 'MyServiceId' /= qwe 100 /< /= rty 100 /> /= type 'service' /= /T"
     
-This query checks that _name_ is 'MyServiceId' and  that _qwe_ is less than 100 and that _rty_ is greater than 100.
+This query checks that name is 'MyServiceId' and that qwe is less than 100 and that rty is greater than 100.
 
 #### Evaluation
 
 Operations work on last 2 stack entries which are replaced by result.
 
-    Value/op               Stack
+    Value & op             Stack
+    ---------------        ---------------------------
     
-    [name]                 'MyServiceId'
-    ['MyServiceId']        'MyServiceId' 'MyServiceId'
-    (==)                   true
-    [qwe]                  true 92
-    [100]                  true 92 100
-    (<)                    true true
-    (==)                   true
-    [rty]                  true 236
-    [100]                  true 236 100
-    (>)                    true true
-    (==)                   true
+    name                   'MyServiceId'
+    'MyServiceId'          'MyServiceId' 'MyServiceId'
+    /=                     T
+    qwe                    T 92
+    100                    T 92 100
+    /<                     T T
+    /=                     T
+    rty                    T 236
+    100                    T 236 100
+    />                     T T
+    /T                     T
 
-Longer version additions
+Longer Version additions
 
-    [type]                 true 'service'
-    ['service']            true 'service' 'service'
-    (==)                   true true
-    (==)                   true
+    type                   T 'service'
+    'service'              T 'service' 'service'
+    /=                     T T
+    /T                     T
     
