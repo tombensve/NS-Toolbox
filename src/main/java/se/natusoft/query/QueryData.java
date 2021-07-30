@@ -1,4 +1,4 @@
-package se.natusoft.rpnquery;
+package se.natusoft.query;
 
 /**
  * API for providing data to query.

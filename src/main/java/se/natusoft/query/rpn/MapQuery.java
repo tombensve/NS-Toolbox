@@ -1,4 +1,6 @@
-package se.natusoft.rpnquery;
+package se.natusoft.query.rpn;
+
+import se.natusoft.query.QueryData;
 
 import java.util.Map;
 
