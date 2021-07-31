@@ -2,7 +2,8 @@
 
 Queries some data using an RPN based query string.
 
-If you have even used a HP calculator like "HP 15c" for example then you understand RPN. This uses the same RPN principles, but is not a calculator :-).
+If you have ever used a HP calculator like "HP 15c" for example then you understand RPN. This uses the same RPN 
+principles, but is not a calculator :-).
 
 The order of things are: `value value operation`, or `value value operation value value operation operation` in which the last operation is operating on the results of first two, and will take the stack down to one entry, which is where you want to end up. This avoids the need for parentesis grouping. You can also add to the query by adding to the end. If you are not familiar with RPN then it definately looks a bit weird :-). 
 
