@@ -1,4 +1,4 @@
-package se.natusoft.query;
+package se.natusoft.query.hmm;
 
 /**
  * Represents a query that always returns a boolean.

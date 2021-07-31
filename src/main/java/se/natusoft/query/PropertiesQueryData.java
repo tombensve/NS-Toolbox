@@ -1,14 +1,14 @@
-package se.natusoft.query.rpn;
+package se.natusoft.query;
 
 import se.natusoft.query.QueryData;
 
-import java.util.Map;
+import java.util.Properties;
 
-public class MapQuery implements QueryData {
+public class PropertiesQueryData implements QueryData {
 
-    private Map<String, String> dataMap;
+    private Properties dataMap;
 
-    public MapQuery(Map<String, String> sourceMap) {
+    public PropertiesQueryData( Properties sourceMap) {
         this.dataMap = sourceMap;
     }
 
@@ -20,6 +20,6 @@ public class MapQuery implements QueryData {
      * @return The value of the named data.
      */
     public String getByName(String name) {
-        return this.dataMap.get(name);
+        return this.dataMap.getProperty(name);
     }
 }
