@@ -1,4 +1,4 @@
-package se.natusoft.query.rpn;
+package se.natusoft.query.api;
 
 /**
  * Defines a generic operation. The last 2 entries on stack will be passed as value1 and value2.

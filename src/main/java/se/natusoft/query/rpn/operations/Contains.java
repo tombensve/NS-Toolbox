@@ -2,7 +2,7 @@ package se.natusoft.query.rpn.operations;
 
 import se.natusoft.query.api.Operation;
 
-public class Equals implements Operation {
+public class Contains implements Operation {
 
     /**
      * Executes the operation on the 2 provided values.
@@ -13,6 +13,6 @@ public class Equals implements Operation {
      */
     @Override
     public boolean execute( String value1, String value2 ) {
-        return value1.equals( value2 );
+        return value1.contains( value2 );
     }
 }

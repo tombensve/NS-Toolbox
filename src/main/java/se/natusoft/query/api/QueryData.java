@@ -1,4 +1,4 @@
-package se.natusoft.query;
+package se.natusoft.query.api;
 
 /**
  * API for providing data to query.

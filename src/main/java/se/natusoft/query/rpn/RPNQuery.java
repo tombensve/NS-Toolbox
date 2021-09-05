@@ -1,8 +1,9 @@
 package se.natusoft.query.rpn;
 
-import se.natusoft.query.DataQuery;
-import se.natusoft.query.QueryData;
-import se.natusoft.query.rpn.operations.Equals;
+import se.natusoft.query.api.DataQuery;
+import se.natusoft.query.api.QueryData;
+import se.natusoft.query.api.Operation;
+import se.natusoft.query.rpn.operations.*;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -27,11 +28,18 @@ public class RPNQuery implements DataQuery {
 
         Map<String, Operation> ops = new LinkedHashMap<>();
         _operations_.put( "=", new Equals() );
+        _operations_.put( "!=", new NotEquals() );
+        _operations_.put( "T", new True() );
+        _operations_.put( "F", new False() );
+        _operations_.put( ">", new GreaterThan() );
+        _operations_.put( ">=", new GreaterThanEquals() );
+        _operations_.put( "<", new LessThan() );
+        _operations_.put( "<=", new LessThanEquals() );
 
         return ops;
     }
 
-    private static Operation lookupOperation(String operation) {
+    private static Operation lookupOperation( String operation ) {
         return _operations_.get( operation );
     }
 
@@ -46,9 +54,13 @@ public class RPNQuery implements DataQuery {
     // Constructors
     //
 
+    /**
+     * Creates a new RPNQuery instance.
+     *
+     * @param queryData The data to query.
+     */
     public RPNQuery( QueryData queryData ) {
         this.queryData = queryData;
-
     }
 
     //
@@ -68,22 +80,24 @@ public class RPNQuery implements DataQuery {
 
         Arrays.stream( query.split( " " ) ).iterator().forEachRemaining( value -> {
 
-            if ( value.startsWith( "/" ) ) {
+            if ( value.startsWith( "/" ) ) { // An operation
 
                 String operation = value.substring( 1 ).trim();
                 Operation op = lookupOperation( operation );
+                if (op == null) throw new IllegalStateException("Unknown operation: " + operation + "!");
+
                 String val2 = queryStack.pop();
                 String val1 = queryStack.pop();
                 boolean res = op.execute( val1, val2 );
 
                 queryStack.push( res ? "T" : "F" );
             }
-            else if ( value.startsWith( "'" ) ) {
+            else if ( value.startsWith( "'" ) ) { // String value
 
                 value = value.replaceAll( "'", "" );
                 queryStack.push( value );
             }
-            else {
+            else { // A property reference.
 
                 String valueName = value;
                 value = this.queryData.getByName( valueName );
@@ -93,17 +107,5 @@ public class RPNQuery implements DataQuery {
         } );
 
         return queryStack.pop();
-    }
-
-    /**
-     * Same as query() but returns a boolean.
-     *
-     * @param query The query to make.
-     * @return true or false.
-     * @exception IllegalStateException on reference of non existent value.
-     */
-    public boolean queryAsBool( String query ) throws IllegalStateException {
-
-        return query( query ).equals( "T" );
     }
 }

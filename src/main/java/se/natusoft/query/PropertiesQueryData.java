@@ -1,6 +1,6 @@
 package se.natusoft.query;
 
-import se.natusoft.query.QueryData;
+import se.natusoft.query.api.QueryData;
 
 import java.util.Properties;
 
