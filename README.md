@@ -1,3 +1,5 @@
+    This is still in work in progress! No tests nor any test execution has been done yet!
+
 # RPNQuery
 
 Queries some data using an RPN based query string.
