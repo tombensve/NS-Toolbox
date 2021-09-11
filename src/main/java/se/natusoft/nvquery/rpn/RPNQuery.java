@@ -53,17 +53,19 @@ public class RPNQuery implements DataQuery {
 
     private static Map<String, Operation> initOps() {
 
-        Map<String, Operation> ops = new LinkedHashMap<>();
-        _operations_.put( "=", new Equals() );
-        _operations_.put( "!=", new NotEquals() );
-        _operations_.put( "T", new True() );
-        _operations_.put( "F", new False() );
-        _operations_.put( ">", new GreaterThan() );
-        _operations_.put( ">=", new GreaterThanEquals() );
-        _operations_.put( "<", new LessThan() );
-        _operations_.put( "<=", new LessThanEquals() );
+        Map<String, Operation> operations = new LinkedHashMap<>();
+        operations.put("()", new Contains());
+        operations.put("!()", new NotContains());
+        operations.put( "=", new Equals() );
+        operations.put( "!=", new NotEquals() );
+        operations.put( "T", new True() );
+        operations.put( "F", new False() );
+        operations.put( ">", new GreaterThan() );
+        operations.put( ">=", new GreaterThanEquals() );
+        operations.put( "<", new LessThan() );
+        operations.put( "<=", new LessThanEquals() );
 
-        return ops;
+        return operations;
     }
 
     /**
@@ -107,21 +109,34 @@ public class RPNQuery implements DataQuery {
 
         Arrays.stream( query.split( " " ) ).iterator().forEachRemaining( value -> {
 
+            // Replace all '_' to spaces. The query must contain '_' instead of space to parse correct.
+            value = value.replace( "_", " " );
+
             if ( value.startsWith( "/" ) ) { // An operation
 
                 String operation = value.substring( 1 ).trim();
                 Operation op = lookupOperation( operation );
                 if (op == null) throw new IllegalStateException("Unknown operation: " + operation + "!");
 
+                boolean res = false;
                 String val2 = queryStack.pop();
-                String val1 = queryStack.pop();
-                boolean res = op.execute( val1, val2 );
+                if (!queryStack.empty()) {
+                    String val1 = queryStack.pop();
+                    res = op.execute( val1, val2 );
+                }
+                else { // This basically only happens for True and False.
+                    res = op.execute( "X", val2 );
+                }
 
                 queryStack.push( res ? "T" : "F" );
             }
             else if ( value.startsWith( "'" ) ) { // String value
 
                 value = value.replaceAll( "'", "" );
+                queryStack.push( value );
+            }
+            // Regexp from https://stackoverflow.com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
+            else if (value.matches( "^[1-9]\\d*(\\.\\d+)?$" )) { // A number
                 queryStack.push( value );
             }
             else { // A property reference.

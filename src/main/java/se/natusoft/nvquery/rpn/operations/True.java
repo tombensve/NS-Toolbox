@@ -43,7 +43,7 @@ public class True implements Operation {
      */
     @Override
     public boolean execute( String value1, String value2 ) {
-        return value1.equals( "T" ) && value2.equals( "T" );
+        return value1.equals( "X" ) && value2.equals( "true" );
     }
 
     /**

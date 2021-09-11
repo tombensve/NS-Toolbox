@@ -32,6 +32,7 @@ package se.natusoft.nvquery.data.providers;
 
 import se.natusoft.nvquery.api.QueryData;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MapQueryData implements QueryData {
@@ -40,6 +41,16 @@ public class MapQueryData implements QueryData {
 
     public MapQueryData( Map<String, String> sourceMap) {
         this.dataMap = sourceMap;
+    }
+
+    public MapQueryData() {}
+
+    public MapQueryData add(String name, String value) {
+        if (this.dataMap == null) this.dataMap = new LinkedHashMap<>();
+
+        this.dataMap.put(name, value);
+
+        return this;
     }
 
     /**
