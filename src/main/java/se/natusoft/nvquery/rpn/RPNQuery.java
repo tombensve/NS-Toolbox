@@ -1,39 +1,39 @@
-/* 
- * 
+/*
+ *
  * PROJECT
  *     Name
  *         rpnquery
- *     
+ *
  * COPYRIGHTS
  *     Copyright (C) 2021 by Natusoft AB All rights reserved.
- *     
+ *
  * LICENSE
  *     Apache 2.0 (Open Source)
- *     
+ *
  *     Licensed under the Apache License, Version 2.0 (the "License");
  *     you may not use this file except in compliance with the License.
  *     You may obtain a copy of the License at
- *     
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- *     
+ *
  *     Unless required by applicable law or agreed to in writing, software
  *     distributed under the License is distributed on an "AS IS" BASIS,
  *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
- *     
+ *
  * AUTHORS
  *     tommy ()
  *         Changes:
  *         2021-09-05: Created!
- *         
+ *
  */
-package se.natusoft.query.rpn;
+package se.natusoft.nvquery.rpn;
 
-import se.natusoft.query.api.DataQuery;
-import se.natusoft.query.api.QueryData;
-import se.natusoft.query.api.Operation;
-import se.natusoft.query.rpn.operations.*;
+import se.natusoft.nvquery.api.DataQuery;
+import se.natusoft.nvquery.api.QueryData;
+import se.natusoft.nvquery.api.Operation;
+import se.natusoft.nvquery.rpn.operations.*;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -48,10 +48,7 @@ public class RPNQuery implements DataQuery {
     // Statics
     //
 
-    // This would have been so much cleaner to do in Groovy, but I didn't want to pull in the
-    // Groovy runtime just for this.
-
-    /** A cache of operations. */
+    /** A set of operations. */
     private static Map<String, Operation> _operations_ = initOps();
 
     private static Map<String, Operation> initOps() {
@@ -69,16 +66,16 @@ public class RPNQuery implements DataQuery {
         return ops;
     }
 
+    /**
+     * Provide operation implementation.
+     *
+     * @param operation The query string syntax of operation.
+     *
+     * @return The implementation of operation.
+     */
     private static Operation lookupOperation( String operation ) {
         return _operations_.get( operation );
     }
-
-    //
-    // Private Members
-    //
-
-    /** The data that a query can reference by name. */
-    private QueryData queryData;
 
     //
     // Constructors
@@ -86,11 +83,8 @@ public class RPNQuery implements DataQuery {
 
     /**
      * Creates a new RPNQuery instance.
-     *
-     * @param queryData The data to query.
      */
-    public RPNQuery( QueryData queryData ) {
-        this.queryData = queryData;
+    public RPNQuery() {
     }
 
     //
@@ -101,10 +95,13 @@ public class RPNQuery implements DataQuery {
      * Makes a query returning a String of 'T' or 'F' as long as query ends up with one value in stack.
      *
      * @param query The query to make.
-     * @return "T" or "F".
-     * @exception IllegalStateException on reference of non existent value.
+     * @param queryData The data to query.
+     *
+     * @return true or false.
+     *
+     * @throws IllegalStateException on reference if non existent value.
      */
-    public String query( String query ) throws IllegalStateException /* To be clear! */ {
+    public boolean query( String query, QueryData queryData ) {
 
         Stack<String> queryStack = new Stack<>();
 
@@ -130,12 +127,12 @@ public class RPNQuery implements DataQuery {
             else { // A property reference.
 
                 String valueName = value;
-                value = this.queryData.getByName( valueName );
+                value = queryData.getByName( valueName );
                 if ( value == null ) throw new IllegalStateException( "'" + valueName + "' does not exist!" );
                 queryStack.push( value );
             }
         } );
 
-        return queryStack.pop();
+        return queryStack.pop().trim().equals( "T" );
     }
 }

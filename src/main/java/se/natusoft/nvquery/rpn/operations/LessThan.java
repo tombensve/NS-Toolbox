@@ -1,55 +1,65 @@
-/* 
- * 
+/*
+ *
  * PROJECT
  *     Name
  *         rpnquery
- *     
+ *
  * COPYRIGHTS
  *     Copyright (C) 2021 by Natusoft AB All rights reserved.
- *     
+ *
  * LICENSE
  *     Apache 2.0 (Open Source)
- *     
+ *
  *     Licensed under the Apache License, Version 2.0 (the "License");
  *     you may not use this file except in compliance with the License.
  *     You may obtain a copy of the License at
- *     
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- *     
+ *
  *     Unless required by applicable law or agreed to in writing, software
  *     distributed under the License is distributed on an "AS IS" BASIS,
  *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
- *     
+ *
  * AUTHORS
  *     tommy ()
  *         Changes:
  *         2021-09-05: Created!
- *         
+ *
  */
-package se.natusoft.query;
+package se.natusoft.nvquery.rpn.operations;
 
-import se.natusoft.query.api.QueryData;
+import se.natusoft.nvquery.api.Operation;
 
-import java.util.Map;
 
-public class MapQueryData implements QueryData {
-
-    private Map<String, String> dataMap;
-
-    public MapQueryData( Map<String, String> sourceMap) {
-        this.dataMap = sourceMap;
-    }
+public class LessThan implements Operation {
 
     /**
-     * Should return data for the given name.
+     * Executes the operation on the 2 provided values.
      *
-     * @param name The named data to get.
-     *
-     * @return The value of the named data.
+     * @param value1 First value.
+     * @param value2 Second value.
+     * @return true or false.
      */
-    public String getByName(String name) {
-        return this.dataMap.get(name);
+    @SuppressWarnings( "DuplicatedCode" )
+    @Override
+    public boolean execute( String value1, String value2 ) {
+        boolean res;
+
+
+        if (value1.contains( "." ) || value2.contains( "." ))
+        {
+            double v1 = Double.parseDouble( value1 );
+            double v2 = Double.parseDouble( value2 );
+            res = v1 < v2;
+        }
+        else {
+            long v1 = Long.parseLong( value1 );
+            long v2 = Long.parseLong( value2 );
+            res = v1 < v2;
+        }
+
+        return res;
     }
 }

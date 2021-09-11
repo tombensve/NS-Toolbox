@@ -1,11 +1,12 @@
-    This is still in work in progress! No tests nor any test execution has been done yet!
+# NameValueQuery
 
-# RPNQuery
+This is a very simplistic API for querying simple name / value data, and currently supplies one implementation using RPN.
 
-Queries some data using an RPN based query string.
+## RPNQuery
 
-If you have ever used a HP calculator like "HP 15c" for example then you understand RPN. This uses the same RPN 
-principles, but is not a calculator :-).
+Queries some data using an [RPN](https://en.wikipedia.org/wiki/Reverse_Polish_notation) based query string.
+
+If you have even used a HP calculator like "HP 15c" for example then you understand RPN. This uses the same RPN principles, but is not a calculator :-).
 
 The order of things are: `value value operation`, or `value value operation value value operation operation` in which the last operation is operating on the results of first two, and will take the stack down to one entry, which is where you want to end up. This avoids the need for parentesis grouping. You can also add to the query by adding to the end. If you are not familiar with RPN then it definately looks a bit weird :-). 
 
@@ -13,15 +14,11 @@ There are values and there are operations. Values can be named data reference or
 
 Further down in this document there is an example of data, and a query against it that shows the state of the stack for each data and operation.
 
-## Data queried
-
-My personal need and why I'm doing this, is a Map with String keys and string or numeric values, but I'll try to not lock myself into any specific structure.
-
-## Functionallity
+### Functionallity
 
 User provides a stack of data and operations. Operations always work on top 2 stack entries, which are removed by an operation and operation result is added.
 
-### Operations ( /... )
+#### Operations ( /... )
 
 - **/=** _equals _
 
@@ -29,7 +26,7 @@ User provides a stack of data and operations. Operations always work on top 2 st
 
 - **/{}** _contains_
 
-- **/!{}** _ does not contain_ 
+- **/}{** _ does not contain_ 
 
 - **/<** _less than_ 
 
@@ -43,7 +40,7 @@ User provides a stack of data and operations. Operations always work on top 2 st
 
 - **/F** _False  (Anything but true & true)_
 
-### Values
+##### Values
 
 - **T** _True_
 
@@ -57,9 +54,9 @@ User provides a stack of data and operations. Operations always work on top 2 st
 
 <!-- @PageBreak -->
 
-### Example
+#### Example
 
-#### Sample Data
+##### Sample Data
 
 I use JSON as example format, but data can be a simple java.util.Map, java.util.Properties, or whatever.
 
@@ -70,7 +67,7 @@ I use JSON as example format, but data can be a simple java.util.Map, java.util.
         "rty": 236
     }
 
-#### Sample Query
+##### Sample Query
 
     "name 'MyServiceId' /= qwe 100 /< /= rty 100 /> /T"
     
@@ -81,7 +78,7 @@ Slightly longer version:
     
 This query checks that name is 'MyServiceId' and that qwe is less than 100 and that rty is greater than 100.
 
-#### Evaluation
+##### Evaluation
 
 Operations work on last 2 stack entries which are replaced by result.
 
