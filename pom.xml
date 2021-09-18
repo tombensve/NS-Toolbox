@@ -15,9 +15,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version> 5.6.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -88,11 +94,6 @@
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>3.3.0</version>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
                 </plugin>
 
                 <plugin>
@@ -198,17 +199,27 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+            </plugin>
 
         </plugins>
 
 
     </build>
 
+    <!--
+        The variables used here are in my personal setting.xml! I make binaries
+        available from my web server after bintray shut down.
 
+        See: https://github.com/tombensve/About
+    -->
     <distributionManagement>
         <repository>
             <id>download.natusoft.se</id>
-            <name>DownloadNatusoftSe-MarkdownDoc</name>
+            <name>DownloadNatusoftSe-RPNQuery</name>
             <url>ftp://${maven.repo.upload}/${maven.base.path}</url>
         </repository>
     </distributionManagement>

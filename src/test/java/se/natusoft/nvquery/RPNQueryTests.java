@@ -1,6 +1,7 @@
 package se.natusoft.nvquery;
 
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import se.natusoft.nvquery.api.DataQuery;
 import se.natusoft.nvquery.data.providers.MapQueryData;
 import se.natusoft.nvquery.rpn.RPNQuery;
