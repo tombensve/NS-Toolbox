@@ -24,9 +24,9 @@ User provides a stack of data and operations. Operations always work on top 2 st
 
 -  **/!=** _not equals_
 
-- **/{}** _contains_
+- **/()** _contains_
 
-- **/}{** _ does not contain_ 
+- **/!()** _ does not contain_ 
 
 - **/<** _less than_ 
 
