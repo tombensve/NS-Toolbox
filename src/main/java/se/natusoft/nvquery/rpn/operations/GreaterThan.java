@@ -32,9 +32,8 @@ package se.natusoft.nvquery.rpn.operations;
 
 import se.natusoft.nvquery.api.Operation;
 
-
-public class GreaterThan implements Operation {
-
+public class GreaterThan implements Operation
+{
     /**
      * Executes the operation on the 2 provided values.
      *
@@ -44,10 +43,11 @@ public class GreaterThan implements Operation {
      */
     @SuppressWarnings( "DuplicatedCode" )
     @Override
-    public boolean execute( String value1, String value2 ) {
+    public boolean execute( String value1, String value2 )
+    {
         boolean res = false;
 
-        if (value1.contains( "." ) || value2.contains( "." )) {
+        if ( value1.contains( "." ) || value2.contains( "." ) ) {
             double v1 = Double.parseDouble( value1 );
             double v2 = Double.parseDouble( value2 );
             res = v1 > v2;

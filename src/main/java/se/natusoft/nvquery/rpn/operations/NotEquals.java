@@ -32,9 +32,8 @@ package se.natusoft.nvquery.rpn.operations;
 
 import se.natusoft.nvquery.api.Operation;
 
-public class NotEquals extends Equals implements Operation {
-
-
+public class NotEquals extends Equals implements Operation
+{
     /**
      * Executes the operation on the 2 provided values.
      *
@@ -43,7 +42,8 @@ public class NotEquals extends Equals implements Operation {
      * @return true or false.
      */
     @Override
-    public boolean execute( String value1, String value2 ) {
+    public boolean execute( String value1, String value2 )
+    {
         return !super.execute( value1, value2 );
     }
 }

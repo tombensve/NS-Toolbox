@@ -33,14 +33,13 @@ package se.natusoft.nvquery.api;
 /**
  * A rather generic query API, just for the heck of it ...
  */
-public interface DataQuery {
-
+public interface DataQuery
+{
     /**
      * Executes supplied query on supplied query data.
      *
      * @param query The query to make.
      * @param queryData The data to query.
-     *
      * @return true or false.
      */
     boolean query( String query, QueryData queryData );

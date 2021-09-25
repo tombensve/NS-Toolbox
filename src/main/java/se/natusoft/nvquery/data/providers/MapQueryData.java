@@ -35,20 +35,44 @@ import se.natusoft.nvquery.api.QueryData;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class MapQueryData implements QueryData {
+/**
+ * A default implementation of QueryData around a java.util.Map.
+ */
+public class MapQueryData implements QueryData
+{
 
-    private Map<String, String> dataMap;
+    /** The Map we are wrapping */
+    private Map<String, Object> dataMap;
 
-    public MapQueryData( Map<String, String> sourceMap) {
+    /**
+     * Creates a new MapQueryData with content.
+     *
+     * @param sourceMap A Map containing data to query.
+     */
+    public MapQueryData( Map<String, Object> sourceMap )
+    {
         this.dataMap = sourceMap;
     }
 
-    public MapQueryData() {}
+    /**
+     * Creates a new empty MapQueryData to add content to.
+     */
+    public MapQueryData()
+    {
+    }
 
-    public MapQueryData add(String name, String value) {
-        if (this.dataMap == null) this.dataMap = new LinkedHashMap<>();
+    /**
+     * Adds content to the map.
+     *
+     * @param name The name of the content.
+     * @param value The content value.
+     * @return 'this' to provide builder pattern.
+     */
+    public MapQueryData add( String name, String value )
+    {
+        if ( this.dataMap == null ) this.dataMap = new LinkedHashMap<>();
 
-        this.dataMap.put(name, value);
+        this.dataMap.put( name, value );
 
         return this;
     }
@@ -57,10 +81,11 @@ public class MapQueryData implements QueryData {
      * Should return data for the given name.
      *
      * @param name The named data to get.
-     *
      * @return The value of the named data.
      */
-    public String getByName(String name) {
-        return this.dataMap.get(name);
+    public String getByName( String name )
+    {
+        Object value = this.dataMap.get( name );
+        return value != null ? value.toString() : "";
     }
 }

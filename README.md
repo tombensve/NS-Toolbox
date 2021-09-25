@@ -103,4 +103,40 @@ Longer Version additions
     'service'              T 'service' 'service'
     /=                     T T
     /T                     T
+
+## Code Style
+
+I have worked with Java since version 1.0, and C before that. The style of braces have always been to start '{' at the end of the line and end with '}' at the beginning of next line.
+
+    public class Palsternacka {
+        public Palsternacka() {
+            Some code
+        }
+    
+        ...
+    }
+
+I then quite a while back started to put an empty line after '{' just to make space and make things easier to read. 
+
+    public class Palsternacka {
+    
+        public Palsternacka() {
+        
+            Some code
+        }
+    
+        ...
+    }
+
+I have now come in contact with C# and I reacted att first that C# code tended to put the '{' by itself on the next line. I first thought that looked weird and was annoyed, but the more I looked at C# code the more I realized that this style forces some space and make things more readable. It is also easier to see that braces are matched since they align very clearly. Even though this still feels strange and unfamiliar (the brain likes familiarity) it improves code readability, so I have decided to ignore my brains complaints and go with this style.
+
+    public class Palsternacka
+    {
+        public PalsterNacka()
+        {
+             Somne code
+        }
+    
+        ...
+    }
     

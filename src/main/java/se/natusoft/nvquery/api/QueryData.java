@@ -33,14 +33,14 @@ package se.natusoft.nvquery.api;
 /**
  * API for providing data to query.
  */
-public interface QueryData {
+public interface QueryData
+{
 
     /**
      * Should return data for the given name.
      *
      * @param name The named data to get.
-     *
      * @return The value of the named data.
      */
-    String getByName(String name);
+    String getByName( String name );
 }

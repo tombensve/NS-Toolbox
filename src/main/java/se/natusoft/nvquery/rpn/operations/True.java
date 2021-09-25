@@ -32,8 +32,8 @@ package se.natusoft.nvquery.rpn.operations;
 
 import se.natusoft.nvquery.api.Operation;
 
-public class True implements Operation {
-
+public class True implements Operation
+{
     /**
      * Executes the operation on the 2 provided values.
      *
@@ -42,7 +42,8 @@ public class True implements Operation {
      * @return true or false.
      */
     @Override
-    public boolean execute( String value1, String value2 ) {
+    public boolean execute( String value1, String value2 )
+    {
         return value1.equals( "X" ) && value2.equals( "true" );
     }
 
@@ -50,10 +51,10 @@ public class True implements Operation {
      * Checks if a string value represents a true value.
      *
      * @param value The string value to check.
-     *
      * @return true or false.
      */
-    public static boolean is(String value) {
+    public static boolean is( String value )
+    {
         return value.trim().equals( "T" );
     }
 }

@@ -34,22 +34,32 @@ import se.natusoft.nvquery.api.QueryData;
 
 import java.util.Properties;
 
-public class PropertiesQueryData implements QueryData {
+/**
+ * Provides and implementation of QueryData using a java.util.Properties object.
+ */
+public class PropertiesQueryData implements QueryData
+{
+    /** The provided properties to query. */
+    private Properties sourceData;
 
-    private Properties dataMap;
-
-    public PropertiesQueryData( Properties sourceMap) {
-        this.dataMap = sourceMap;
+    /**
+     * Creates a new PropertiesQueryData.
+     *
+     * @param properties The Properties to query.
+     */
+    public PropertiesQueryData( Properties properties )
+    {
+        this.sourceData = properties;
     }
 
     /**
      * Should return data for the given name.
      *
      * @param name The named data to get.
-     *
      * @return The value of the named data.
      */
-    public String getByName(String name) {
-        return this.dataMap.getProperty(name);
+    public String getByName( String name )
+    {
+        return this.sourceData.getProperty( name );
     }
 }

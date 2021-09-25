@@ -43,7 +43,8 @@ import java.util.Stack;
 /**
  * Provides the user API for RPNQuery.
  */
-public class RPNQuery implements DataQuery {
+public class RPNQuery implements DataQuery
+{
     //
     // Statics
     //
@@ -51,11 +52,12 @@ public class RPNQuery implements DataQuery {
     /** A set of operations. */
     private static Map<String, Operation> _operations_ = initOps();
 
-    private static Map<String, Operation> initOps() {
+    private static Map<String, Operation> initOps()
+    {
 
         Map<String, Operation> operations = new LinkedHashMap<>();
-        operations.put("()", new Contains());
-        operations.put("!()", new NotContains());
+        operations.put( "()", new Contains() );
+        operations.put( "!()", new NotContains() );
         operations.put( "=", new Equals() );
         operations.put( "!=", new NotEquals() );
         operations.put( "T", new True() );
@@ -75,7 +77,8 @@ public class RPNQuery implements DataQuery {
      *
      * @return The implementation of operation.
      */
-    private static Operation lookupOperation( String operation ) {
+    private static Operation lookupOperation( String operation )
+    {
         return _operations_.get( operation );
     }
 
@@ -86,7 +89,8 @@ public class RPNQuery implements DataQuery {
     /**
      * Creates a new RPNQuery instance.
      */
-    public RPNQuery() {
+    public RPNQuery()
+    {
     }
 
     //
@@ -101,9 +105,10 @@ public class RPNQuery implements DataQuery {
      *
      * @return true or false.
      *
-     * @throws IllegalStateException on reference if non existent value.
+     * @exception IllegalStateException on reference if non existent value.
      */
-    public boolean query( String query, QueryData queryData ) {
+    public boolean query( String query, QueryData queryData )
+    {
 
         Stack<String> queryStack = new Stack<>();
 
@@ -116,11 +121,11 @@ public class RPNQuery implements DataQuery {
 
                 String operation = value.substring( 1 ).trim();
                 Operation op = lookupOperation( operation );
-                if (op == null) throw new IllegalStateException("Unknown operation: " + operation + "!");
+                if ( op == null ) throw new IllegalStateException( "Unknown operation: " + operation + "!" );
 
                 boolean res = false;
                 String val2 = queryStack.pop();
-                if (!queryStack.empty()) {
+                if ( !queryStack.empty() ) {
                     String val1 = queryStack.pop();
                     res = op.execute( val1, val2 );
                 }
@@ -136,7 +141,7 @@ public class RPNQuery implements DataQuery {
                 queryStack.push( value );
             }
             // Regexp from https://stackoverflow.com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
-            else if (value.matches( "^[1-9]\\d*(\\.\\d+)?$" )) { // A number
+            else if ( value.matches( "^[1-9]\\d*(\\.\\d+)?$" ) ) { // A number
                 queryStack.push( value );
             }
             else { // A property reference.
