@@ -44,6 +44,11 @@ public class False extends True implements Operation
     @Override
     public boolean execute( String value1, String value2 )
     {
+        value1 = value1.replace( "false", "F" );
+        value1 = value1.replace( "FALSE", "F" );
+        value2 = value2.replace( "false", "F" );
+        value2 = value2.replace( "FALSE", "F" );
+
         return !super.execute( value1, value2 );
     }
 

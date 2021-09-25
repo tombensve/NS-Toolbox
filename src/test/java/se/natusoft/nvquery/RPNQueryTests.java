@@ -90,4 +90,19 @@ public class RPNQueryTests
     //
     // Complex tests
     //
+
+    @Test
+    public void testComplex()
+    {
+        MapQueryData data = new MapQueryData()
+                .add( "name", "MyServiceId" )
+                .add("type", "service")
+                .add( "qwe", 92 )
+                .add("rty", 236);
+
+        assert query.query(
+                "name 'MyServiceId' /= qwe 100 /< /= rty 100 /> /= type 'service' /= /T",
+                data
+        );
+    }
 }

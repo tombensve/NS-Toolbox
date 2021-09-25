@@ -35,7 +35,6 @@ package se.natusoft.nvquery.api;
  */
 public interface QueryData
 {
-
     /**
      * Should return data for the given name.
      *

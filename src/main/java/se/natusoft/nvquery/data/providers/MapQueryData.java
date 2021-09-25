@@ -40,7 +40,6 @@ import java.util.Map;
  */
 public class MapQueryData implements QueryData
 {
-
     /** The Map we are wrapping */
     private Map<String, Object> dataMap;
 
@@ -59,6 +58,7 @@ public class MapQueryData implements QueryData
      */
     public MapQueryData()
     {
+        this.dataMap = this.dataMap = new LinkedHashMap<>();
     }
 
     /**
@@ -68,11 +68,9 @@ public class MapQueryData implements QueryData
      * @param value The content value.
      * @return 'this' to provide builder pattern.
      */
-    public MapQueryData add( String name, String value )
+    public MapQueryData add( String name, Object value )
     {
-        if ( this.dataMap == null ) this.dataMap = new LinkedHashMap<>();
-
-        this.dataMap.put( name, value );
+        this.dataMap.put( name, "" + value );
 
         return this;
     }

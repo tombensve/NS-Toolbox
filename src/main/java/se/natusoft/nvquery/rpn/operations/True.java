@@ -44,7 +44,12 @@ public class True implements Operation
     @Override
     public boolean execute( String value1, String value2 )
     {
-        return value1.equals( "X" ) && value2.equals( "true" );
+        value1 = value1.replace( "true", "T" );
+        value1 = value1.replace( "TRUE", "T" );
+        value2 = value2.replace( "true", "T" );
+        value2 = value2.replace( "TRUE", "T" );
+
+        return value1.equals( "T" ) && value2.equals( "T" );
     }
 
     /**

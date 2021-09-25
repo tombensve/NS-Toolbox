@@ -61,7 +61,7 @@ User provides a stack of data and operations. Operations always work on top 2 st
 I use JSON as example format, but data can be a simple java.util.Map, java.util.Properties, or whatever.
 
     {
-        "name": "MyServiceId2,
+        "name": "MyServiceId,
         "type": "service",
         "qwe": 92,
         "rty": 236

@@ -130,7 +130,15 @@ public class RPNQuery implements DataQuery
                     res = op.execute( val1, val2 );
                 }
                 else { // This basically only happens for True and False.
-                    res = op.execute( "X", val2 );
+                       // This also means that there is only one entry on the stack and that
+                       // is principally wrong! But I accept this anyhow treating the first
+                       // value as a true. This will happen when you end up with one true
+                       // and want to verify it without first pushing another true and then
+                       // do an equals instead, which would be more proper.
+                       // I basically support a lazy and bad query.
+                       // The True and False operations are basically one value operations
+                       // breaking the pattern. Should maybe remove these.
+                    res = op.execute( "T", val2 );
                 }
 
                 queryStack.push( res ? "T" : "F" );

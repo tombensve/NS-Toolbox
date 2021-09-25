@@ -40,7 +40,7 @@ import java.util.Properties;
 public class PropertiesQueryData implements QueryData
 {
     /** The provided properties to query. */
-    private Properties sourceData;
+    private Properties properties;
 
     /**
      * Creates a new PropertiesQueryData.
@@ -49,17 +49,40 @@ public class PropertiesQueryData implements QueryData
      */
     public PropertiesQueryData( Properties properties )
     {
-        this.sourceData = properties;
+        this.properties = properties;
+    }
+
+    /**
+     * Creates a new PropertiesQueryData with a default and empty set of properties.
+     */
+    public PropertiesQueryData() {
+        this.properties = new Properties();
+    }
+
+    /**
+     * Adds content to the properties.
+     *
+     * @param name The name of the content.
+     * @param value The content value.
+     *
+     * @return 'this' to provide builder pattern.
+     */
+    public PropertiesQueryData add( String name, Object value )
+    {
+        this.properties.put( name, "" + value );
+
+        return this;
     }
 
     /**
      * Should return data for the given name.
      *
      * @param name The named data to get.
+     *
      * @return The value of the named data.
      */
     public String getByName( String name )
     {
-        return this.sourceData.getProperty( name );
+        return this.properties.getProperty( name );
     }
 }
