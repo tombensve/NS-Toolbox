@@ -20,7 +20,7 @@ User provides a stack of data and operations. Operations always work on top 2 st
 
 #### Operations ( /... )
 
-- **/=** _equals _
+- **/=** _equals_
 
 -  **/!=** _not equals_
 
@@ -36,15 +36,15 @@ User provides a stack of data and operations. Operations always work on top 2 st
 
 - **/>=** _greater than or equals_
  
-- **/T** _True  (Only true & true)_
+- **/T** _True  This is a special operation to check single end result for true. An alternative to adding  'true /='
 
-- **/F** _False  (Anything but true & true)_
+- **/F** _False  This is a special operation to check single end result for false. An alternative to adding 'false /='
 
 ##### Values
 
 - **T** _True_
 
-- **F** _False_
+- **F** _False_ 
 
 - **'...'** _String constant_
 

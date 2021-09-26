@@ -30,26 +30,34 @@
  */
 package se.natusoft.nvquery.rpn.operations;
 
-import se.natusoft.nvquery.api.Operation;
+import se.natusoft.nvquery.api.SingleValueOperation;
 
-public class True implements Operation
+public class True implements SingleValueOperation
 {
     /**
      * Executes the operation on the 2 provided values.
      *
      * @param value1 First value.
-     * @param value2 Second value.
+     * @param value2 Not used.
      * @return true or false.
      */
     @Override
     public boolean execute( String value1, String value2 )
     {
-        value1 = value1.replace( "true", "T" );
-        value1 = value1.replace( "TRUE", "T" );
-        value2 = value2.replace( "true", "T" );
-        value2 = value2.replace( "TRUE", "T" );
+        return is(value1 );
+    }
 
-        return value1.equals( "T" ) && value2.equals( "T" );
+    /**
+     * Converts upper and lower case 'true' to 'T'.
+     *
+     * @param t The string to convert.
+     */
+    private static String convertToT( String t )
+    {
+        t = t.replace( "TRUE", "T" );
+        t = t.replace( "true", "T" );
+
+        return t;
     }
 
     /**
@@ -60,6 +68,6 @@ public class True implements Operation
      */
     public static boolean is( String value )
     {
-        return value.trim().equals( "T" );
+        return convertToT( value ).trim().equals( "T" );
     }
 }

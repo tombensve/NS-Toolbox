@@ -30,9 +30,9 @@
  */
 package se.natusoft.nvquery.rpn.operations;
 
-import se.natusoft.nvquery.api.Operation;
+import se.natusoft.nvquery.api.SingleValueOperation;
 
-public class False extends True implements Operation
+public class False extends True implements SingleValueOperation
 {
     /**
      * Executes the operation on the 2 provided values.
@@ -44,12 +44,20 @@ public class False extends True implements Operation
     @Override
     public boolean execute( String value1, String value2 )
     {
-        value1 = value1.replace( "false", "F" );
-        value1 = value1.replace( "FALSE", "F" );
-        value2 = value2.replace( "false", "F" );
-        value2 = value2.replace( "FALSE", "F" );
+        return is( value1 );
+    }
 
-        return !super.execute( value1, value2 );
+    /**
+     * Converts upper and lower case 'false' to 'F'.
+     *
+     * @param value The string to convert.
+     */
+    private static String convertToF( String value )
+    {
+        value = value.replace( "false", "F" );
+        value = value.replace( "FALSE", "F" );
+
+        return value;
     }
 
     /**
@@ -60,6 +68,6 @@ public class False extends True implements Operation
      */
     public static boolean is( String value )
     {
-        return value.trim().equals( "F" );
+        return convertToF( value ).trim().equals( "F" );
     }
 }

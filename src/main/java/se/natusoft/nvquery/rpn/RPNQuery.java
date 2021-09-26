@@ -33,6 +33,7 @@ package se.natusoft.nvquery.rpn;
 import se.natusoft.nvquery.api.DataQuery;
 import se.natusoft.nvquery.api.QueryData;
 import se.natusoft.nvquery.api.Operation;
+import se.natusoft.nvquery.api.SingleValueOperation;
 import se.natusoft.nvquery.rpn.operations.*;
 
 import java.util.Arrays;
@@ -74,7 +75,6 @@ public class RPNQuery implements DataQuery
      * Provide operation implementation.
      *
      * @param operation The query string syntax of operation.
-     *
      * @return The implementation of operation.
      */
     private static Operation lookupOperation( String operation )
@@ -102,14 +102,11 @@ public class RPNQuery implements DataQuery
      *
      * @param query The query to make.
      * @param queryData The data to query.
-     *
      * @return true or false.
-     *
      * @exception IllegalStateException on reference if non existent value.
      */
     public boolean query( String query, QueryData queryData )
     {
-
         Stack<String> queryStack = new Stack<>();
 
         Arrays.stream( query.split( " " ) ).iterator().forEachRemaining( value -> {
@@ -117,8 +114,8 @@ public class RPNQuery implements DataQuery
             // Replace all '_' to spaces. The query must contain '_' instead of space to parse correct.
             value = value.replace( "_", " " );
 
-            if ( value.startsWith( "/" ) ) { // An operation
-
+            if ( value.startsWith( "/" ) ) // An operation
+            {
                 String operation = value.substring( 1 ).trim();
                 Operation op = lookupOperation( operation );
                 if ( op == null ) throw new IllegalStateException( "Unknown operation: " + operation + "!" );
@@ -130,29 +127,36 @@ public class RPNQuery implements DataQuery
                     res = op.execute( val1, val2 );
                 }
                 else { // This basically only happens for True and False.
-                       // This also means that there is only one entry on the stack and that
-                       // is principally wrong! But I accept this anyhow treating the first
-                       // value as a true. This will happen when you end up with one true
-                       // and want to verify it without first pushing another true and then
-                       // do an equals instead, which would be more proper.
-                       // I basically support a lazy and bad query.
-                       // The True and False operations are basically one value operations
-                       // breaking the pattern. Should maybe remove these.
-                    res = op.execute( "T", val2 );
+                    // This also means that there is only one entry on the stack and that
+                    // is principally wrong! But I accept this anyhow treating the first
+                    // value as a true. This will happen when you end up with one true
+                    // and want to verify it without first pushing another true and then
+                    // do an equals instead, which would be more proper.
+                    // I basically support a lazy and bad query.
+                    // The True and False operations are basically one value operations
+                    // breaking the pattern. Should maybe remove these.
+
+                    if ( !( op instanceof SingleValueOperation ) )
+                        throw new IllegalStateException( "Only one value provided to operation requiring two!" );
+
+                    res = op.execute( val2, null );
                 }
 
                 queryStack.push( res ? "T" : "F" );
             }
-            else if ( value.startsWith( "'" ) ) { // String value
+            else if ( value.startsWith( "'" ) )  // String value
+            {
 
                 value = value.replaceAll( "'", "" );
                 queryStack.push( value );
             }
             // Regexp from https://stackoverflow.com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
-            else if ( value.matches( "^[1-9]\\d*(\\.\\d+)?$" ) ) { // A number
+            else if ( value.matches( "^[1-9]\\d*(\\.\\d+)?$" ) ) // A number
+            {
                 queryStack.push( value );
             }
-            else { // A property reference.
+            else // A property reference.
+            {
 
                 String valueName = value;
                 value = queryData.getByName( valueName );
