@@ -101,8 +101,18 @@ public class RPNQueryTests
                 .add("rty", 236);
 
         assert query.query(
-                "name 'MyServiceId' /= qwe 100 /< /= rty 100 /> /= type 'service' /= /T",
+                //    /---------1----------\ /---2----\ /3\/---4----\ /5\/------6-----\ /7\/8\/9\
+                "name 'MyServiceId' /= qwe 100 /< /= rty 100 /> /= type 'service' /= /= /T",
                 data
         );
+        // 1. Value of name and 'MyServiceId' is equal. ==> true
+        // 2. Value of qwe is less than 100. ==> true
+        // 3. The last 2 operations have the same result (true in this case). Leaves one 'true' on the stack.
+        // 4. Value of rty is greater than 100. ==> true
+        // 5. The last 2 operations have same result (true).
+        // 6. type contains 'service'.
+        // 7. The last 2 operations have same result (true).
+        // 8. The last 2 operations have same result (true). Shortening the stack.
+        // 9. Checks that end result (last entry on stack) is true (should only be one true on the stack here).
     }
 }
