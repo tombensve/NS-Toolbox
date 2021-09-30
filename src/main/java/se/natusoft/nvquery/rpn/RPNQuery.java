@@ -31,8 +31,8 @@
 package se.natusoft.nvquery.rpn;
 
 import se.natusoft.nvquery.api.DataQuery;
-import se.natusoft.nvquery.api.QueryData;
 import se.natusoft.nvquery.api.Operation;
+import se.natusoft.nvquery.api.QueryData;
 import se.natusoft.nvquery.api.SingleValueOperation;
 import se.natusoft.nvquery.rpn.operations.*;
 
@@ -44,8 +44,8 @@ import java.util.Stack;
 /**
  * Provides the user API for RPNQuery.
  */
-public class RPNQuery implements DataQuery
-{
+public class RPNQuery implements DataQuery {
+
     //
     // Statics
     //
@@ -53,8 +53,7 @@ public class RPNQuery implements DataQuery
     /** A set of operations. */
     private static Map<String, Operation> _operations_ = initOps();
 
-    private static Map<String, Operation> initOps()
-    {
+    private static Map<String, Operation> initOps() {
 
         Map<String, Operation> operations = new LinkedHashMap<>();
         operations.put( "()", new Contains() );
@@ -77,8 +76,8 @@ public class RPNQuery implements DataQuery
      * @param operation The query string syntax of operation.
      * @return The implementation of operation.
      */
-    private static Operation lookupOperation( String operation )
-    {
+    private static Operation lookupOperation( String operation ) {
+
         return _operations_.get( operation );
     }
 
@@ -89,8 +88,7 @@ public class RPNQuery implements DataQuery
     /**
      * Creates a new RPNQuery instance.
      */
-    public RPNQuery()
-    {
+    public RPNQuery() {
     }
 
     //
@@ -105,8 +103,8 @@ public class RPNQuery implements DataQuery
      * @return true or false.
      * @exception IllegalStateException on reference if non existent value.
      */
-    public boolean query( String query, QueryData queryData )
-    {
+    public boolean query( String query, QueryData queryData ) {
+
         Stack<String> queryStack = new Stack<>();
 
         Arrays.stream( query.split( " " ) ).iterator().forEachRemaining( value -> {
@@ -114,8 +112,8 @@ public class RPNQuery implements DataQuery
             // Replace all '_' to spaces. The query must contain '_' instead of space to parse correct.
             value = value.replace( "_", " " );
 
-            if ( value.startsWith( "/" ) ) // An operation
-            {
+            if ( value.startsWith( "/" ) ) { // An operation
+
                 String operation = value.substring( 1 ).trim();
                 Operation op = lookupOperation( operation );
                 if ( op == null ) throw new IllegalStateException( "Unknown operation: " + operation + "!" );
@@ -123,10 +121,12 @@ public class RPNQuery implements DataQuery
                 boolean res = false;
                 String val2 = queryStack.pop();
                 if ( !queryStack.empty() ) {
+
                     String val1 = queryStack.pop();
                     res = op.execute( val1, val2 );
                 }
-                else { // This basically only happens for True and False.
+                else {
+                    // This basically only happens for True and False.
                     // This also means that there is only one entry on the stack and that
                     // is principally wrong! But I accept this anyhow treating the first
                     // value as a true. This will happen when you end up with one true
@@ -144,19 +144,19 @@ public class RPNQuery implements DataQuery
 
                 queryStack.push( res ? "T" : "F" );
             }
-            else if ( value.startsWith( "'" ) )  // String value
-            {
+
+            else if ( value.startsWith( "'" ) ) { // String value
 
                 value = value.replaceAll( "'", "" );
                 queryStack.push( value );
             }
+
             // Regexp from https://stackoverflow.com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
-            else if ( value.matches( "^[1-9]\\d*(\\.\\d+)?$" ) ) // A number
-            {
+            else if ( value.matches( "^[1-9]\\d*(\\.\\d+)?$" ) ) { // A number
+
                 queryStack.push( value );
             }
-            else // A property reference.
-            {
+            else { // A property reference.
 
                 String valueName = value;
                 value = queryData.getByName( valueName );

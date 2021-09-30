@@ -33,8 +33,8 @@ package se.natusoft.nvquery.api;
 /**
  * API for providing data to query.
  */
-public interface QueryData
-{
+public interface QueryData {
+
     /**
      * Should return data for the given name.
      *

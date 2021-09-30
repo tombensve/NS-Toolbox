@@ -38,8 +38,8 @@ import java.util.Map;
 /**
  * A default implementation of QueryData around a java.util.Map.
  */
-public class MapQueryData implements QueryData
-{
+public class MapQueryData implements QueryData {
+
     /** The Map we are wrapping */
     private Map<String, Object> dataMap;
 
@@ -48,16 +48,14 @@ public class MapQueryData implements QueryData
      *
      * @param sourceMap A Map containing data to query.
      */
-    public MapQueryData( Map<String, Object> sourceMap )
-    {
+    public MapQueryData( Map<String, Object> sourceMap ) {
         this.dataMap = sourceMap;
     }
 
     /**
      * Creates a new empty MapQueryData to add content to.
      */
-    public MapQueryData()
-    {
+    public MapQueryData() {
         this.dataMap = this.dataMap = new LinkedHashMap<>();
     }
 
@@ -68,8 +66,7 @@ public class MapQueryData implements QueryData
      * @param value The content value.
      * @return 'this' to provide builder pattern.
      */
-    public MapQueryData add( String name, Object value )
-    {
+    public MapQueryData add( String name, Object value ) {
         this.dataMap.put( name, "" + value );
 
         return this;
@@ -81,8 +78,7 @@ public class MapQueryData implements QueryData
      * @param name The named data to get.
      * @return The value of the named data.
      */
-    public String getByName( String name )
-    {
+    public String getByName( String name ) {
         Object value = this.dataMap.get( name );
         return value != null ? value.toString() : "";
     }

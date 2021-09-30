@@ -40,8 +40,7 @@ public interface Operation {
      *
      * @param value1 First value.
      * @param value2 Second value.
-     *
      * @return true or false.
      */
-    boolean execute(String value1, String value2);
+    boolean execute( String value1, String value2 );
 }

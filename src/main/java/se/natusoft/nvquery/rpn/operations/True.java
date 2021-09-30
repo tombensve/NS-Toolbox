@@ -32,8 +32,7 @@ package se.natusoft.nvquery.rpn.operations;
 
 import se.natusoft.nvquery.api.SingleValueOperation;
 
-public class True implements SingleValueOperation
-{
+public class True implements SingleValueOperation {
     /**
      * Executes the operation on the 2 provided values.
      *
@@ -42,9 +41,8 @@ public class True implements SingleValueOperation
      * @return true or false.
      */
     @Override
-    public boolean execute( String value1, String value2 )
-    {
-        return is(value1 );
+    public boolean execute( String value1, String value2 ) {
+        return is( value1 );
     }
 
     /**
@@ -52,8 +50,8 @@ public class True implements SingleValueOperation
      *
      * @param t The string to convert.
      */
-    private static String convertToT( String t )
-    {
+    private static String convertToT( String t ) {
+
         t = t.replace( "TRUE", "T" );
         t = t.replace( "true", "T" );
 
@@ -66,8 +64,8 @@ public class True implements SingleValueOperation
      * @param value The string value to check.
      * @return true or false.
      */
-    public static boolean is( String value )
-    {
+    public static boolean is( String value ) {
+
         return convertToT( value ).trim().equals( "T" );
     }
 }

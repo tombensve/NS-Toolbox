@@ -32,8 +32,8 @@ package se.natusoft.nvquery.rpn.operations;
 
 import se.natusoft.nvquery.api.Operation;
 
-public class Contains implements Operation
-{
+public class Contains implements Operation {
+
     /**
      * Executes the operation on the 2 provided values.
      *
@@ -42,8 +42,8 @@ public class Contains implements Operation
      * @return true or false.
      */
     @Override
-    public boolean execute( String value1, String value2 )
-    {
+    public boolean execute( String value1, String value2 ) {
+
         return value1.contains( value2 );
     }
 }

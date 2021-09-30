@@ -32,8 +32,7 @@ package se.natusoft.nvquery.rpn.operations;
 
 import se.natusoft.nvquery.api.Operation;
 
-public class LessThan implements Operation
-{
+public class LessThan implements Operation {
     /**
      * Executes the operation on the 2 provided values.
      *
@@ -43,8 +42,8 @@ public class LessThan implements Operation
      */
     @SuppressWarnings( "DuplicatedCode" )
     @Override
-    public boolean execute( String value1, String value2 )
-    {
+    public boolean execute( String value1, String value2 ) {
+
         boolean res;
 
 
