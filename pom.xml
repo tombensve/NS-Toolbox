@@ -8,6 +8,8 @@
     <artifactId>rpnquery</artifactId>
     <version>1.0.0</version>
 
+    <url>https://github/tombensve/RPNQuery</url>
+
     <organization>
         <name>Natusoft AB</name>
         <url>https://github.com/tombensve/RPNQuery</url>
@@ -23,23 +25,41 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version> 5.6.0</version>
+            <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
     <inceptionYear>2021</inceptionYear>
-    <licenses>
-        <license>
-            <name>Apache 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
+
+    <description>
+        Provides a RPN Query against name value set of data (Properties, Map).
+    </description>
+
+    <properties>
+        <copyrightYear>2021</copyrightYear>
+        <copyrightHolder>Natusoft AB</copyrightHolder>
+        <copyrightHolderWeb>https://www.natusoft.se/</copyrightHolderWeb>
+    </properties>
+
     <developers>
         <developer>
             <name>Tommy Svensson</name>
             <email>tommy@natusoft.se</email>
         </developer>
     </developers>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/tombensve/RPNQuery</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
     <scm>
         <connection>scm:https://github.com/tombensve/RPNQuery.git</connection>
         <url>scm:https://github.com/tombensve/RPNQuery.git</url>
@@ -67,13 +87,17 @@
         </pluginRepository>
     </pluginRepositories>
 
-
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/tombensve/RPNQuery/issues</url>
-    </issueManagement>
-
     <build>
+
+        <extensions>
+            <!-- Enabling the use of FTP -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>2.3</version>
+            </extension>
+        </extensions>
+
         <pluginManagement>
             <plugins>
                 <plugin>
