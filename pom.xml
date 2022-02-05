@@ -5,15 +5,21 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>se.natusoft.tools</groupId>
-    <artifactId>rpnquery</artifactId>
-    <version>1.0.0</version>
+    <artifactId>ns-toolbox</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.1</version>
 
-    <url>https://github/tombensve/RPNQuery</url>
+    <url>https://github/tombensve/NS-Toolbox</url>
 
     <organization>
         <name>Natusoft AB</name>
-        <url>https://github.com/tombensve/RPNQuery</url>
+        <url>https://github.com/tombensve/NS-Toolbox</url>
     </organization>
+
+    <modules>
+        <module>RPNQuery</module>
+        <module>ns-toolbox-apis</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -28,17 +34,27 @@
             <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>1.0-rc7</version>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
-    <inceptionYear>2021</inceptionYear>
+    <inceptionYear>2022</inceptionYear>
 
     <description>
         Provides a RPN Query against name value set of data (Properties, Map).
     </description>
 
     <properties>
-        <copyrightYear>2021</copyrightYear>
+        <copyrightYear>2022</copyrightYear>
         <copyrightHolder>Natusoft AB</copyrightHolder>
         <copyrightHolderWeb>https://www.natusoft.se/</copyrightHolderWeb>
+
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <developers>
@@ -243,7 +259,7 @@
     <distributionManagement>
         <repository>
             <id>download.natusoft.se</id>
-            <name>DownloadNatusoftSe-RPNQuery</name>
+            <name>DownloadNatusoftSe-NS-Toolbox</name>
             <url>ftp://${maven.repo.upload}/${maven.base.path}</url>
         </repository>
     </distributionManagement>
