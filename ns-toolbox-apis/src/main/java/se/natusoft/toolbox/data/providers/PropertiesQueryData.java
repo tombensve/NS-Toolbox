@@ -2,7 +2,7 @@
  *
  * PROJECT
  *     Name
- *         RPNQuery
+ *         ns-toolbox-apis
  *     
  *     Description
  *         Provides a RPN Query against name value set of data (Properties, Map).
@@ -31,46 +31,44 @@
  *         2021-09-05: Created!
  *
  */
-package se.natusoft.toolbox.nvquery.data.providers;
+package se.natusoft.toolbox.data.providers;
 
 import se.natusoft.toolbox.api.query.QueryData;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Properties;
 
 /**
- * A default implementation of QueryData around a java.util.Map.
+ * Provides and implementation of QueryData using a java.util.Properties object.
  */
-public class MapQueryData implements QueryData {
-
-    /** The Map we are wrapping */
-    private Map<String, Object> dataMap;
+public class PropertiesQueryData implements QueryData {
+    /** The provided properties to query. */
+    private Properties properties;
 
     /**
-     * Creates a new MapQueryData with content.
+     * Creates a new PropertiesQueryData.
      *
-     * @param sourceMap A Map containing data to query.
+     * @param properties The Properties to query.
      */
-    public MapQueryData( Map<String, Object> sourceMap ) {
-        this.dataMap = sourceMap;
+    public PropertiesQueryData( Properties properties ) {
+        this.properties = properties;
     }
 
     /**
-     * Creates a new empty MapQueryData to add content to.
+     * Creates a new PropertiesQueryData with a default and empty set of properties.
      */
-    public MapQueryData() {
-        this.dataMap = this.dataMap = new LinkedHashMap<>();
+    public PropertiesQueryData() {
+        this.properties = new Properties();
     }
 
     /**
-     * Adds content to the map.
+     * Adds content to the properties.
      *
      * @param name The name of the content.
      * @param value The content value.
      * @return 'this' to provide builder pattern.
      */
-    public MapQueryData add( String name, Object value ) {
-        this.dataMap.put( name, "" + value );
+    public PropertiesQueryData add( String name, Object value ) {
+        this.properties.put( name, "" + value );
 
         return this;
     }
@@ -82,7 +80,6 @@ public class MapQueryData implements QueryData {
      * @return The value of the named data.
      */
     public String getByName( String name ) {
-        Object value = this.dataMap.get( name );
-        return value != null ? value.toString() : "";
+        return this.properties.getProperty( name );
     }
 }

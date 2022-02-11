@@ -19,6 +19,8 @@
     <modules>
         <module>RPNQuery</module>
         <module>ns-toolbox-apis</module>
+        <module>filtering-service-loader</module>
+        <module>Modelish</module>
     </modules>
 
     <dependencies>
