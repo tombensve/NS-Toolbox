@@ -21,6 +21,11 @@ This uses the fluent ([https://dzone.com/articles/java-fluent-api-design](https:
     
     }
 ```
+
+Note that 
+- the name is the same for both setter and getter.
+- the overall code to implement this is quite small!
+
 ### Usage
 
 
@@ -28,9 +33,10 @@ This uses the fluent ([https://dzone.com/articles/java-fluent-api-design](https:
     TestModel testModel = Modelish.create( TestModel.class )
             .name("Tommy Svensson")
             .age(53)
-            .address("Undisclosed").lock();
+            .address("Stockholm")
+            .lock();
 
 ```
 
-After the lock() call the model cannot be modified.
+After the lock() call the model cannot be modified. There is intentionally no unlock.
 

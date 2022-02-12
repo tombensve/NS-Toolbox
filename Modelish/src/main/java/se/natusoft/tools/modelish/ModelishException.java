@@ -1,5 +1,5 @@
-/*
- *
+/* 
+ * 
  * PROJECT
  *     Name
  *         Modelish
@@ -28,33 +28,17 @@
  * AUTHORS
  *     tommy ()
  *         Changes:
- *         2022-02-11: Created!
- *
+ *         2022-02-12: Created!
+ *         
  */
 package se.natusoft.tools.modelish;
 
-import se.natusoft.tools.modelish.internal.ModelishInvocationHandler;
-
-import java.lang.reflect.Proxy;
-
 /**
- * Provides a static method that creates an instance of the specified model interface class
- *
- * Rules are fluent API, that is same name for getter and setter where the getter has no arguments
- * and the setter one argument.
- *
- * Model interfaces should extend the ModelishModel interface.
- *
- * @param <T>
+ * This is in general thrown on bad model interface.
  */
-public class Modelish<T> {
+public class ModelishException extends IllegalArgumentException {
 
-    public static <Model> Model create(Class<Model> api) {
-        Class<?>[] interfaces = new Class[ 1 ];
-        interfaces[ 0 ] = api;
-
-        //noinspection unchecked
-        return ( Model ) Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler() );
-
+    public ModelishException(String message) {
+        super(message);
     }
 }

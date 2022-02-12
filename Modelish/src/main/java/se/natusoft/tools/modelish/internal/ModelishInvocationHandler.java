@@ -1,9 +1,43 @@
+/*
+ *
+ * PROJECT
+ *     Name
+ *         Modelish
+ *     
+ *     Description
+ *         Provides a RPN Query against name value set of data (Properties, Map).
+ *         
+ * COPYRIGHTS
+ *     Copyright (C) 2022 by Natusoft AB All rights reserved.
+ *     
+ * LICENSE
+ *     Apache 2.0 (Open Source)
+ *     
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *     
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ *     
+ * AUTHORS
+ *     tommy ()
+ *         Changes:
+ *         2022-02-11: Created!
+ *
+ */
 package se.natusoft.tools.modelish.internal;
+
+import se.natusoft.tools.modelish.ModelishException;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -17,7 +51,8 @@ public class ModelishInvocationHandler implements InvocationHandler {
     /** When this is set to true the contents of a model can no longer be changed. */
     private boolean locked = false;
 
-    public ModelishInvocationHandler() {}
+    public ModelishInvocationHandler() {
+    }
 
     /**
      * Processes a method invocation on a proxy instance and returns
@@ -69,28 +104,38 @@ public class ModelishInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke( Object proxy, Method method, Object[] args ) throws Throwable {
 
-        Object result = null;
+        Object result = proxy;
 
-        if (method.getName().toLowerCase( Locale.ROOT ).equals( "lock" )) {
+        // .lock()
+        if ( method.getName().equals( "lock" ) ) {
+
             this.locked = true;
-            result = proxy;
-        }
-        else {
 
-            if (args != null && args.length > 1) throw new IllegalArgumentException(
+        } else {
+
+            // Validation of bad model interface. Can only be 0 or 1 argument.
+            if ( args != null && args.length > 1 ) throw new ModelishException(
                     "Badly defined model method! Can only be one value for setter."
             );
 
+            // Setter
             if ( args != null && args.length == 1 ) {
-                // Argument has been provided ==> set
-                if (!this.locked) {
+
+                if ( !this.locked ) {
+
                     this.values.put( method.getName(), args[ 0 ] );
-                    result = proxy;
-                } else throw new IllegalArgumentException("Object is locked!");
-            } else {
-                // No argument ==> get
-                result = this.values.get( method.getName() );
-            }
+
+                } else throw new ModelishException( "Update of read only object not allowed!" );
+            } else
+                // Getter
+                if ( args == null ) {
+
+                    result = this.values.get( method.getName() );
+
+                } else {
+
+                    throw new ModelishException( "Only one (setter) or zero (getter) argument is valid!" );
+                }
         }
 
         return result;
