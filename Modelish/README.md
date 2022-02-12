@@ -60,3 +60,6 @@ After the lock() call the model cannot be modified. There is intentionally no un
 
 With this model `_clone()` can be called to get a current clone of model that will be open for changes until _lock() is called.
 
+----
+
+See [Test](https://github.com/tombensve/NS-Toolbox/blob/main/Modelish/src/test/java/se/natusoft/tools/modelish/ModelishTest.java) for an example of usage.
