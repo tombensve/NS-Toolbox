@@ -38,13 +38,13 @@ import org.junit.jupiter.api.Test;
 public class ModelishTest {
 
     @Test
-    public void testModelish() {
+    public void verifyModelishNormalUsage() {
 
         TestModel testModel = Modelish.create( TestModel.class )
                 .name("Tommy Svensson")
                 .age(53)
                 .address("Stockholm")
-                .lock();
+                ._lock();
 
         assert testModel.name().equals( "Tommy Svensson" );
         assert testModel.age() == 53;
@@ -58,5 +58,33 @@ public class ModelishTest {
         catch ( IllegalArgumentException iae ) {
             assert iae.getMessage().equals( "Update of read only object not allowed!" );
         }
+    }
+
+    @Test
+    public void verifyCloningModel() {
+
+        TestModel testModel = Modelish.create( TestModel.class )
+                .name("Tommy Svensson")
+                .age(53)
+                .address("Stockholm")
+                ._lock();
+
+        // Note that new model is not locked even if old one was.
+        TestModel clonedModel = testModel._clone().address("Liljeholmen")._lock();
+
+        // Make sure the original hasn't changed.
+        assert testModel.address().equals( "Stockholm" );
+
+        // The cloned should have the updated value.
+        assert clonedModel.address().equals( "Liljeholmen" );
+
+        // Make sure clone is locked.
+        try {
+            clonedModel.name("Tommy B Svensson");
+        }
+        catch ( IllegalArgumentException iae ) {
+            assert iae.getMessage().equals( "Update of read only object not allowed!" );
+        }
+
     }
 }

@@ -3,28 +3,28 @@
  * PROJECT
  *     Name
  *         Modelish
- *     
+ *
  *     Description
  *         Provides a RPN Query against name value set of data (Properties, Map).
- *         
+ *
  * COPYRIGHTS
  *     Copyright (C) 2022 by Natusoft AB All rights reserved.
- *     
+ *
  * LICENSE
  *     Apache 2.0 (Open Source)
- *     
+ *
  *     Licensed under the Apache License, Version 2.0 (the "License");
  *     you may not use this file except in compliance with the License.
  *     You may obtain a copy of the License at
- *     
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- *     
+ *
  *     Unless required by applicable law or agreed to in writing, software
  *     distributed under the License is distributed on an "AS IS" BASIS,
  *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
- *     
+ *
  * AUTHORS
  *     tommy ()
  *         Changes:
@@ -37,6 +37,7 @@ import se.natusoft.tools.modelish.ModelishException;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -46,12 +47,23 @@ import java.util.Map;
 public class ModelishInvocationHandler implements InvocationHandler {
 
     /** This holds the models values. */
-    private Map<String, Object> values = new LinkedHashMap<>();
+    private final Map<String, Object> values;
 
     /** When this is set to true the contents of a model can no longer be changed. */
     private boolean locked = false;
 
+    /** Default handler */
     public ModelishInvocationHandler() {
+        this.values = new LinkedHashMap<>();
+    }
+
+    /**
+     * Used when cloning.
+     *
+     * @param copy a copy of the model data which is used instead of a new empty.
+     */
+    private ModelishInvocationHandler(Map<String, Object> copy) {
+        this.values = copy;
     }
 
     /**
@@ -107,9 +119,13 @@ public class ModelishInvocationHandler implements InvocationHandler {
         Object result = proxy;
 
         // .lock()
-        if ( method.getName().equals( "lock" ) ) {
+        if ( method.getName().equals( "_lock" ) ) {
 
             this.locked = true;
+
+        } else if ( method.getName().equals( "_clone" ) ) {
+
+            result = doClone( proxy.getClass().getInterfaces()[0], this.values );
 
         } else {
 
@@ -134,10 +150,31 @@ public class ModelishInvocationHandler implements InvocationHandler {
 
                 } else {
 
-                    throw new ModelishException( "Only one (setter) or zero (getter) argument is valid!" );
+                    throw new ModelishException( "Bad model API! Only one (setter) or zero (getter) argument is valid." );
                 }
         }
 
         return result;
+    }
+
+    /**
+     * Clones a model returning a complete copy of source.
+     *
+     * @param api The model API.
+     * @param source The source model being cloned.
+     *
+     * @return a new Proxy implementation of the clone.
+     */
+    private Object doClone(Class api, Map<String, Object> source) {
+
+        Map<String, Object> copy = new LinkedHashMap<>();
+        for (String key : source.keySet()) {
+            copy.put(key, source.get( key ) );
+        }
+
+        Class<?>[] interfaces = new Class[ 1 ];
+        interfaces[ 0 ] = api;
+
+        return Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler(copy) );
     }
 }

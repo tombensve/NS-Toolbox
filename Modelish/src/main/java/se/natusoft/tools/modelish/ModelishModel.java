@@ -48,5 +48,5 @@ public interface ModelishModel<T> {
      *
      * @return itself.
      */
-    T lock();
+    T _lock();
 }
