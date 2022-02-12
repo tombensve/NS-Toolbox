@@ -16,6 +16,8 @@ Restructured and split into many jars, one for APIs and one for each tool.
 
 ### 1.1.0
 
-- Added [Modelish](Modelish/), a fluent data model defined as interface and instantiated using the Modelish class.
+Added [Modelish](Modelish/), a fluent data model defined as interface and instantiated using the Modelish class.
 
+### 1.1.1
 
+Modelish now supports cloning a model, modify it, and then lock the clone. For this `CloneableModelishModel` must be extended by the model API interface. 

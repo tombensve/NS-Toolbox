@@ -26,7 +26,7 @@ Note that
 - the name is the same for both setter and getter.
 - the overall code to implement this is quite small!
 
-### Usage
+## Usage
 
 
 ```java
@@ -39,4 +39,24 @@ Note that
 ```
 
 After the lock() call the model cannot be modified. There is intentionally no unlock.
+
+## Clone and modify model
+
+```java
+
+    public interface TestModel extends CloneableModelishModel<TestModel> {
+    
+        String name();
+        TestModel name(String name);
+    
+        int age();
+        TestModel age(int age);
+    
+        String address();
+        TestModel address(String address);
+    
+    }
+```
+
+With this model `_clone()` can be called to get a current clone of model that will be open for changes until _lock() is called.
 

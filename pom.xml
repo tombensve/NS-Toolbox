@@ -7,7 +7,7 @@
     <groupId>se.natusoft.tools</groupId>
     <artifactId>ns-toolbox</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 
     <url>https://github/tombensve/NS-Toolbox</url>
 

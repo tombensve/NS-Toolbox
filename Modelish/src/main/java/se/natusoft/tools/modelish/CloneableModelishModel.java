@@ -1,5 +1,5 @@
-/*
- *
+/* 
+ * 
  * PROJECT
  *     Name
  *         Modelish
@@ -29,19 +29,19 @@
  *     tommy ()
  *         Changes:
  *         2022-02-12: Created!
- *
+ *         
  */
 package se.natusoft.tools.modelish;
 
-public interface TestModel extends CloneableModelishModel<TestModel> {
+/**
+ * Let your models extend this interface instead of ModelishModel directly to be able to clone them.
+ *
+ * @param <T>
+ */
+public interface CloneableModelishModel<T> extends ModelishModel<T> {
 
-    String name();
-    TestModel name(String name);
-
-    int age();
-    TestModel age(int age);
-
-    String address();
-    TestModel address(String address);
-
+    /**
+     * @return A clone of current model. New model will not be locked.
+     */
+    T _clone();
 }
