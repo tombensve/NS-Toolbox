@@ -78,6 +78,10 @@ public class ModelishTest {
         // The cloned should have the updated value.
         assert clonedModel.address().equals( "Liljeholmen" );
 
+        // Old, copied values are still there.
+        assert clonedModel.name().equals( "Tommy Svensson" );
+        assert clonedModel.age() == 53;
+
         // Make sure clone is locked.
         try {
             clonedModel.name("Tommy B Svensson");
