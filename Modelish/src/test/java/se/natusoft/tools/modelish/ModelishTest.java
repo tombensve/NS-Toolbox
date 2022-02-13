@@ -40,40 +40,40 @@ public class ModelishTest {
     @Test
     public void verifyModelishNormalUsage() {
 
-        TestModel testModel = Modelish.create( TestModel.class )
-                .name("Tommy Svensson")
-                .age(53)
-                .address("Stockholm")
+        UserInfo userInfo = Modelish.create( UserInfo.class )
+                .name( "Tommy Svensson" )
+                .age( 53 )
+                .address( "Stockholm" )
                 ._lock();
 
-        assert testModel.name().equals( "Tommy Svensson" );
-        assert testModel.age() == 53;
-        assert testModel.address().equals( "Stockholm" );
+        assert userInfo.name().equals( "Tommy Svensson" );
+        assert userInfo.age() == 53;
+        assert userInfo.address().equals( "Stockholm" );
 
         try {
-            testModel.name( "qwerty" );
+            userInfo.name( "qwerty" );
             // This because shit can ALWAYS happen!
-            throw new RuntimeException("This should not happen since model is locked.");
-        }
-        catch ( IllegalArgumentException iae ) {
+            throw new RuntimeException( "This should not happen since model is locked." );
+        } catch ( IllegalArgumentException iae ) {
             assert iae.getMessage().equals( "Update of read only object not allowed!" );
         }
     }
 
+
     @Test
     public void verifyCloningModel() {
 
-        TestModel testModel = Modelish.create( TestModel.class )
-                .name("Tommy Svensson")
-                .age(53)
-                .address("Stockholm")
+        UserInfo userInfo = Modelish.create( UserInfo.class )
+                .name( "Tommy Svensson" )
+                .age( 53 )
+                .address( "Stockholm" )
                 ._lock();
 
         // Note that new model is not locked even if old one was.
-        TestModel clonedModel = testModel._clone().address("Liljeholmen")._lock();
+        UserInfo clonedModel = userInfo._clone().address( "Liljeholmen" )._lock();
 
         // Make sure the original hasn't changed.
-        assert testModel.address().equals( "Stockholm" );
+        assert userInfo.address().equals( "Stockholm" );
 
         // The cloned should have the updated value.
         assert clonedModel.address().equals( "Liljeholmen" );
@@ -84,11 +84,80 @@ public class ModelishTest {
 
         // Make sure clone is locked.
         try {
-            clonedModel.name("Tommy B Svensson");
-        }
-        catch ( IllegalArgumentException iae ) {
+            clonedModel.name( "Tommy B Svensson" );
+        } catch ( IllegalArgumentException iae ) {
             assert iae.getMessage().equals( "Update of read only object not allowed!" );
         }
 
+    }
+
+    @Test
+    public void verifySubModelish() {
+
+        User user = Modelish.create( User.class )
+                .id( "tbs" )
+                .loginCount( 9843 )
+                .userInfo( Modelish.create( UserInfo.class )
+                        .name( "Tommy" )
+                        .address( "Liljeholmen" )
+                        .age( 53 )
+                        ._lock()
+                )
+                ._lock();
+
+        // Verify read access of model in model.
+        assert user.userInfo().address().equals( "Liljeholmen" );
+    }
+
+    @Test
+    public void verifySubModelishClone() {
+
+        User user = Modelish.create( User.class )
+                .id( "tbs" )
+                .loginCount( 9843 )
+                .userInfo( Modelish.create( UserInfo.class )
+                                .name( "Tommy" )
+                                .address( "Liljeholmen" )
+                                .age( 53 )
+                        //._lock()
+                )
+                ._lock();
+
+        User user2 = user._clone();
+
+        // Verify read access of model in model of cloned object.
+        assert user2.userInfo().address().equals( "Liljeholmen" );
+
+        // Modify original address
+        user.userInfo().address( "Stockholm" );
+        assert user.userInfo().address().equals( "Stockholm" );
+
+        // Make sure address of clone is not modified.
+        assert user2.userInfo().address().equals( "Liljeholmen" );
+
+    }
+
+    @Test
+    public void verifyRecursiveLock() {
+
+        User user = Modelish.create( User.class )
+                .id( "tbs" )
+                .loginCount( 9843 )
+                .userInfo( Modelish.create( UserInfo.class )
+                        .name( "Tommy" )
+                        .address( "Liljeholmen" )
+                        .age( 53 )
+                )
+                ._recursiveLock();
+
+        try {
+            user.userInfo().age( 43 );
+
+            throw new IllegalArgumentException("Update allowed! Should have caused an exception!");
+
+        } catch ( IllegalArgumentException iae ) {
+
+            assert iae.getMessage().equals( "Update of read only object not allowed!" );
+        }
     }
 }

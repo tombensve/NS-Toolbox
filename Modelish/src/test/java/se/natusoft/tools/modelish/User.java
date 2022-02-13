@@ -28,32 +28,20 @@
  * AUTHORS
  *     tommy ()
  *         Changes:
- *         2022-02-11: Created!
+ *         2022-02-12: Created!
  *
  */
 package se.natusoft.tools.modelish;
 
-/**
- * Base interface for modelish models.
- *
- * @param <T>
- */
-public interface ModelishModel<T> {
+public interface User extends CloneableModelishModel<User> {
 
-    /**
-     * This has to be called when all values have been set to make it impossible to modify
-     * the objects content. A locked model cannot be unlocked.
-     *
-     * This is not required, but is a good idea to call this!
-     *
-     * @return self.
-     */
-    T _lock();
+    String id();
+    User id( String id);
 
-    /**
-     * Does the same as lock() but also recursively on sub models of model.
-     *
-     * @return self.
-     */
-    T _recursiveLock();
+    int loginCount();
+    User loginCount(int count);
+
+    UserInfo userInfo();
+    User userInfo(UserInfo userInfo);
+
 }
