@@ -21,3 +21,9 @@ Added [Modelish](Modelish/), a fluent data model defined as interface and instan
 ### 1.1.1
 
 Modelish now supports cloning a model, modify it, and then lock the clone. For this `CloneableModelishModel` must be extended by the model API interface. 
+
+### 1.2.1
+
+Modelish now supports recursive cloning of a model that have Modelish models as members. In this case all Modelish models are cloned. 
+
+Since `_lock()` only locks the model `_lock()` was called on and not any Modelish submodel there is now also a `_recursiveLock()` method that locks everything for complex models.

@@ -33,7 +33,9 @@
  */
 package se.natusoft.tools.modelish.internal;
 
+import se.natusoft.tools.modelish.CloneableModelishModel;
 import se.natusoft.tools.modelish.ModelishException;
+import se.natusoft.tools.modelish.ModelishModel;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -66,6 +68,7 @@ public class ModelishInvocationHandler implements InvocationHandler {
         this.values = copy;
     }
 
+    // Kept the IDEA generated javadoc for invoke(...).
     /**
      * Processes a method invocation on a proxy instance and returns
      * the result.  This method will be invoked on an invocation handler
@@ -118,10 +121,21 @@ public class ModelishInvocationHandler implements InvocationHandler {
 
         Object result = proxy;
 
-        // .lock()
         if ( method.getName().equals( "_lock" ) ) {
 
             this.locked = true;
+
+        } else if (method.getName().equals( "_recursiveLock" )) {
+
+            this.locked = true;
+
+            // Also lock any sub models.
+            for ( String key : this.values.keySet() ) {
+                Object value = this.values.get( key );
+                if ( value instanceof ModelishModel ) {
+                    ( (ModelishModel<?>) value )._lock();
+                }
+            }
 
         } else if ( method.getName().equals( "_clone" ) ) {
 
@@ -158,18 +172,29 @@ public class ModelishInvocationHandler implements InvocationHandler {
     }
 
     /**
-     * Clones a model returning a complete copy of source.
+     * Clones a model returning a complete copy of source model.
+     *
+     * Note that any value that is a `CloneableModelishModel` is also cloned!
      *
      * @param api The model API.
      * @param source The source model being cloned.
      *
      * @return a new Proxy implementation of the clone.
      */
-    private Object doClone(Class api, Map<String, Object> source) {
+    private Object doClone(Class<?> api, Map<String, Object> source) {
 
         Map<String, Object> copy = new LinkedHashMap<>();
+
         for (String key : source.keySet()) {
-            copy.put(key, source.get( key ) );
+
+            Object srcObj = source.get( key );
+
+            if (srcObj instanceof CloneableModelishModel ) {
+
+                srcObj = ((CloneableModelishModel<?>)srcObj)._clone();
+            }
+
+            copy.put( key, srcObj );
         }
 
         Class<?>[] interfaces = new Class[ 1 ];

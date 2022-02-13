@@ -30,15 +30,17 @@ Note that
 
 
 ```java
-    TestModel testModel = Modelish.create( TestModel.class )
+    TestModel userInfo = Modelish.create( TestModel.class )
             .name("Tommy Svensson")
             .age(53)
             .address("Stockholm")
-            .lock();
+            ._lock();
 
 ```
 
-After the lock() call the model cannot be modified. There is intentionally no unlock.
+After the lock() call the model cannot be modified. There is intentionally no unlock. 
+
+Note that for complex models with submodels there is now also an `recursiveLock()` method that locks model and any submodels.
 
 ## Clone and modify model
 
