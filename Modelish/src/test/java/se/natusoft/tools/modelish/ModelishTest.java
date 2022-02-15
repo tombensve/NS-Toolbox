@@ -35,7 +35,27 @@ package se.natusoft.tools.modelish;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * This doubles as test and example of usage.
+ */
 public class ModelishTest {
+
+    //
+    // Simple Usage
+    //
+
+    public interface UserInfo extends CloneableModelishModel<UserInfo> {
+
+        String name();
+        UserInfo name( String name);
+
+        int age();
+        UserInfo age( int age);
+
+        String address();
+        UserInfo address( String address);
+
+    }
 
     @Test
     public void verifyModelishNormalUsage() {
@@ -59,6 +79,10 @@ public class ModelishTest {
         }
     }
 
+
+    //
+    // Cloning a model
+    //
 
     @Test
     public void verifyCloningModel() {
@@ -91,6 +115,23 @@ public class ModelishTest {
 
     }
 
+    //
+    // Adding a sub model
+    //
+
+    public interface User extends CloneableModelishModel<User> {
+
+        String id();
+        User id( String id);
+
+        int loginCount();
+        User loginCount( int count);
+
+        UserInfo userInfo();
+        User userInfo( UserInfo userInfo);
+
+    }
+
     @Test
     public void verifySubModelish() {
 
@@ -108,6 +149,10 @@ public class ModelishTest {
         // Verify read access of model in model.
         assert user.userInfo().address().equals( "Liljeholmen" );
     }
+
+    //
+    // Cloning with a sub model
+    //
 
     @Test
     public void verifySubModelishClone() {
@@ -137,6 +182,10 @@ public class ModelishTest {
 
     }
 
+    //
+    // Recursive lock of model.
+    //
+
     @Test
     public void verifyRecursiveLock() {
 
@@ -159,5 +208,45 @@ public class ModelishTest {
 
             assert iae.getMessage().equals( "Update of read only object not allowed!" );
         }
+    }
+
+    //
+    // Giving it a more builder feel
+    //
+
+    public interface Address extends CloneableModelishModel<Address> {
+
+        String street();
+
+        int streetNumber();
+
+        String postalAddress();
+
+    }
+
+    public interface AddressBuilder extends Address {
+
+        AddressBuilder street(String street);
+
+        AddressBuilder streetNumber(int number);
+
+        AddressBuilder postalAddress(String postalNumber);
+    }
+
+    @Test
+    public void verifyBuilderStyle() {
+
+        Address address = Modelish.create( AddressBuilder.class )
+                .street( "Somewhere Street" )
+                .streetNumber(44)
+                .postalAddress("Stockholm")
+                ._lock();
+
+
+        // Note that these resulting objects are read only, only having getters.
+        assert address.street().equals( "Somewhere Street" );
+        assert address.streetNumber() == 44;
+        assert address.postalAddress().equals( "Stockholm" );
+
     }
 }
