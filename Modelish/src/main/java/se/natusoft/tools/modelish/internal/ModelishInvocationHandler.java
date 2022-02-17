@@ -37,6 +37,8 @@ import se.natusoft.tools.modelish.CloneableModelishModel;
 import se.natusoft.tools.modelish.ModelishException;
 import se.natusoft.tools.modelish.ModelishModel;
 
+import javax.annotation.Nonnull;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -137,7 +139,7 @@ public class ModelishInvocationHandler implements InvocationHandler {
                 }
             }
 
-        } else if ( method.getName().equals( "_clone" ) ) {
+        } else if ( method.getName().equals( "_clone" ) || method.getName().equals( "_create" ) ) {
 
             result = doClone( proxy.getClass().getInterfaces()[0], this.values );
 
@@ -151,11 +153,18 @@ public class ModelishInvocationHandler implements InvocationHandler {
             // Setter
             if ( args != null && args.length == 1 ) {
 
-                if ( !this.locked ) {
+                // Validate nullability of setter.
+                Annotation nonNull = method.getAnnotation( Nonnull.class );
+                if (nonNull != null && args[0] == null) {
+                    throw new ModelishException( "null passed to non nullable value!" );
+                }
 
-                    this.values.put( method.getName(), args[ 0 ] );
+                if ( this.locked ) {
+                    throw new ModelishException( "Update of read only object not allowed!" );
+                }
 
-                } else throw new ModelishException( "Update of read only object not allowed!" );
+                this.values.put( method.getName(), args[ 0 ] );
+
             } else
                 // Getter
                 if ( args == null ) {
