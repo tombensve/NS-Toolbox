@@ -35,6 +35,8 @@ package se.natusoft.tools.modelish;
 
 import org.junit.jupiter.api.Test;
 
+import javax.annotation.Nonnull;
+
 /**
  * This doubles as test and example of usage.
  */
@@ -47,13 +49,16 @@ public class ModelishTest {
     public interface UserInfo extends CloneableModelishModel<UserInfo> {
 
         String name();
-        UserInfo name( String name);
+
+        UserInfo name( String name );
 
         int age();
-        UserInfo age( int age);
+
+        UserInfo age( int age );
 
         String address();
-        UserInfo address( String address);
+
+        UserInfo address( String address );
 
     }
 
@@ -122,13 +127,16 @@ public class ModelishTest {
     public interface User extends CloneableModelishModel<User> {
 
         String id();
-        User id( String id);
+
+        User id( String id );
 
         int loginCount();
-        User loginCount( int count);
+
+        User loginCount( int count );
 
         UserInfo userInfo();
-        User userInfo( UserInfo userInfo);
+
+        User userInfo( UserInfo userInfo );
 
     }
 
@@ -202,7 +210,7 @@ public class ModelishTest {
         try {
             user.userInfo().age( 43 );
 
-            throw new IllegalArgumentException("Update allowed! Should have caused an exception!");
+            throw new IllegalArgumentException( "Update allowed! Should have caused an exception!" );
 
         } catch ( IllegalArgumentException iae ) {
 
@@ -226,11 +234,11 @@ public class ModelishTest {
 
     public interface AddressBuilder extends Address {
 
-        AddressBuilder street(String street);
+        AddressBuilder street( String street );
 
-        AddressBuilder streetNumber(int number);
+        AddressBuilder streetNumber( int number );
 
-        AddressBuilder postalAddress(String postalNumber);
+        AddressBuilder postalAddress( String postalNumber );
     }
 
     @Test
@@ -238,8 +246,8 @@ public class ModelishTest {
 
         Address address = Modelish.create( AddressBuilder.class )
                 .street( "Somewhere Street" )
-                .streetNumber(44)
-                .postalAddress("Stockholm")
+                .streetNumber( 44 )
+                .postalAddress( "Stockholm" )
                 ._lock();
 
 
@@ -249,4 +257,54 @@ public class ModelishTest {
         assert address.postalAddress().equals( "Stockholm" );
 
     }
+
+    //
+    // Factory usage
+    //
+
+    public interface Car extends FactoryModelishModel<Car> {
+
+        String model();
+        @Nonnull Car model( String model );
+
+        int age();
+        Car age( int age );
+
+        int wheels();
+        Car wheels( int age );
+    }
+
+
+    @Test
+    public void verifyFactoryUse() {
+
+        Car carFactory = Modelish.create( Car.class ).age( 16 )._lock();
+
+        Car car = carFactory._create().model( "VW EOS" ).wheels( 4 );
+
+        assert car.model().equals( "VW EOS" );
+        assert car.age() == 16;
+        assert car.wheels() == 4;
+
+    }
+
+    //
+    // Non null fields
+    //
+
+    @Test
+    public void verifyNonnull() {
+
+        boolean threwException = false;
+
+        try {
+            Car car = Modelish.create( Car.class ).model( null ).age( 16 ).wheels( 4 )._lock();
+        }
+        catch ( IllegalArgumentException iae ) {
+            threwException = true;
+        }
+
+        assert threwException;
+    }
+
 }
