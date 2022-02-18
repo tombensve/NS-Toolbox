@@ -280,7 +280,8 @@ public class ModelishTest {
 
         Car carFactory = Modelish.create( Car.class ).age( 16 )._lock();
 
-        Car car = carFactory._create().model( "VW EOS" ).wheels( 4 );
+        // Note: _create() and _clone() are identical!! _create() just looks better when used as factory.
+        Car car = carFactory._create().model( "VW EOS" ).wheels( 4 )._lock();
 
         assert car.model().equals( "VW EOS" );
         assert car.age() == 16;
@@ -301,6 +302,9 @@ public class ModelishTest {
             Car car = Modelish.create( Car.class ).model( null ).age( 16 ).wheels( 4 )._lock();
         }
         catch ( IllegalArgumentException iae ) {
+
+            assert iae.getMessage().equals( "null passed to non nullable value!" );
+
             threwException = true;
         }
 
