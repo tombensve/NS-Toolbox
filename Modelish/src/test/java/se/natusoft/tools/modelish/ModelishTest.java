@@ -46,7 +46,7 @@ public class ModelishTest {
     // Simple Usage
     //
 
-    public interface UserInfo extends CloneableModelishModel<UserInfo> {
+    public interface UserInfo extends Cloneable<UserInfo> {
 
         String name();
 
@@ -124,7 +124,7 @@ public class ModelishTest {
     // Adding a sub model
     //
 
-    public interface User extends CloneableModelishModel<User> {
+    public interface User extends Cloneable<User> {
 
         String id();
 
@@ -222,7 +222,7 @@ public class ModelishTest {
     // Giving it a more builder feel
     //
 
-    public interface Address extends CloneableModelishModel<Address> {
+    public interface Address extends Cloneable<Address> {
 
         String street();
 
@@ -262,7 +262,7 @@ public class ModelishTest {
     // Factory usage
     //
 
-    public interface Car extends FactoryModelishModel<Car> {
+    public interface Car extends Factory<Car> {
 
         String model();
         @Nonnull Car model( String model );
@@ -290,7 +290,7 @@ public class ModelishTest {
     }
 
     //
-    // Non null fields
+    // Not null fields
     //
 
     @Test
@@ -303,7 +303,7 @@ public class ModelishTest {
         }
         catch ( IllegalArgumentException iae ) {
 
-            assert iae.getMessage().equals( "null passed to non nullable value!" );
+            assert iae.getMessage().equals( "null passed to non nullable 'model'!" );
 
             threwException = true;
         }

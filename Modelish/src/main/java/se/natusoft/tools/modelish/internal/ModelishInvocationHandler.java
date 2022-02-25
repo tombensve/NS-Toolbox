@@ -33,9 +33,9 @@
  */
 package se.natusoft.tools.modelish.internal;
 
-import se.natusoft.tools.modelish.CloneableModelishModel;
+import se.natusoft.tools.modelish.Cloneable;
 import se.natusoft.tools.modelish.ModelishException;
-import se.natusoft.tools.modelish.ModelishModel;
+import se.natusoft.tools.modelish.Model;
 
 import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
@@ -134,8 +134,8 @@ public class ModelishInvocationHandler implements InvocationHandler {
             // Also lock any sub models.
             for ( String key : this.values.keySet() ) {
                 Object value = this.values.get( key );
-                if ( value instanceof ModelishModel ) {
-                    ( (ModelishModel<?>) value )._lock();
+                if ( value instanceof Model ) {
+                    ( (Model<?>) value )._lock();
                 }
             }
 
@@ -156,7 +156,7 @@ public class ModelishInvocationHandler implements InvocationHandler {
                 // Validate nullability of setter.
                 Annotation nonNull = method.getAnnotation( Nonnull.class );
                 if (nonNull != null && args[0] == null) {
-                    throw new ModelishException( "null passed to non nullable value!" );
+                    throw new ModelishException( "null passed to non nullable '" + method.getName() + "'!" );
                 }
 
                 if ( this.locked ) {
@@ -198,9 +198,9 @@ public class ModelishInvocationHandler implements InvocationHandler {
 
             Object srcObj = source.get( key );
 
-            if (srcObj instanceof CloneableModelishModel ) {
+            if (srcObj instanceof Cloneable ) {
 
-                srcObj = ((CloneableModelishModel<?>)srcObj)._clone();
+                srcObj = ((Cloneable<?>)srcObj)._clone();
             }
 
             copy.put( key, srcObj );

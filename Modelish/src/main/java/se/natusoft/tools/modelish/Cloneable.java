@@ -28,32 +28,21 @@
  * AUTHORS
  *     tommy ()
  *         Changes:
- *         2022-02-11: Created!
+ *         2022-02-12: Created!
  *
  */
 package se.natusoft.tools.modelish;
 
 /**
- * Base interface for modelish models.
+ * Let your models extend this interface instead of ModelishModel directly to be able to clone them.
  *
  * @param <T>
  */
-public interface ModelishModel<T> {
+public interface Cloneable<T> extends Model<T> {
 
     /**
-     * This has to be called when all values have been set to make it impossible to modify
-     * the objects content. A locked model cannot be unlocked.
-     *
-     * This is not required, but is a good idea to call this!
-     *
-     * @return self.
+     * @return A clone of current model. New model will not be locked, and neither will sub models!!
+     *         You have to lock clone and all its sub models manually if/when you want them locked.
      */
-    T _lock();
-
-    /**
-     * Does the same as lock() but also recursively on sub models of model.
-     *
-     * @return self.
-     */
-    T _recursiveLock();
+    T _clone();
 }
