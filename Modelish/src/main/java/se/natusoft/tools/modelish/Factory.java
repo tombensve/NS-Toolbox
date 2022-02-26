@@ -34,15 +34,15 @@
 package se.natusoft.tools.modelish;
 
 /**
- * Let your models extend this interface instead of ModelishModel directly to be able to clone them.
+ * Identical to Cloneable but using _create() method instead, more fitting for a factory. Basically cosmetics.
  *
  * @param <T>
  */
-public interface CloneableModelishModel<T> extends ModelishModel<T> {
+public interface Factory<T> extends Model<T> {
 
     /**
      * @return A clone of current model. New model will not be locked, and neither will sub models!!
      *         You have to lock clone and all its sub models manually if/when you want them locked.
      */
-    T _clone();
+    T _create();
 }

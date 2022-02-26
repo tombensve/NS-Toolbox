@@ -28,21 +28,32 @@
  * AUTHORS
  *     tommy ()
  *         Changes:
- *         2022-02-12: Created!
+ *         2022-02-11: Created!
  *
  */
 package se.natusoft.tools.modelish;
 
 /**
- * Identical to Cloneable but using _create() method instead, more fitting for a factory. Basically cosmetics.
+ * Base interface for modelish models.
  *
  * @param <T>
  */
-public interface FactoryModelishModel<T> extends ModelishModel<T> {
+public interface Model<T> {
 
     /**
-     * @return A clone of current model. New model will not be locked, and neither will sub models!!
-     *         You have to lock clone and all its sub models manually if/when you want them locked.
+     * This has to be called when all values have been set to make it impossible to modify
+     * the objects content. A locked model cannot be unlocked.
+     *
+     * This is not required, but is a good idea to call this!
+     *
+     * @return self.
      */
-    T _create();
+    T _lock();
+
+    /**
+     * Does the same as lock() but also recursively on sub models of model.
+     *
+     * @return self.
+     */
+    T _recursiveLock();
 }
