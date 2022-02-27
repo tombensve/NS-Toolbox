@@ -49,15 +49,12 @@ public class ModelishTest {
     public interface UserInfo extends Cloneable<UserInfo> {
 
         String name();
-
         UserInfo name( String name );
 
         int age();
-
         UserInfo age( int age );
 
         String address();
-
         UserInfo address( String address );
 
     }
@@ -127,15 +124,12 @@ public class ModelishTest {
     public interface User extends Cloneable<User> {
 
         String id();
-
         User id( String id );
 
         int loginCount();
-
         User loginCount( int count );
 
         UserInfo userInfo();
-
         User userInfo( UserInfo userInfo );
 
     }
@@ -252,6 +246,10 @@ public class ModelishTest {
 
 
         // Note that these resulting objects are read only, only having getters.
+        // But yes, the instance can still be cast to AddressBuilder also, but any
+        // try to modify will fail due to the ending _lock() call.
+        // But using the Address interface only gives you access to getters, thus looking
+        // a bit cleaner.
         assert address.street().equals( "Somewhere Street" );
         assert address.streetNumber() == 44;
         assert address.postalAddress().equals( "Stockholm" );
@@ -300,9 +298,9 @@ public class ModelishTest {
 
         try {
             Car car = Modelish.create( Car.class ).model( null ).age( 16 ).wheels( 4 )._lock();
-        }
-        catch ( IllegalArgumentException iae ) {
-
+        }                                        //  |
+        catch ( IllegalArgumentException iae ) { //  +---------------------+
+                                                 //                        V
             assert iae.getMessage().equals( "null passed to non nullable 'model'!" );
 
             threwException = true;
