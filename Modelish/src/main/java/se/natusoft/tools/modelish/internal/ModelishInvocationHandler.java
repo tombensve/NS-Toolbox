@@ -135,7 +135,7 @@ public class ModelishInvocationHandler implements InvocationHandler {
             for ( String key : this.values.keySet() ) {
                 Object value = this.values.get( key );
                 if ( value instanceof Model ) {
-                    ( (Model<?>) value )._lock();
+                    ( (Model<?>) value )._recursiveLock();
                 }
             }
 
