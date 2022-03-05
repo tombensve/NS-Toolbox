@@ -5,6 +5,9 @@ This is a truly simple API for defining models as interfaces and have them dynam
 
 This uses the fluent ([https://dzone.com/articles/java-fluent-api-design](https://dzone.com/articles/java-fluent-api-design)) variant of models.
 
+This is very a very simple and small tool. Jar file is ~6400 bytes and contains 6 classes, 3 of them interfaces.
+The only code generation done is by the JDK at runtime, `java.lang.reflect.Proxy` is used. 
+
 ## Example model
 
 ```java
@@ -25,7 +28,7 @@ This uses the fluent ([https://dzone.com/articles/java-fluent-api-design](https:
 
 Note that 
 - the name is the same for both setter and getter.
-- the overall code to implement this is quite small!
+- the overall code to implement this is quite small.
 
 ## Usage
 
