@@ -47,7 +47,7 @@ Note that for complex models with submodels there is now also an `recursiveLock(
 
 ```java
 
-    public interface TestModel extends CloneableModelishModel<TestModel> {
+    public interface TestModel extends Cloneable<TestModel> {
     
         String name();
         TestModel name(String name);

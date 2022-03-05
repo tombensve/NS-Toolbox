@@ -309,4 +309,12 @@ public class ModelishTest {
         assert threwException;
     }
 
+    /*
+     * DO NOTE in above test, that if a @Nonnull annotated setter is never called then the result of
+     * getting that value will be null!!! I see no clean way to solve this. It would be possible to add
+     * a _validate() method to Model interface, but still messy to implement since it requires information
+     * not available in proxy handler call, and assumptions have to be made. This is currently rather clean,
+     * and I will not mess it up due to this little "issue".
+     */
+
 }
