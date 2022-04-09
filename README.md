@@ -8,7 +8,30 @@ This will probably grow over time.
 
 Each tool has its own submodule. See Readme.md in each for more info.
 
-Due to a bad versioning descision I have now bumped all versions to 2.0.0 to start over, and from now on only submodules that have been changed will have a version bump. This also means that the version of the base module will only be bumped on adding new modules or making other changes in root pom.
+----
+
+## Versioning Aaaaarg!!!
+
+I have concluded that versioning gets really, really messy since I'm trying to keep
+several, different tools as one codebase under a common parent pom. 
+
+Trying to only bump version of modified module failed due to top pom needing update,
+and then under modules points to older top. It just gets really, really messy no
+matter what I do! For example when I introduced version 3.0.0, if I point version
+2.0.0 of a sub module to version 3.0.0 then there is an old pointing to 2.0.0 and
+I'm suddenly replacing it rather than leaving old or making new ... and here my 
+head starts spinning!! 
+
+I'm giving up on this and just bump all versions when one version needs bumping. 
+
+I have previously kept same versions on everything in multimodule maven projects.
+Not doing that becomes mindbogglingly complex!!
+
+The downside is that it creates new jars with new versions that have no new code.
+The upside is that I'm not overwriting old modules pointing to a new parent, and 
+I do get to keep my sanity ...
+
+----
 
 ## Current content
 
@@ -19,3 +42,5 @@ Due to a bad versioning descision I have now bumped all versions to 2.0.0 to sta
 - [RPNQuery](RPNQuery/README.md)
 
 - [Filtering service loader](filtering-service-loader/README.md)
+
+- [GroovyBuildMixin](GroovyBuildMixin/README.md)

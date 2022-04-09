@@ -7,7 +7,7 @@
     <groupId>se.natusoft.tools</groupId>
     <artifactId>ns-toolbox</artifactId>
     <packaging>pom</packaging>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
 
     <url>https://github/tombensve/NS-Toolbox</url>
 
@@ -21,6 +21,7 @@
         <module>ns-toolbox-apis</module>
         <module>filtering-service-loader</module>
         <module>Modelish</module>
+        <module>GroovyBuildMixin</module>
     </modules>
 
     <dependencies>
