@@ -11,9 +11,9 @@ Add the following code to the pom wanting to build groovy code:
                 <configuration>
                     <mixins>
                         <mixin>
-                            <groupId>se.natusoft.tools</groupId>
+                            <groupId>se.natusoft.tools.toolbox</groupId>
                             <artifactId>groovy-mixin</artifactId>
-                            <version>3.0.0</version>
+                            <version>1.0.0</version>
                         </mixin>
                     </mixins>
                 </configuration>
