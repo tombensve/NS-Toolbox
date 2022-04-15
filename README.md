@@ -10,26 +10,13 @@ Each tool has its own submodule. See Readme.md in each for more info.
 
 ----
 
-## Versioning Aaaaarg!!!
+## Versioning 
 
-I have concluded that versioning gets really, really messy since I'm trying to keep
-several, different tools as one codebase under a common parent pom. 
+This is a set of different tools that belong to one git codebase even if they are separate freestanding tools. I did not want to create a separate repo for each, it would be too much. These are relatively small things. 
 
-Trying to only bump version of modified module failed due to top pom needing update,
-and then under modules points to older top. It just gets really, really messy no
-matter what I do! For example when I introduced version 3.0.0, if I point version
-2.0.0 of a sub module to version 3.0.0 then there is an old pointing to 2.0.0 and
-I'm suddenly replacing it rather than leaving old or making new ... and here my 
-head starts spinning!! 
+It took me 3 tries to come up with a versioning strategy that did not suck. The root pom have version `static` and will never change, as hinted by the name. Each other tool has its own version, and references the _static_ parent.
 
-I'm giving up on this and just bump all versions when one version needs bumping. 
-
-I have previously kept same versions on everything in multimodule maven projects.
-Not doing that becomes mindbogglingly complex!!
-
-The downside is that it creates new jars with new versions that have no new code.
-The upside is that I'm not overwriting old modules pointing to a new parent, and 
-I do get to keep my sanity ...
+All tools belong to the `se.natusoft.tools.toolbox` group.
 
 ----
 

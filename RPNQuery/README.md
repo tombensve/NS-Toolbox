@@ -1,8 +1,4 @@
-# NameValueQuery
-
-This is a very simplistic API for querying simple name / value data, and currently supplies one implementation using RPN.
-
-## RPNQuery
+# RPNQuery
 
 Queries some data using an [RPN](https://en.wikipedia.org/wiki/Reverse_Polish_notation) based query string.
 

@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>se.natusoft.tools</groupId>
-    <artifactId>ns-toolbox</artifactId>
+    <groupId>se.natusoft.tools.toolbox</groupId>
+    <artifactId>toolbox</artifactId>
     <packaging>pom</packaging>
-    <version>3.0.0</version>
+    <version>static</version>
 
     <url>https://github/tombensve/NS-Toolbox</url>
 
