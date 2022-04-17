@@ -31,29 +31,32 @@
  *         2022-02-11: Created!
  *
  */
-package se.natusoft.tools.modelish;
+package se.natusoft.tools.modelish
+
+import groovy.transform.CompileStatic
+import se.natusoft.tools.modelish.internal.ModelishInvocationHandler
+
+import java.lang.reflect.Proxy
 
 /**
- * Base interface for modelish models.
+ * Provides a static method that creates an instance of the specified model interface class
+ *
+ * Rules are fluent API, that is same name for getter and setter where the getter has no arguments
+ * and the setter one argument.
+ *
+ * Model interfaces should extend the ModelishModel interface.
  *
  * @param <T>
  */
-public interface Model<T> {
+@CompileStatic
+class Modelish<T> {
 
-    /**
-     * This has to be called when all values have been set to make it impossible to modify
-     * the objects content. A locked model cannot be unlocked.
-     *
-     * This is not required, but is a good idea to call this!
-     *
-     * @return self.
-     */
-    T _lock();
+    static <Model> Model create( Class<Model> api ) {
+        Class<?>[] interfaces = new Class[1]
+        interfaces[ 0 ] = api
 
-    /**
-     * Does the same as lock() but also recursively on sub models of model.
-     *
-     * @return self.
-     */
-    T _recursiveLock();
+        //noinspection unchecked
+        return (Model) Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler() )
+
+    }
 }

@@ -21,7 +21,8 @@
         <module>ns-toolbox-apis</module>
         <module>filtering-service-loader</module>
         <module>Modelish</module>
-        <module>GroovyBuildMixin</module>
+        <module>GroovyBuildMixin-BC11</module>
+        <module>GroovyBuildMixin-BC1.8</module>
     </modules>
 
     <dependencies>

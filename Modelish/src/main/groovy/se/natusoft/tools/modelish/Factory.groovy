@@ -28,33 +28,24 @@
  * AUTHORS
  *     tommy ()
  *         Changes:
- *         2022-02-11: Created!
+ *         2022-02-12: Created!
  *
  */
-package se.natusoft.tools.modelish;
+package se.natusoft.tools.modelish
 
-import se.natusoft.tools.modelish.internal.ModelishInvocationHandler;
-
-import java.lang.reflect.Proxy;
+import groovy.transform.CompileStatic
 
 /**
- * Provides a static method that creates an instance of the specified model interface class
- *
- * Rules are fluent API, that is same name for getter and setter where the getter has no arguments
- * and the setter one argument.
- *
- * Model interfaces should extend the ModelishModel interface.
+ * Identical to Cloneable but using _create() method instead, more fitting for a factory. Basically cosmetics.
  *
  * @param <T>
  */
-public class Modelish<T> {
+@CompileStatic
+interface Factory<T> extends Model<T> {
 
-    public static <Model> Model create(Class<Model> api) {
-        Class<?>[] interfaces = new Class[ 1 ];
-        interfaces[ 0 ] = api;
-
-        //noinspection unchecked
-        return ( Model ) Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler() );
-
-    }
+    /**
+     * @return A clone of current model. New model will not be locked, and neither will sub models!!
+     *         You have to lock clone and all its sub models manually if/when you want them locked.
+     */
+    T _create()
 }

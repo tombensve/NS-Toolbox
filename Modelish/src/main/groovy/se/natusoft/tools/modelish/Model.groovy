@@ -28,21 +28,35 @@
  * AUTHORS
  *     tommy ()
  *         Changes:
- *         2022-02-12: Created!
+ *         2022-02-11: Created!
  *
  */
-package se.natusoft.tools.modelish;
+package se.natusoft.tools.modelish
+
+import groovy.transform.CompileStatic
 
 /**
- * Let your models extend this interface instead of ModelishModel directly to be able to clone them.
+ * Base interface for modelish models.
  *
  * @param <T>
  */
-public interface Cloneable<T> extends Model<T> {
+@CompileStatic
+interface Model<T> {
 
     /**
-     * @return A clone of current model. New model will not be locked, and neither will sub models!!
-     *         You have to lock clone and all its sub models manually if/when you want them locked.
+     * This has to be called when all values have been set to make it impossible to modify
+     * the objects content. A locked model cannot be unlocked.
+     *
+     * This is not required, but is a good idea to call this!
+     *
+     * @return self.
      */
-    T _clone();
+    T _lock()
+
+    /**
+     * Does the same as lock() but also recursively on sub models of model.
+     *
+     * @return self.
+     */
+    T _recursiveLock()
 }

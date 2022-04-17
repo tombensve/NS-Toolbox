@@ -31,18 +31,17 @@
  *         2022-02-12: Created!
  *
  */
-package se.natusoft.tools.modelish;
+package se.natusoft.tools.modelish
+
+import groovy.transform.CompileStatic
 
 /**
- * Identical to Cloneable but using _create() method instead, more fitting for a factory. Basically cosmetics.
- *
- * @param <T>
+ * This is in general thrown on bad model interface.
  */
-public interface Factory<T> extends Model<T> {
+@CompileStatic
+class ModelishException extends IllegalArgumentException {
 
-    /**
-     * @return A clone of current model. New model will not be locked, and neither will sub models!!
-     *         You have to lock clone and all its sub models manually if/when you want them locked.
-     */
-    T _create();
+    ModelishException( String message ) {
+        super( message )
+    }
 }

@@ -13,7 +13,7 @@
  * LICENSE
  *     Apache 2.0 (Open Source)
  *
- *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     Licensed under the Apache License, Version 2.0 (the "License")
  *     you may not use this file except in compliance with the License.
  *     You may obtain a copy of the License at
  *
@@ -31,70 +31,68 @@
  *         2022-02-11: Created!
  *
  */
-package se.natusoft.tools.modelish.internal;
+package se.natusoft.tools.modelish.internal
 
-import se.natusoft.tools.modelish.Cloneable;
-import se.natusoft.tools.modelish.ModelishException;
-import se.natusoft.tools.modelish.Model;
+import groovy.transform.CompileStatic
+import se.natusoft.tools.modelish.Cloneable
+import se.natusoft.tools.modelish.ModelishException
+import se.natusoft.tools.modelish.Model
 
-import javax.annotation.Nonnull;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import javax.annotation.Nonnull
+import java.lang.annotation.Annotation
+import java.lang.reflect.InvocationHandler
+import java.lang.reflect.Method
+import java.lang.reflect.Proxy
 
 /**
  * This provides an implementation to a model API, using java.lang.reflect.Proxy.
  */
-public class ModelishInvocationHandler implements InvocationHandler {
+@CompileStatic
+class ModelishInvocationHandler implements InvocationHandler {
 
     /** This holds the models values. */
-    private final Map<String, Object> values;
+    private Map<String, Object> values = [ : ]
 
     /** When this is set to true the contents of a model can no longer be changed. */
-    private boolean locked = false;
+    private boolean locked = false
 
     /** Default handler */
-    public ModelishInvocationHandler() {
-        this.values = new LinkedHashMap<>();
-    }
+    ModelishInvocationHandler() {}
 
     /**
      * Used when cloning.
      *
      * @param copy a copy of the model data which is used instead of a new empty.
      */
-    private ModelishInvocationHandler(Map<String, Object> copy) {
-        this.values = copy;
+    private ModelishInvocationHandler( Map<String, Object> copy ) {
+        this.values = copy
     }
 
-    // Kept the IDEA generated javadoc for invoke(...).
+    // Kept the IDEA generated javadoc copy for invoke(...).
     /**
      * Processes a method invocation on a proxy instance and returns
      * the result.  This method will be invoked on an invocation handler
      * when a method is invoked on a proxy instance that it is
      * associated with.
      *
-     * @param proxy  the proxy instance that the method was invoked on
+     * @param proxy the proxy instance that the method was invoked on
      * @param method the {@code Method} instance corresponding to
      *               the interface method invoked on the proxy instance.  The declaring
      *               class of the {@code Method} object will be the interface that
      *               the method was declared in, which may be a superinterface of the
      *               proxy interface that the proxy class inherits the method through.
-     * @param args   an array of objects containing the values of the
+     * @param args an array of objects containing the values of the
      *               arguments passed in the method invocation on the proxy instance,
      *               or {@code null} if interface method takes no arguments.
      *               Arguments of primitive types are wrapped in instances of the
      *               appropriate primitive wrapper class, such as
-     *               {@code java.lang.Integer} or {@code java.lang.Boolean}.
+     * {@code java.lang.Integer} or {@code java.lang.Boolean}.
      *
      * @return the value to return from the method invocation on the
      * proxy instance.  If the declared return type of the interface
      * method is a primitive type, then the value returned by
      * this method must be an instance of the corresponding primitive
-     * wrapper class; otherwise, it must be a type assignable to the
+     * wrapper class otherwise, it must be a type assignable to the
      * declared return type.  If the value returned by this method is
      * {@code null} and the interface method's return type is
      * primitive, then a {@code NullPointerException} will be
@@ -107,77 +105,88 @@ public class ModelishInvocationHandler implements InvocationHandler {
      * @throws Throwable the exception to throw from the method
      *                   invocation on the proxy instance.  The exception's type must be
      *                   assignable either to any of the exception types declared in the
-     *                   {@code throws} clause of the interface method or to the
+     * {@code throws} clause of the interface method or to the
      *                   unchecked exception types {@code java.lang.RuntimeException}
      *                   or {@code java.lang.Error}.  If a checked exception is
      *                   thrown by this method that is not assignable to any of the
      *                   exception types declared in the {@code throws} clause of
      *                   the interface method, then an
-     *                   {@link UndeclaredThrowableException} containing the
+     * {@link UndeclaredThrowableException} containing the
      *                   exception that was thrown by this method will be thrown by the
      *                   method invocation on the proxy instance.
      * @see UndeclaredThrowableException
      */
+    @SuppressWarnings( 'GroovyDocCheck' )
     @Override
-    public Object invoke( Object proxy, Method method, Object[] args ) throws Throwable {
+    Object invoke( Object proxy, Method method, Object[] args ) throws Throwable {
 
-        Object result = proxy;
+        Object result = proxy
 
-        if ( method.getName().equals( "_lock" ) ) {
+        //noinspection GroovyFallthrough
+        switch ( method.name ) {
 
-            this.locked = true;
+            case "_lock":
+                this.locked = true
+                break
 
-        } else if (method.getName().equals( "_recursiveLock" )) {
+            case "_recursiveLock":
+                this.locked = true
 
-            this.locked = true;
-
-            // Also lock any sub models.
-            for ( String key : this.values.keySet() ) {
-                Object value = this.values.get( key );
-                if ( value instanceof Model ) {
-                    ( (Model<?>) value )._recursiveLock();
+                // Also lock any sub models.
+                for ( String key : this.values.keySet() ) {
+                    Object value = this.values.get( key )
+                    if ( value instanceof Model ) {
+                        ( (Model<?>) value )._recursiveLock()
+                    }
                 }
-            }
+                break
 
-        } else if ( method.getName().equals( "_clone" ) || method.getName().equals( "_create" ) ) {
+            case "_clone":
+            case "_create":
+                result = doClone( proxy.getClass().getInterfaces()[ 0 ], this.values )
+                break
 
-            result = doClone( proxy.getClass().getInterfaces()[0], this.values );
+            default:
 
-        } else {
-
-            // Validation of bad model interface. Can only be 0 or 1 argument.
-            if ( args != null && args.length > 1 ) throw new ModelishException(
-                    "Badly defined model method! Can only be one value for setter."
-            );
-
-            // Setter
-            if ( args != null && args.length == 1 ) {
-
-                // Validate nullability of setter.
-                Annotation nonNull = method.getAnnotation( Nonnull.class );
-                if (nonNull != null && args[0] == null) {
-                    throw new ModelishException( "null passed to non nullable '" + method.getName() + "'!" );
+                // Validation of bad model interface. Can only be 0 or 1 argument.
+                if ( args != null && args.length > 1 ) {
+                    throw new ModelishException(
+                            "Badly defined model method! Can only be one value for setter."
+                    )
                 }
 
-                if ( this.locked ) {
-                    throw new ModelishException( "Update of read only object not allowed!" );
+                // Setter
+                if ( args != null && args.length == 1 ) {
+
+                    // Validate nullability of setter.
+                    Annotation nonNull = method.getAnnotation( Nonnull.class )
+                    if ( nonNull != null && args[ 0 ] == null ) {
+                        throw new ModelishException( "null passed to non nullable '${method.name}'!" )
+                    }
+
+                    if ( this.locked ) {
+                        throw new ModelishException( "Update of read only object not allowed!" )
+                    }
+
+                    this.values.put( method.getName(), args[ 0 ] )
+
                 }
-
-                this.values.put( method.getName(), args[ 0 ] );
-
-            } else
                 // Getter
-                if ( args == null ) {
+                else if ( args == null ) {
 
-                    result = this.values.get( method.getName() );
+                    result = this.values.get( method.getName() )
 
-                } else {
-
-                    throw new ModelishException( "Bad model API! Only one (setter) or zero (getter) argument is valid." );
+                }
+                // Bad model!
+                else {
+                    throw new ModelishException(
+                            "Bad model API! Only one (setter) or zero (getter) argument are valid."
+                    )
                 }
         }
 
-        return result;
+        return result
+
     }
 
     /**
@@ -190,25 +199,25 @@ public class ModelishInvocationHandler implements InvocationHandler {
      *
      * @return a new Proxy implementation of the clone.
      */
-    private Object doClone(Class<?> api, Map<String, Object> source) {
+    private static Object doClone( Class<?> api, Map<String, Object> source ) {
 
-        Map<String, Object> copy = new LinkedHashMap<>();
+        Map<String, Object> copy = new LinkedHashMap<>()
 
-        for (String key : source.keySet()) {
+        for ( String key : source.keySet() ) {
 
-            Object srcObj = source.get( key );
+            Object srcObj = source.get( key )
 
-            if (srcObj instanceof Cloneable ) {
+            if ( srcObj instanceof Cloneable ) {
 
-                srcObj = ((Cloneable<?>)srcObj)._clone();
+                srcObj = ( (Cloneable<?>) srcObj )._clone()
             }
 
-            copy.put( key, srcObj );
+            copy.put( key, srcObj )
         }
 
-        Class<?>[] interfaces = new Class[ 1 ];
-        interfaces[ 0 ] = api;
+        Class<?>[] interfaces = new Class[1]
+        interfaces[ 0 ] = api
 
-        return Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler(copy) );
+        return Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler( copy ) )
     }
 }
