@@ -3,18 +3,41 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ns-toolbox</artifactId>
-        <groupId>se.natusoft.tools</groupId>
-        <version>2.0.0</version>
+        <artifactId>toolbox</artifactId>
+        <groupId>se.natusoft.tools.toolbox</groupId>
+        <version>static</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ns-toolbox-apis</artifactId>
-    <version>2.0.0</version>
+    <artifactId>toolbox-apis</artifactId>
+    <version>1.1.0</version>
 
-<!--    <properties>-->
-<!--        <maven.compiler.source>17</maven.compiler.source>-->
-<!--        <maven.compiler.target>17</maven.compiler.target>-->
-<!--    </properties>-->
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.odavid.maven.plugins</groupId>
+                <artifactId>mixin-maven-plugin</artifactId>
+                <version>0.1-alpha-39</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <mixins>
+                        <mixin>
+                            <groupId>se.natusoft.tools.toolbox</groupId>
+                            <artifactId>groovy-build-mixin</artifactId>
+                            <version>1.0.0_G4.0.1-BC11</version>
+                        </mixin>
+                    </mixins>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

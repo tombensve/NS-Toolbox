@@ -8,7 +8,23 @@ This will probably grow over time.
 
 Each tool has its own submodule. See Readme.md in each for more info.
 
-Due to a bad versioning descision I have now bumped all versions to 2.0.0 to start over, and from now on only submodules that have been changed will have a version bump. This also means that the version of the base module will only be bumped on adding new modules or making other changes in root pom.
+----
+
+## Versioning 
+
+This is a set of different tools that belong to one git codebase even if they are separate freestanding tools. I did not want to create a separate repo for each, it would be too much. These are relatively small things. 
+
+It took me 3 tries to come up with a versioning strategy that did not suck. The root pom have version `static` and will never change, as hinted by the name. Each other tool has its own version, and references the _static_ parent.
+
+All tools belong to the `se.natusoft.tools.toolbox` group.
+
+## Groovy
+
+Since Java went down with the sun, I have now decided from now on to use the Groovy JVM language instead of Java for my GitHub code. Groovy is a **far better** language than Java and 100% JVM / Java compatible. Groovy have been along for a very long time. Groovy had features from the start that Java didn't get until much later, and Groovy did them right. Different from Java, Groovy also has real functions, called closures! Java have lambdas, bound to single method interfaces creating a lot of limitations. In use they look similar, but in functionality they are quite different. 
+
+As of 4.x of Groovy you can decide what bytecode version to produce! I'm using 11 since it is the last backwards compatible JDK. 
+
+----
 
 ## Current content
 
@@ -19,3 +35,5 @@ Due to a bad versioning descision I have now bumped all versions to 2.0.0 to sta
 - [RPNQuery](RPNQuery/README.md)
 
 - [Filtering service loader](filtering-service-loader/README.md)
+
+- [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md)

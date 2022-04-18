@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>toolbox</artifactId>
+        <groupId>se.natusoft.tools.toolbox</groupId>
+        <version>static</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>groovy-build-mixin</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0_G4.0.1-BC1.8</version><!-- To indicate Groovy version and produced byte code version. -->
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <sourceDirectory>src/main/groovy</sourceDirectory>
+        <testSourceDirectory>src/test/groovy</testSourceDirectory>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>1.13.1</version>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.groovy</groupId>
+                        <artifactId>groovy</artifactId>
+                        <version>4.0.1</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <targetBytecode>1.8</targetBytecode>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>addSources</goal>
+                            <goal>addTestSources</goal>
+                            <!--goal>generateStubs</goal-->
+                            <goal>compile</goal>
+                            <!--goal>generateTestStubs</goal-->
+                            <goal>compileTests</goal>
+                            <!--goal>removeStubs</goal-->
+                            <!--goal>removeTestStubs</goal-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+</project>
