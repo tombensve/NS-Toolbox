@@ -70,7 +70,7 @@ Note that
             .name("Tommy Svensson")
             .age(53)
             .address("Stockholm")
-            ._lock();
+            ._lock()
 
 ```
 
