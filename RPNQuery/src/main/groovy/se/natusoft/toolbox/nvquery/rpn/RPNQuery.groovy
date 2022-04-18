@@ -55,17 +55,17 @@ class RPNQuery implements DataQueryProvider {
 
     private static Map<String, Operation> initOps() {
 
-        Map<String, Operation> operations = new LinkedHashMap<>()
-        operations.put( "()", new Contains() )
-        operations.put( "!()", new NotContains() )
-        operations.put( "=", new Equals() )
-        operations.put( "!=", new NotEquals() )
-        operations.put( "T", new True() )
-        operations.put( "F", new False() )
-        operations.put( ">", new GreaterThan() )
-        operations.put( ">=", new GreaterThanEquals() )
-        operations.put( "<", new LessThan() )
-        operations.put( "<=", new LessThanEquals() )
+        Map<String, Operation> operations = [ : ]
+        operations[ "()" ] = new Contains()
+        operations[ "!()" ] = new NotContains()
+        operations[ "=" ] = new Equals()
+        operations[ "!=" ] = new NotEquals()
+        operations[ "T" ] = new True()
+        operations[ "F" ] = new False()
+        operations[ ">" ] = new GreaterThan()
+        operations[ ">=" ] = new GreaterThanEquals()
+        operations[ "<" ] = new LessThan()
+        operations[ "<=" ] = new LessThanEquals()
 
         operations
     }
@@ -106,16 +106,19 @@ class RPNQuery implements DataQueryProvider {
 
         Stack<String> queryStack = new Stack<>()
 
-        Arrays.stream( query.split( " " ) ).iterator().forEachRemaining( value -> {
+        query.split( " " ).findAll() { String value ->
 
             // Replace all '_' to spaces. The query must contain '_' instead of space to parse correct.
             value = value.replace( "_", " " )
 
-            if ( value.startsWith( "/" ) ) { // An operation
+            if ( value.startsWith( "/" ) ) {
+                // An operation
 
                 String operation = value.substring( 1 ).trim()
                 Operation op = lookupOperation( operation )
-                if ( op == null ) throw new IllegalStateException( "Unknown operation: " + operation + "!" )
+                if ( op == null ) {
+                    throw new IllegalStateException( "Unknown operation: " + operation + "!" )
+                }
 
                 boolean res
                 String val2 = queryStack.pop()
@@ -135,8 +138,9 @@ class RPNQuery implements DataQueryProvider {
                     // The True and False operations are basically one value operations
                     // breaking the pattern. Should maybe remove these.
 
-                    if ( !( op instanceof SingleValueOperation ) )
+                    if ( !( op instanceof SingleValueOperation ) ) {
                         throw new IllegalStateException( "Only one value provided to operation requiring two!" )
+                    }
 
                     res = op.execute( val2, null )
                 }
@@ -144,26 +148,33 @@ class RPNQuery implements DataQueryProvider {
                 queryStack.push( res ? "T" : "F" )
             }
 
-            else if ( value.startsWith( "'" ) ) { // String value
+            else if ( value.startsWith( "'" ) ) {
+                // String value
 
                 value = value.replaceAll( "'", "" )
                 queryStack.push( value )
             }
 
-            // Regexp from https://stackoverflow.com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
-            else if ( value.matches( "^[1-9]\\d*(\\.\\d+)?\$" ) ) { // A number
+            // Regexp from https://stackoverflow.
+            // com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
+            else if ( value.matches( "^[1-9]\\d*(\\.\\d+)?\$" ) ) {
+                // A number
 
                 queryStack.push( value )
             }
-            else { // A property reference.
+            else {
+                // A property reference.
 
                 String valueName = value
                 value = queryData.getByName( valueName )
-                if ( value == null ) throw new IllegalStateException( "'" + valueName + "' does not exist!" )
+                if ( value == null ) {
+                    throw new IllegalStateException( "'" + valueName + "' does not exist!" )
+                }
                 queryStack.push( value )
             }
-        } )
 
-        queryStack.pop().trim().equals( "T" )
+        }
+
+        queryStack.pop().trim() == "T"
     }
 }
