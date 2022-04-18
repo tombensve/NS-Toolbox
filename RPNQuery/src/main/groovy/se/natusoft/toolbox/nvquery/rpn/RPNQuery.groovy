@@ -51,35 +51,19 @@ class RPNQuery implements DataQueryProvider {
     //
 
     /** A set of operations. */
-    private static final Map<String, Operation> _operations_ = initOps()
+    private static final Map<String, Operation> OPERATIONS = [
+            "()" : new Contains(),
+            "!()": new NotContains(),
+            "="  : new Equals(),
+            "!=" : new NotEquals(),
+            "T"  : new True(),
+            "F"  : new False(),
+            ">"  : new GreaterThan(),
+            ">=" : new GreaterThanEquals(),
+            "<"  : new LessThan(),
+            "<=" : new LessThanEquals()
 
-    private static Map<String, Operation> initOps() {
-
-        Map<String, Operation> operations = [ : ]
-        operations[ "()" ] = new Contains()
-        operations[ "!()" ] = new NotContains()
-        operations[ "=" ] = new Equals()
-        operations[ "!=" ] = new NotEquals()
-        operations[ "T" ] = new True()
-        operations[ "F" ] = new False()
-        operations[ ">" ] = new GreaterThan()
-        operations[ ">=" ] = new GreaterThanEquals()
-        operations[ "<" ] = new LessThan()
-        operations[ "<=" ] = new LessThanEquals()
-
-        operations
-    }
-
-    /**
-     * Provide operation implementation.
-     *
-     * @param operation The query string syntax of operation.
-     * @return The implementation of operation.
-     */
-    private static Operation lookupOperation( String operation ) {
-
-        _operations_.get( operation )
-    }
+    ] as Map<String, Operation>
 
     //
     // Constructors
@@ -115,7 +99,8 @@ class RPNQuery implements DataQueryProvider {
                 // An operation
 
                 String operation = value.substring( 1 ).trim()
-                Operation op = lookupOperation( operation )
+                Operation op = OPERATIONS[ operation ]
+
                 if ( op == null ) {
                     throw new IllegalStateException( "Unknown operation: " + operation + "!" )
                 }
