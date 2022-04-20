@@ -142,7 +142,7 @@ class RPNQuery implements DataQueryProvider {
 
             // Regexp from https://stackoverflow.
             // com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
-            else if ( value.matches( "^[1-9]\\d*(\\.\\d+)?\$" ) ) {
+            else if ( value ==~ /^[1-9]\d*(\.\d+)?$/ ) {
                 // A number
 
                 queryStack.push( value )
@@ -153,7 +153,7 @@ class RPNQuery implements DataQueryProvider {
                 String valueName = value
                 value = queryData.getByName( valueName )
                 if ( value == null ) {
-                    throw new IllegalStateException( "'" + valueName + "' does not exist!" )
+                    throw new IllegalStateException( "'${valueName}' does not exist!" )
                 }
                 queryStack.push( value )
             }
