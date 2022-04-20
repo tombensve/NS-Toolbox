@@ -90,7 +90,7 @@ class RPNQuery implements DataQueryProvider {
 
         Stack<String> queryStack = new Stack<>()
 
-        query.split( " " ).findAll() { String value ->
+        query.split( " " ).findAll { String value ->
 
             // Replace all '_' to spaces. The query must contain '_' instead of space to parse correct.
             value = value.replace( "_", " " )
