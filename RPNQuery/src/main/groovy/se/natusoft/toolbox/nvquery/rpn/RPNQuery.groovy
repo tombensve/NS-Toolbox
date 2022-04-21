@@ -90,13 +90,18 @@ class RPNQuery implements DataQueryProvider {
 
         Stack<String> queryStack = new Stack<>()
 
+        def isAnOperation = { String value -> value.startsWith( "/" ) }
+        def isAValue = { String value -> value.startsWith( "'" ) }
+        def isANumber = { String value -> value ==~ /^[1-9]\d*(\.\d+)?$/ }
+        // Regexp from https://stackoverflow.
+        // com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
+
         query.split( / / ).findAll { String value ->
 
             // Replace all '_' to spaces. The query must contain '_' instead of space to parse correct.
             value = value.replace( "_", " " )
 
-            if ( value.startsWith( "/" ) ) {
-                // An operation
+            if ( isAnOperation value ) {
 
                 String operation = value.substring( 1 ).trim()
                 Operation op = OPERATIONS[ operation ]
@@ -133,17 +138,13 @@ class RPNQuery implements DataQueryProvider {
                 queryStack.push( res ? "T" : "F" )
             }
 
-            else if ( value.startsWith( "'" ) ) {
-                // String value
+            else if ( isAValue value ) {
 
                 value = value.replaceAll( "'", "" )
                 queryStack.push( value )
             }
 
-            // Regexp from https://stackoverflow.
-            // com/questions/2811031/decimal-or-numeric-values-in-regular-expression-validation
-            else if ( value ==~ /^[1-9]\d*(\.\d+)?$/ ) {
-                // A number
+            else if ( isANumber value  ) {
 
                 queryStack.push( value )
             }
