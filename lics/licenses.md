@@ -9,7 +9,7 @@ __[Apache Software License version 2.0](http://www.apache.org/licenses/LICENSE-2
 
 The following third party products are using this license:
 
-* [auto-service-1.0-rc7](https://github.com/google/auto/tree/master/service)
 * [groovy-4.0.1](https://groovy-lang.org)
+* [auto-service-1.0-rc7](https://github.com/google/auto/tree/master/service)
 
 <!-- CLM -->
