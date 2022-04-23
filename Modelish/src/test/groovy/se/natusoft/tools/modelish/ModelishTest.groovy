@@ -35,7 +35,6 @@ package se.natusoft.tools.modelish
 
 import org.junit.jupiter.api.Test
 
-import javax.annotation.Nonnull
 
 /**
  * This doubles as test and example of usage.
@@ -265,7 +264,7 @@ class ModelishTest {
     interface Car extends Factory<Car> {
 
         String model();
-        @Nonnull Car model( String model )
+        @NoNull Car model( String model )
 
         int age();
         Car age( int age )

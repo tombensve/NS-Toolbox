@@ -10,6 +10,15 @@ There are values and there are operations. Values can be named data reference or
 
 Further down in this document there is an example of data, and a query against it that shows the state of the stack for each data and operation.
 
+## Version
+
+    <dependency>
+        <groupId>se.natusoft.tools.toolbox</groupId>
+        <artifactId>RPNQuery</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+
+
 ### Functionallity
 
 User provides a stack of data and operations. Operations always work on top 2 stack entries, which are removed by an operation and operation result is added.

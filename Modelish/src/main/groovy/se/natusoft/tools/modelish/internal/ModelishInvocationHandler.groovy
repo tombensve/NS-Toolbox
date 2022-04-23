@@ -37,8 +37,8 @@ import groovy.transform.CompileStatic
 import se.natusoft.tools.modelish.Cloneable
 import se.natusoft.tools.modelish.ModelishException
 import se.natusoft.tools.modelish.Model
+import se.natusoft.tools.modelish.NoNull
 
-import javax.annotation.Nonnull
 import java.lang.annotation.Annotation
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
@@ -159,8 +159,8 @@ class ModelishInvocationHandler implements InvocationHandler {
                 if ( args != null && args.length == 1 ) {
 
                     // Validate nullability of setter.
-                    Annotation nonNull = method.getAnnotation( Nonnull.class )
-                    if ( nonNull != null && args[ 0 ] == null ) {
+                    Annotation noNull = method.getAnnotation( NoNull.class )
+                    if ( noNull != null && args[ 0 ] == null ) {
                         throw new ModelishException( "null passed to non nullable '${method.name}'!" )
                     }
 

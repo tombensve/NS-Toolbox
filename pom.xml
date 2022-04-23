@@ -38,12 +38,6 @@
             <version>5.6.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.google.auto.service</groupId>
-            <artifactId>auto-service</artifactId>
-            <version>1.0-rc7</version>
-            <optional>true</optional>
-        </dependency>
 
     </dependencies>
     <inceptionYear>2022</inceptionYear>
@@ -165,8 +159,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.11</source>
+                    <target>1.11</target>
                 </configuration>
             </plugin>
 

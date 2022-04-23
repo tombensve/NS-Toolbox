@@ -8,6 +8,17 @@ This uses the fluent ([https://dzone.com/articles/java-fluent-api-design](https:
 This is very a very simple and small tool. Jar file is ~6400 bytes and contains 6 classes, 3 of them interfaces.
 The only code generation done is by the JDK at runtime, `java.lang.reflect.Proxy` is used. 
 
+## Latest Version
+
+### 3.0.1
+
+    <dependency>
+        <groupId>se.natusoft.tools.toolbox</groupId>
+        <artifactId>Modelish</artifactId>
+        <version>3.0.1</version>
+    </dependency>
+
+
 ## Example model
 
 ### Java
