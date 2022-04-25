@@ -10,7 +10,7 @@ The only code generation done is by the JDK at runtime, `java.lang.reflect.Proxy
 
 ## Latest Version
 
-### 3.0.1
+### 3.0.2
 
     <dependency>
         <groupId>se.natusoft.tools.toolbox</groupId>
@@ -128,6 +128,18 @@ Note that for complex models with submodels there is now also an `recursiveLock(
 ```
 
 With this model `_clone()` can be called to get a current clone of model that will be open for changes until _lock() is called.
+
+## Supports JavaBean also!
+
+The setters however have to return the model type! 
+
+```groovy
+    interface JBTest extends Model<JBTest> {
+
+        JBTest setName( String name )
+        String getName()
+    }
+```
 
 ----
 

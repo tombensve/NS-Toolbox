@@ -33,12 +33,14 @@
  */
 package se.natusoft.tools.modelish
 
+import groovy.transform.CompileStatic
 import org.junit.jupiter.api.Test
 
 
 /**
  * This doubles as test and example of usage.
  */
+@CompileStatic
 class ModelishTest {
 
     //
@@ -47,13 +49,16 @@ class ModelishTest {
 
     interface UserInfo extends Cloneable<UserInfo> {
 
-        String name();
+        String name()
+
         UserInfo name( String name )
 
         int age();
+
         UserInfo age( int age )
 
         String address();
+
         UserInfo address( String address )
 
     }
@@ -75,7 +80,8 @@ class ModelishTest {
             userInfo.name( "qwerty" )
             // This because shit can ALWAYS happen!
             throw new RuntimeException( "This should not happen since model is locked." )
-        } catch ( IllegalArgumentException iae ) {
+        }
+        catch ( IllegalArgumentException iae ) {
             assert iae.getMessage().equals( "Update of read only object not allowed!" )
         }
     }
@@ -110,7 +116,8 @@ class ModelishTest {
         // Make sure clone is locked.
         try {
             clonedModel.name( "Tommy B Svensson" )
-        } catch ( IllegalArgumentException iae ) {
+        }
+        catch ( IllegalArgumentException iae ) {
             assert iae.getMessage().equals( "Update of read only object not allowed!" )
         }
 
@@ -124,13 +131,16 @@ class ModelishTest {
 
         @SuppressWarnings( 'unused' )
         String id()
+
         User id( String id )
 
         @SuppressWarnings( 'unused' )
         int loginCount();
+
         User loginCount( int count )
 
         UserInfo userInfo();
+
         User userInfo( UserInfo userInfo )
 
     }
@@ -164,9 +174,9 @@ class ModelishTest {
                 .id( "tbs" )
                 .loginCount( 9843 )
                 .userInfo( Modelish.create( UserInfo.class )
-                                .name( "Tommy" )
-                                .address( "Liljeholmen" )
-                                .age( 53 )
+                        .name( "Tommy" )
+                        .address( "Liljeholmen" )
+                        .age( 53 )
                         //._lock()
                 )
                 ._lock()
@@ -207,7 +217,8 @@ class ModelishTest {
 
             throw new IllegalArgumentException( "Update allowed! Should have caused an exception!" )
 
-        } catch ( IllegalArgumentException iae ) {
+        }
+        catch ( IllegalArgumentException iae ) {
 
             assert iae.getMessage().equals( "Update of read only object not allowed!" )
         }
@@ -264,12 +275,16 @@ class ModelishTest {
     interface Car extends Factory<Car> {
 
         String model();
-        @NoNull Car model( String model )
+
+        @NoNull
+        Car model( String model )
 
         int age();
+
         Car age( int age )
 
         int wheels();
+
         Car wheels( int age )
     }
 
@@ -299,9 +314,10 @@ class ModelishTest {
 
         try {
             Modelish.create( Car.class ).model( null ).age( 16 ).wheels( 4 )._lock()
-        }                                        //  |
-        catch ( IllegalArgumentException iae ) { //  +---------------------+
-                                                 //                        V
+        } //  |
+        catch ( IllegalArgumentException iae ) {
+            //  +---------------------+
+            //                        V
             assert iae.getMessage().equals( "null passed to non nullable 'model'!" )
 
             threwException = true
@@ -310,8 +326,37 @@ class ModelishTest {
         assert threwException
     }
 
+    //
+    // Java Bean methods (Well, not 100%, setters have to return the interface type!).
+    //
+
+    interface JBTest extends Model<JBTest> {
+
+        JBTest setName( String name )
+        String getName()
+    }
+
+    @Test
+    void verifyJavaBean() {
+
+        JBTest jbTest = Modelish.create( JBTest.class ).setName( "Nisse" )._lock()
+
+        assert jbTest.getName() == "Nisse"
+        assert jbTest.name == "Nisse" // Groovy property access work.
+
+        try {
+            jbTest.setName( "hult" )
+
+            throw new ModelishException( "This should not happen!" )
+        }
+        catch ( ModelishException me ) {
+
+            assert me.getMessage() == "Update of read only object not allowed!"
+        }
+    }
+
     /*
-     * DO NOTE in above test, that if a @Nonnull annotated setter is never called then the result of
+     * DO NOTE in above test, that if a @NoNull annotated setter is never called then the result of
      * getting that value will be null!!! I see no clean way to solve this. It would be possible to add
      * a _validate() method to Model interface, but still messy to implement since it requires information
      * not available in proxy handler call, and assumptions have to be made. This is currently rather clean,

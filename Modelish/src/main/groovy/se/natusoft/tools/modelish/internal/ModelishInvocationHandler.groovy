@@ -122,8 +122,15 @@ class ModelishInvocationHandler implements InvocationHandler {
 
         Object result = proxy
 
+        // Also handle Java Bean get/set methods.
+        String calledMethod = method.name
+        if (calledMethod.startsWith( "get" ) || calledMethod.startsWith( "set" )) {
+            calledMethod = calledMethod.substring( 3 )
+            calledMethod = calledMethod.substring( 0, 1 ).toLowerCase() + calledMethod.substring( 1 )
+        }
+
         //noinspection GroovyFallthrough
-        switch ( method.name ) {
+        switch ( calledMethod ) {
 
             case "_lock":
                 this.locked = true
@@ -168,13 +175,13 @@ class ModelishInvocationHandler implements InvocationHandler {
                         throw new ModelishException( "Update of read only object not allowed!" )
                     }
 
-                    this.values.put( method.getName(), args[ 0 ] )
+                    this.values.put( calledMethod, args[ 0 ] )
 
                 }
                 // Getter
                 else if ( args == null ) {
 
-                    result = this.values.get( method.getName() )
+                    result = this.values.get( calledMethod )
 
                 }
                 // Bad model!
