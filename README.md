@@ -34,6 +34,6 @@ As of 4.x of Groovy you can decide what bytecode version to produce! I'm using 1
 
 - [RPNQuery](RPNQuery/README.md)
 
-- [Filtering service loader](filtering-service-loader/README.md)
-
 - [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md)
+
+<!-- - [Filtering service loader](filtering-service-loader/README.md) -->
