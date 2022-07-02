@@ -72,9 +72,9 @@ class ModelishTest {
                 .address( "Stockholm" )
                 ._lock()
 
-        assert userInfo.name().equals( "Tommy Svensson" )
+        assert userInfo.name() ==  "Tommy Svensson"
         assert userInfo.age() == 53
-        assert userInfo.address().equals( "Stockholm" )
+        assert userInfo.address() == "Stockholm"
 
         try {
             userInfo.name( "qwerty" )
@@ -82,7 +82,7 @@ class ModelishTest {
             throw new RuntimeException( "This should not happen since model is locked." )
         }
         catch ( IllegalArgumentException iae ) {
-            assert iae.getMessage().equals( "Update of read only object not allowed!" )
+            assert iae.getMessage() == "Update of read only object not allowed!"
         }
     }
 
@@ -104,13 +104,13 @@ class ModelishTest {
         UserInfo clonedModel = userInfo._clone().address( "Liljeholmen" )._lock()
 
         // Make sure the original hasn't changed.
-        assert userInfo.address().equals( "Stockholm" )
+        assert userInfo.address() == "Stockholm"
 
         // The cloned should have the updated value.
-        assert clonedModel.address().equals( "Liljeholmen" )
+        assert clonedModel.address() == "Liljeholmen"
 
         // Old, copied values are still there.
-        assert clonedModel.name().equals( "Tommy Svensson" )
+        assert clonedModel.name() == "Tommy Svensson"
         assert clonedModel.age() == 53
 
         // Make sure clone is locked.
@@ -118,7 +118,7 @@ class ModelishTest {
             clonedModel.name( "Tommy B Svensson" )
         }
         catch ( IllegalArgumentException iae ) {
-            assert iae.getMessage().equals( "Update of read only object not allowed!" )
+            assert iae.getMessage() == "Update of read only object not allowed!"
         }
 
     }
@@ -160,7 +160,7 @@ class ModelishTest {
                 ._lock()
 
         // Verify read access of model in model.
-        assert user.userInfo().address().equals( "Liljeholmen" )
+        assert user.userInfo().address() == "Liljeholmen"
     }
 
     //
@@ -184,14 +184,14 @@ class ModelishTest {
         User user2 = user._clone()
 
         // Verify read access of model in model of cloned object.
-        assert user2.userInfo().address().equals( "Liljeholmen" )
+        assert user2.userInfo().address() == "Liljeholmen"
 
         // Modify original address
         user.userInfo().address( "Stockholm" )
-        assert user.userInfo().address().equals( "Stockholm" )
+        assert user.userInfo().address() == "Stockholm"
 
         // Make sure address of clone is not modified.
-        assert user2.userInfo().address().equals( "Liljeholmen" )
+        assert user2.userInfo().address() == "Liljeholmen"
 
     }
 
@@ -220,7 +220,7 @@ class ModelishTest {
         }
         catch ( IllegalArgumentException iae ) {
 
-            assert iae.getMessage().equals( "Update of read only object not allowed!" )
+            assert iae.getMessage() == "Update of read only object not allowed!"
         }
     }
 
@@ -262,9 +262,9 @@ class ModelishTest {
         // try to modify will fail due to the ending _lock() call.
         // But using the Address interface only gives you access to getters, thus looking
         // a bit cleaner.
-        assert address.street().equals( "Somewhere Street" )
+        assert address.street() == "Somewhere Street"
         assert address.streetNumber() == 44
-        assert address.postalAddress().equals( "Stockholm" )
+        assert address.postalAddress() == "Stockholm"
 
     }
 
@@ -297,7 +297,7 @@ class ModelishTest {
         // Note: _create() and _clone() are identical!! _create() just looks better when used as factory.
         Car car = carFactory._create().model( "VW EOS" ).wheels( 4 )._lock()
 
-        assert car.model().equals( "VW EOS" )
+        assert car.model() == "VW EOS"
         assert car.age() == 16
         assert car.wheels() == 4
 
@@ -316,9 +316,8 @@ class ModelishTest {
             Modelish.create( Car.class ).model( null ).age( 16 ).wheels( 4 )._lock()
         } //  |
         catch ( IllegalArgumentException iae ) {
-            //  +---------------------+
-            //                        V
-            assert iae.getMessage().equals( "null passed to non nullable 'model'!" )
+
+            assert iae.getMessage() == "null passed to non nullable 'model'!"
 
             threwException = true
         }

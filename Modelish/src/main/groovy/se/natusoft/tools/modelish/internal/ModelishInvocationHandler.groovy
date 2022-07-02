@@ -125,8 +125,7 @@ class ModelishInvocationHandler implements InvocationHandler {
         // Also handle Java Bean get/set methods.
         String calledMethod = method.name
         if (calledMethod.startsWith( "get" ) || calledMethod.startsWith( "set" )) {
-            calledMethod = calledMethod.substring( 3 )
-            calledMethod = calledMethod.substring( 0, 1 ).toLowerCase() + calledMethod.substring( 1 )
+            calledMethod = calledMethod.substring( 3 ).toLowerCase()
         }
 
         //noinspection GroovyFallthrough
