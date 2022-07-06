@@ -10,12 +10,12 @@ The only code generation done is by the JDK at runtime, `java.lang.reflect.Proxy
 
 ## Latest Version
 
-### 3.0.2
+### 3.0.3
 
     <dependency>
         <groupId>se.natusoft.tools.toolbox</groupId>
         <artifactId>Modelish</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.3</version>
     </dependency>
 
 
