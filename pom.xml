@@ -86,6 +86,16 @@
     Make sure we have access to ns repo.
     -->
     <repositories>
+        <!--
+            It turns out this is not always available! It seems
+            to be default when none is specified, but when you
+            specify a repo you also need to include this.
+        -->
+        <repository>
+            <id>maven-central</id>
+            <name>maven-central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
         <repository>
             <id>ns-repo</id>
             <name>ns-artifact-repository</name>
