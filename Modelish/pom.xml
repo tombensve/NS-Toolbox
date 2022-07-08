@@ -10,18 +10,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Modelish</artifactId>
-    <version>3.0.3</version>
+    <version>3.0.4</version>
 
     <properties>
-        <byte-code>11</byte-code>
-        <groovy>4.0.1</groovy>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
-            <version>4.0.1</version>
+            <version>4.0.3</version>
         </dependency>
     </dependencies>
 
@@ -37,7 +35,7 @@
                         <mixin>
                             <groupId>se.natusoft.tools.toolbox</groupId>
                             <artifactId>groovy-build-mixin</artifactId>
-                            <version>1.0.0_G${groovy}-BC${byte-code}</version>
+                            <version>G4-BC11</version>
                         </mixin>
                     </mixins>
                 </configuration>

@@ -52,10 +52,9 @@
         <copyrightHolder>Natusoft AB</copyrightHolder>
         <copyrightHolderWeb>https://www.natusoft.se/</copyrightHolderWeb>
 
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+<!--        <maven.compiler.source>8</maven.compiler.source>-->
+<!--        <maven.compiler.target>8</maven.compiler.target>-->
 
-        <version-root>2.0.0</version-root>
     </properties>
 
     <developers>
@@ -163,17 +162,6 @@
         </pluginManagement>
 
         <plugins>
-
-            <!--
-                Setup for java 8.
-            -->
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.11</source>
-                    <target>1.11</target>
-                </configuration>
-            </plugin>
 
             <!--
                 Define project assemblies.

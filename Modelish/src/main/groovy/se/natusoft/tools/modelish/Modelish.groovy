@@ -37,6 +37,7 @@ import groovy.transform.CompileStatic
 import se.natusoft.tools.modelish.internal.ModelishInvocationHandler
 
 import java.lang.reflect.Proxy
+//import groovy.json.
 
 /**
  * Provides a static method that creates an instance of the specified model interface class
@@ -57,6 +58,10 @@ class Modelish<T> {
 
         //noinspection unchecked
         return (Model) Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler() )
+
+    }
+
+    static <Model> Model fromJSON( Class<Model> api , Object data) {
 
     }
 }

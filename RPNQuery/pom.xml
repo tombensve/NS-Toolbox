@@ -11,13 +11,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>RPNQuery</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
-            <version>4.0.1</version>
+            <version>4.0.3</version>
         </dependency>
 
         <dependency>
@@ -40,7 +40,7 @@
                         <mixin>
                             <groupId>se.natusoft.tools.toolbox</groupId>
                             <artifactId>groovy-build-mixin</artifactId>
-                            <version>1.0.0_G4.0.1-BC11</version>
+                            <version>G4-BC11</version>
                         </mixin>
                     </mixins>
                 </configuration>

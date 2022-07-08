@@ -9,6 +9,6 @@ __[Apache Software License version 2.0](http://www.apache.org/licenses/LICENSE-2
 
 The following third party products are using this license:
 
-* [groovy-4.0.1](https://groovy-lang.org)
+* [groovy-4.0.3](https://groovy-lang.org)
 
 <!-- CLM -->
