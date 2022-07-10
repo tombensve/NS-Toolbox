@@ -10,5 +10,7 @@ __[Apache Software License version 2.0](http://www.apache.org/licenses/LICENSE-2
 The following third party products are using this license:
 
 * [groovy-4.0.3](https://groovy-lang.org)
+* [groovy-json-4.0.3](https://groovy-lang.org)
+* [jackson-jr-all-2.13.3](http://wiki.fasterxml.com/JacksonHome)
 
 <!-- CLM -->

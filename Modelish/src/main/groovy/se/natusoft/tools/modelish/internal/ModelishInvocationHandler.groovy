@@ -35,8 +35,8 @@ package se.natusoft.tools.modelish.internal
 
 import groovy.transform.CompileStatic
 import se.natusoft.tools.modelish.Cloneable
-import se.natusoft.tools.modelish.ModelishException
 import se.natusoft.tools.modelish.Model
+import se.natusoft.tools.modelish.ModelishException
 import se.natusoft.tools.modelish.NoNull
 
 import java.lang.annotation.Annotation
@@ -51,7 +51,7 @@ import java.lang.reflect.Proxy
 class ModelishInvocationHandler implements InvocationHandler {
 
     /** This holds the models values. */
-    private Map<String, Object> values = [ : ]
+    private Map<String, Object> values
 
     /** When this is set to true the contents of a model can no longer be changed. */
     private boolean locked = false
@@ -62,10 +62,10 @@ class ModelishInvocationHandler implements InvocationHandler {
     /**
      * Used when cloning.
      *
-     * @param copy a copy of the model data which is used instead of a new empty.
+     * @param provided a provided set of values.
      */
-    private ModelishInvocationHandler( Map<String, Object> copy ) {
-        this.values = copy
+    ModelishInvocationHandler( Map<String, Object> provided ) {
+        this.values = provided
     }
 
     // Kept the IDEA generated javadoc copy for invoke(...).
@@ -119,6 +119,10 @@ class ModelishInvocationHandler implements InvocationHandler {
     @SuppressWarnings( 'GroovyDocCheck' )
     @Override
     Object invoke( Object proxy, Method method, Object[] args ) throws Throwable {
+
+        if (this.values == null) {
+            this.values = [ : ]
+        }
 
         Object result = proxy
 
