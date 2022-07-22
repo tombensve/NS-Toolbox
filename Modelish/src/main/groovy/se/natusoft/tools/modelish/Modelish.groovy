@@ -35,6 +35,8 @@ package se.natusoft.tools.modelish
 
 import com.fasterxml.jackson.jr.ob.JSON
 import groovy.transform.CompileStatic
+import groovy.transform.PackageScope
+import se.natusoft.tools.modelish.Plugin
 import se.natusoft.tools.modelish.internal.ModelishInvocationHandler
 
 import java.lang.reflect.Method
@@ -43,21 +45,40 @@ import java.lang.reflect.Proxy
 /**
  * This is the API for using Modelish. It contains only static methods.
  *
- * @param <T> A model API somewhere extending Model.
+ * @param <T>  A model API somewhere extending Model.
  */
 @CompileStatic
-class Modelish<T> {
+class Modelish<ModelType> {
+
+    /** Plugins to use by ModelishInvocationHandler. */
+    private static List<Plugin> plugins = [ ]
+
+    /**
+     * Adds a plugin to be executed when models are created.
+     *
+     * Warning: Once you have installed a plugin, it cannot be uninstalled!!
+     * This behavior is intentional. If it is a good idea remains to be seen ...
+     */
+    static installPlugin(Plugin plugin) {
+        plugins << plugin
+    }
+
+    /**
+     * ModelishInvocationHandler will call this.
+     */
+    static List<Plugin> getPlugins() {
+        plugins
+    }
 
     /**
      * Provides a static method that creates an instance of the specified model interface class.
      *
-     * Rules are fluent API, that is same name for getter and setter where
-     * the getter has no arguments and the setter one argument, or getter/setter, both are
-     * supported.
+     * Supports both Fluent (no set/get, only name, with or without argument for
+     * setter / getter) or JavaBean standard.
      *
      * Modelish interfaces should extend the base "Model" interface.
      *
-     * @param <Model>  The type of the model to create.
+     * @param <Model>   The type of the model to create.
      */
     static <Model> Model create( Class<Model> api ) {
         Class<?>[] interfaces = new Class[1]
@@ -69,8 +90,9 @@ class Modelish<T> {
                 interfaces,
                 new ModelishInvocationHandler()
         )
-
     }
+
+    // Delete when done!!! -->
 
     // Support for producing JSON from Modelish model and reading JSON into a
     // Modelish Model. Jackson Jr is used for this.
@@ -97,43 +119,103 @@ class Modelish<T> {
      *
      * @param model The Modelish model to translate to a Map<String, Object>.
      */
-    private static Map<String, Object> modelToMapModel( Model model ) {
+    @PackageScope static Map<String, Object> modelToMap( Model model ) {
 
-        Map<String, Object> mapModel = [ : ]
+        Map<String, Object> modelAsMap = [ : ]
 
-        model.getClass().getMethods().find { Method method ->
-            // Might need more filtering than this!
-            method.parameterCount == 0
-        }.each { Method method ->
+        model.class.interfaces.each { Class api ->
 
-            String prop = method.name
-            if ( prop.startsWith( "get" ) ) {
+            api.methods.findAll { Method method ->
 
-                prop = prop.substring( 3 )
-                prop = prop.substring( 0, 1 ).toLowerCase() + prop.substring( 1 )
-            }
+                method.parameterCount == 0 && method.returnType != null
 
-            Object value = method.invoke( model )
+            }.each { Method method ->
 
-            if ( value instanceof Model ) {
-                value = modelToMapModel( value as Model )
-            }
-            else {
-                mapModel.put( prop, value )
-            }
+                        String prop = method.name
+
+                        // In case this is using JavaBean standard.
+                        if ( prop.startsWith( "get" ) ) {
+
+                            prop = prop.substring( 3 )
+                            prop = prop.substring( 0, 1 ).toLowerCase() + prop.substring( 1 )
+                        }
+
+                        Object value = method.invoke( model )
+
+                        modelAsMap[ prop ] =
+                            value instanceof Model ? modelToMap( value as Model ) : value as Object
+                    }
         }
 
-        mapModel
+        modelAsMap
     }
 
     /**
+     * Takes JSON data represented as a Map and invokes the appropriate setters of the created model
+     * instance.
      *
+     * @param map JSON data represented as a Map.
+     * @param modelType An interface that in the end of the inheritance chain extends Model.
+     *
+     * @return A Modelish model instance.
      */
-    static void writeJSON( OutputStream jsonStream, Model model ) {
-        JSON.std.write( modelToMapModel( model ), jsonStream );
+    @PackageScope static Model modelFromMap( Map<String, Object> map, Class<Model> modelType ) {
+
+        Model model = create( modelType )
+
+        modelType.interfaces.each { Class<?> api ->
+
+            api.methods.find { Method method ->
+
+                method.parameterCount == 1 && !method.name.startsWith( "_" )
+            }
+                    .each { Method method ->
+
+                        String prop = method.name
+
+                        System.err.println ">>>> ${prop}"
+
+                        // In case this is using JavaBean standard.
+                        if ( prop.startsWith( "get" ) ) {
+
+                            prop = prop.substring( 3 )
+                            prop = prop.substring( 0, 1 ).toLowerCase() + prop.substring( 1 )
+                        }
+
+                        Object value = map[ prop ]
+
+                        if ( value instanceof Map ) {
+                            method.invoke( modelFromMap( value as Map, api as Class<Model> ) )
+                        }
+                        else {
+                            method.invoke( model, value )
+                        }
+                    }
+        }
+
+        model
     }
 
-    static <Model> Model readJSON( Class<Model> api , InputStream jsonStream) {
+    /**
+     * Writes the specified Modelish model as JSON to the specified OutputStream.
+     */
+    static void writeJSON( Model model, OutputStream jsonStream ) {
+        JSON.std.write( modelToMap( model ), jsonStream )
+    }
 
+    /**
+     * Reads JSON from the specified InputStream and returns a Model instance of it.
+     *
+     * @param jsonStream A stream containing JSON data.
+     * @param model The Modelsih type to return populated with the JSON data.
+     *
+     * @return A populated Model subclass. You need to cast it to what it really is,
+     *         i.e the class represented by the 'model' argument.
+     */
+    static Model readJSON( InputStream jsonStream, Class model ) {
+        Map<String, Object> jsonMap = JSON.std.mapFrom( jsonStream )
+        modelFromMap( jsonMap, model )
     }
 }
+
+// Try to shoot in backing Modelish Map in proxied instance.

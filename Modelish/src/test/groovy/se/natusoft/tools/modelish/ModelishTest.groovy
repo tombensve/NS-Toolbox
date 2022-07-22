@@ -36,6 +36,8 @@ package se.natusoft.tools.modelish
 import groovy.transform.CompileStatic
 import org.junit.jupiter.api.Test
 
+import java.nio.charset.StandardCharsets
+
 
 /**
  * This doubles as test and example of usage.
@@ -50,17 +52,13 @@ class ModelishTest {
     interface UserInfo extends Cloneable<UserInfo> {
 
         String name()
-
         UserInfo name( String name )
 
         int age();
-
         UserInfo age( int age )
 
         String address();
-
         UserInfo address( String address )
-
     }
 
     @Test
@@ -131,18 +129,14 @@ class ModelishTest {
 
         @SuppressWarnings( 'unused' )
         String id()
-
         User id( String id )
 
         @SuppressWarnings( 'unused' )
         int loginCount();
-
         User loginCount( int count )
 
         UserInfo userInfo();
-
         User userInfo( UserInfo userInfo )
-
     }
 
     @Test
@@ -353,6 +347,23 @@ class ModelishTest {
             assert me.getMessage() == "Update of read only object not allowed!"
         }
     }
+
+    //
+    // JSON tests
+    //
+
+    @Test
+    void verifyJSONSupport() {
+
+        String UserInfo_JSON = '{ "name":"Tommy", "age":"54", "address":"Stockholm" }'
+
+//        InputStream stream = new ByteArrayInputStream(UserInfo_JSON.getBytes( StandardCharsets.UTF_8))
+//
+//        UserInfo userInfo = Modelish.readJSON( stream, UserInfo.class ) as UserInfo
+//
+//        System.out.println("asdf")
+    }
+
 
     /*
      * DO NOTE in above test, that if a @NoNull annotated setter is never called then the result of

@@ -3,10 +3,8 @@
 
 This is a truly simple API for defining models as interfaces and have them dynamically implemented runtime. 
 
-This uses the fluent ([https://dzone.com/articles/java-fluent-api-design](https://dzone.com/articles/java-fluent-api-design)) variant of models.
-
-This is very a very simple and small tool. Jar file is ~6400 bytes and contains 6 classes, 3 of them interfaces.
-The only code generation done is by the JDK at runtime, `java.lang.reflect.Proxy` is used. 
+This supports both fluent ([https://dzone.com/articles/java-fluent-api-design](https://dzone.com/articles/java-fluent-api-design)) variant of models and JavaBeans. Don't however try to mix in
+same model! It might accidentally work, but it is still a bad idea.
 
 ## Latest Version
 

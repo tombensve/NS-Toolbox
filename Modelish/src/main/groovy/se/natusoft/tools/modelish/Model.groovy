@@ -60,5 +60,11 @@ interface Model<T> {
      */
     T _recursiveLock()
 
+    /**
+     * For internal use! Call this only if you are really stupid! You have been warned!
+     *
+     * @return The internal model data as a Map.
+     */
+    Map<String, Object> __modelInternalData()
 
 }

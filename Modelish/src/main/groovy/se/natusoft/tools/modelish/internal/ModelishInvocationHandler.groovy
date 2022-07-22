@@ -36,8 +36,10 @@ package se.natusoft.tools.modelish.internal
 import groovy.transform.CompileStatic
 import se.natusoft.tools.modelish.Cloneable
 import se.natusoft.tools.modelish.Model
+import se.natusoft.tools.modelish.Modelish
 import se.natusoft.tools.modelish.ModelishException
 import se.natusoft.tools.modelish.NoNull
+import se.natusoft.tools.modelish.Plugin
 
 import java.lang.annotation.Annotation
 import java.lang.reflect.InvocationHandler
@@ -120,7 +122,7 @@ class ModelishInvocationHandler implements InvocationHandler {
     @Override
     Object invoke( Object proxy, Method method, Object[] args ) throws Throwable {
 
-        if (this.values == null) {
+        if ( this.values == null ) {
             this.values = [ : ]
         }
 
@@ -128,12 +130,29 @@ class ModelishInvocationHandler implements InvocationHandler {
 
         // Also handle Java Bean get/set methods.
         String calledMethod = method.name
-        if (calledMethod.startsWith( "get" ) || calledMethod.startsWith( "set" )) {
+        if ( calledMethod.startsWith( "get" ) || calledMethod.startsWith( "set" ) ) {
             calledMethod = calledMethod.substring( 3 ).toLowerCase()
         }
 
         //noinspection GroovyFallthrough
         switch ( calledMethod ) {
+
+            case "__modelData":
+                if ( method.parameterCount == 0 ) {
+                    result = this.values
+                }
+                else if ( method.parameterCount == 1 ) {
+                    Map<String, Object> values = args[ 0 ] as Map<String, Object>
+                    values.each { Map.Entry<String, Object> entry ->
+
+                        if ( entry.value instanceof Map ) {
+                            // Map needs to be converted to another maps with Proxied instances
+                            // rather than sub maps!
+                        }
+                    }
+                }
+
+                break
 
             case "_lock":
                 this.locked = true
@@ -157,6 +176,10 @@ class ModelishInvocationHandler implements InvocationHandler {
                 break
 
             default:
+
+                Modelish.plugins.each { Plugin plugin ->
+                    result = plugin.handle( this.values, proxy, method, args, result )
+                }
 
                 // Validation of bad model interface. Can only be 0 or 1 argument.
                 if ( args != null && args.length > 1 ) {
@@ -211,7 +234,7 @@ class ModelishInvocationHandler implements InvocationHandler {
      */
     private static Object doClone( Class<?> api, Map<String, Object> source ) {
 
-        Map<String, Object> copy = new LinkedHashMap<>()
+        Map<String, Object> copy = [ : ]
 
         for ( String key : source.keySet() ) {
 
