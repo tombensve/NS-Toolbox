@@ -14,6 +14,9 @@ model. After 5 different attempts I gave up. Every try made code very much more 
 my reasons for this is to have code very uncomplicated and make it easy to use. I also want it to
 have very little dependencies on anything else. Small, simple, usable anywhere.
 
+It will however probably have problems with code trying to inspect models via reflection. They
+are proxy instances.
+
 ## Latest Version
 
 ### 3.0.3
