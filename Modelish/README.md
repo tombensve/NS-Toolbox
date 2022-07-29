@@ -3,10 +3,16 @@
 
 This is a truly simple API for defining models as interfaces and have them dynamically implemented runtime. 
 
-This uses the fluent ([https://dzone.com/articles/java-fluent-api-design](https://dzone.com/articles/java-fluent-api-design)) variant of models.
+This supports the fluent ([https://dzone.com/articles/java-fluent-api-design](https://dzone.com/articles/java-fluent-api-design)) variant of models in addition to Java Bean standard properties.
 
 This is very a very simple and small tool. Jar file is ~6400 bytes and contains 6 classes, 3 of them interfaces.
 The only code generation done is by the JDK at runtime, `java.lang.reflect.Proxy` is used. 
+
+This does one and only one thing, defining models with different data. I did try to add code to
+convert to JSON-ish Map<String, Object> structure and take such a structure and create a Modelish
+model. After 5 different attempts I gave up. Every try made code very much more complicated! One of
+my reasons for this is to have code very uncomplicated and make it easy to use. I also want it to
+have very little dependencies on anything else. Small, simple, usable anywhere.
 
 ## Latest Version
 
