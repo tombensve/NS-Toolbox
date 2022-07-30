@@ -8,19 +8,10 @@ This supports the fluent ([https://dzone.com/articles/java-fluent-api-design](ht
 This is very a very simple and small tool. Jar file is ~6400 bytes and contains 6 classes, 3 of them interfaces.
 The only code generation done is by the JDK at runtime, `java.lang.reflect.Proxy` is used. 
 
-This does one and only one thing, defining models with different data. I did try to add code to
-convert to JSON-ish Map<String, Object> structure and take such a structure and create a Modelish
-model. After 5 different attempts I gave up. Every try made code very much more complicated! One of
-my reasons for this is to have code very uncomplicated and make it easy to use. I also want it to
-have very little dependencies on anything else. Small, simple, usable anywhere.
+This does one and only one thing, defining models with different data. 
 
-So why not try to produce and read JSON directly ? Because that means I have to choose a JSON
-library to use internally. I don't want to do that. By producing generic Map structures it is 
-very generic and any library supporting that can be used, like Jackson Jr and Groovys
-JSONSlurper, and maybe more.
-
-It will however probably have problems with code trying to inspect models via reflection. They
-are proxy instances.
+It will probably have problems with code trying to inspect models via reflection. They
+are proxy instances. 
 
 ## Latest Version
 
@@ -79,6 +70,10 @@ Note that
 
 ### Java
 
+<!--
+  If the below code example is red underlined, then you are using IDEA, and it has
+  gotten rather confused.
+-->
 ```java
     TestModel userInfo = Modelish.create( TestModel.class )
             .name("Tommy Svensson")
