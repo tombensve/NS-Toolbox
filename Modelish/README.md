@@ -14,6 +14,11 @@ model. After 5 different attempts I gave up. Every try made code very much more 
 my reasons for this is to have code very uncomplicated and make it easy to use. I also want it to
 have very little dependencies on anything else. Small, simple, usable anywhere.
 
+So why not try to produce and read JSON directly ? Because that means I have to choose a JSON
+library to use internally. I don't want to do that. By producing generic Map structures it is 
+very generic and any library supporting that can be used, like Jackson Jr and Groovys
+JSONSlurper, and maybe more.
+
 It will however probably have problems with code trying to inspect models via reflection. They
 are proxy instances.
 
