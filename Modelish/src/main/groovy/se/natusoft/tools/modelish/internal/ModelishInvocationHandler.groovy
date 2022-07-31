@@ -56,8 +56,13 @@ class ModelishInvocationHandler implements InvocationHandler {
     /** When this is set to true the contents of a model can no longer be changed. */
     private boolean locked = false
 
+    /** The type of this instance */
+    private Class api
+
     /** Default handler */
-    ModelishInvocationHandler() {}
+    ModelishInvocationHandler(Class<Model> api) {
+        this.api = api
+    }
 
     /**
      * Used when cloning.
@@ -124,7 +129,7 @@ class ModelishInvocationHandler implements InvocationHandler {
 
         // Also handle Java Bean get/set methods.
         String calledMethod = method.name
-        if (calledMethod.startsWith( "get" ) || calledMethod.startsWith( "set" )) {
+        if ( calledMethod.startsWith( "get" ) || calledMethod.startsWith( "set" ) ) {
             calledMethod = calledMethod.substring( 3 ).toLowerCase()
         }
 
@@ -145,6 +150,45 @@ class ModelishInvocationHandler implements InvocationHandler {
                         ( (Model<?>) value )._recursiveLock()
                     }
                 }
+                break
+
+  // NEEDS TESTING
+
+                //    void __setValues(Class<Model> modelApi, Map<String, Object> values)
+                //
+                //    Map<String, Object> __getValues()
+
+            case "__getValues":
+
+                Map<String, Object> vals = [ : ]
+                this.values.keySet(  ).each { String key ->
+
+                    Object val = this.values[ key ]
+                    if (val instanceof Model) {
+                        val = (val as Model).__getValues(  )
+                    }
+                    vals[ key ] = val
+                }
+
+                return vals
+                break
+
+            case "__setValues":
+
+                Class<Model> api = args[ 0 ]
+                Map<String, Object> vals = args[ 1 ] as Map<String, Object>
+
+                vals.keySet(  ).each { String key ->
+
+                    Object setValue = vals[ key ]
+
+                    if ( setValue instanceof Map) {
+                        setValue = doClone( proxy.getClass().getInterfaces()[ 0 ], vals )
+                    }
+
+                    values[ key ] = setValue
+                }
+
                 break
 
             case "_clone":
@@ -226,4 +270,6 @@ class ModelishInvocationHandler implements InvocationHandler {
 
         return Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler( copy ) )
     }
+
+
 }

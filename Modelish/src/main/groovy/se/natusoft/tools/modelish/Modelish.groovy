@@ -56,7 +56,10 @@ class Modelish<T> {
         interfaces[ 0 ] = api
 
         //noinspection unchecked
-        return (Model) Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler() )
-
+        return (Model) Proxy.newProxyInstance( api.getClassLoader(), interfaces,
+                new ModelishInvocationHandler(api as Class<se.natusoft.tools.modelish.Model>) )
+        // For some reason that I'm not getting why the above class type needs a fully qualified
+        // package! There is probably a wrong declaration somewhere that does not fail build,
+        // and that I'm failing to see.
     }
 }

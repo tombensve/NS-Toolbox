@@ -59,4 +59,8 @@ interface Model<T> {
      * @return self.
      */
     T _recursiveLock()
+
+    void __setValues(Class<Model> modelApi, Map<String, Object> values)
+
+    Map<String, Object> __getValues()
 }
