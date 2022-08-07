@@ -108,3 +108,13 @@ Longer Version additions
     'service'              T 'service' 'service'
     /=                     T T
     /T                     T
+
+# Comment
+
+This was intended for use with "FilteringServiceLoader", an idea which I for the moment have 
+dropped.
+
+I however keep this since it should be general enough to be used with any information query.
+
+I wanted a simple query syntax, and I'm not entirely sure that I succeeded with that.
+If you understand "Reverse polish notation" / RPN, then this makes more sense.
