@@ -152,6 +152,51 @@ class ModelishInvocationHandler implements InvocationHandler {
                 result = doClone( proxy.getClass().getInterfaces()[ 0 ], this.values )
                 break
 
+            // Create a new Map and copy values. If value is another model then call _toMap() on that model.
+            case "_toMap":
+                Map<String, Object> map = [:]
+                this.values.each { Map.Entry<String, Object> entry ->
+
+                    if ( entry.value instanceof Model ) { // A sub model!
+
+                        // Using Groovy meta properties.
+                        PropertyValue propertyValue = entry.value.metaPropertyValues[0] as PropertyValue
+                        ModelishInvocationHandler mih = propertyValue.value as ModelishInvocationHandler
+
+                        map[entry.key] = mih.values
+
+                        // Clone what can be cloned.
+                        for (String key: map.keySet(  )) {
+                            Object value = map.get(key)
+                            if (value instanceof java.lang.Cloneable) {
+                                map[key] = value.clone(  )
+                            }
+                        }
+                    }
+                    else {
+
+                        // Clone values if we can.
+                        if (entry.value instanceof java.lang.Cloneable) {
+                            map[entry.key] = entry.value.clone()
+                        }
+                        else {
+                            map[entry.key] = entry.value
+                        }
+                    }
+                }
+
+                result = map
+                break
+
+            // Completely internal call to overwrite values map with provided.
+            case "_provideMap":
+                // Note that this just replaces the default value map with provided one.
+                // This has a side effect when provided Map in turn contains a Map!
+                // In this case a Modelish instance is expected. This code tries to
+                // resolve that when getter is called.
+                this.values = args[0] as Map<String, Object>
+                break
+
             default:
 
                 // Validation of bad model interface. Can only be 0 or 1 argument.
@@ -182,6 +227,13 @@ class ModelishInvocationHandler implements InvocationHandler {
 
                     result = this.values.get( calledMethod )
 
+                    // Check if result is a sub model in Map form, in this case we need to clone.
+                    if (result instanceof Map<String, Object>) {
+
+                        result = doClone( method.returnType, result )
+                    }
+
+                    result
                 }
                 // Bad model!
                 else {
@@ -207,19 +259,21 @@ class ModelishInvocationHandler implements InvocationHandler {
      */
     private static Object doClone( Class<?> api, Map<String, Object> source ) {
 
-        Map<String, Object> copy = new LinkedHashMap<>()
+        Map<String, Object> copy = [:]
 
-        for ( String key : source.keySet() ) {
+        source.keySet(  ).each { String key ->
 
-            Object srcObj = source.get( key )
+            Object srcObj = source[ key ]
 
             if ( srcObj instanceof Cloneable ) {
 
                 srcObj = ( (Cloneable<?>) srcObj )._clone()
             }
 
-            copy.put( key, srcObj )
+            copy[ key ] = srcObj
+
         }
+
 
         Class<?>[] interfaces = new Class[1]
         interfaces[ 0 ] = api

@@ -72,7 +72,7 @@ class ModelishTest {
                 .address( "Stockholm" )
                 ._lock()
 
-        assert userInfo.name() ==  "Tommy Svensson"
+        assert userInfo.name() == "Tommy Svensson"
         assert userInfo.age() == 53
         assert userInfo.address() == "Stockholm"
 
@@ -332,6 +332,7 @@ class ModelishTest {
     interface JBTest extends Model<JBTest> {
 
         JBTest setName( String name )
+
         String getName()
     }
 
@@ -362,4 +363,46 @@ class ModelishTest {
      * and I will not mess it up due to this little "issue".
      */
 
+    @Test
+    void verifyGetValueMap() {
+
+        User user = Modelish.create( User.class )
+                .id( "tbs" )
+                .loginCount( 9843 )
+                .userInfo( Modelish.create( UserInfo.class )
+                        .name( "Tommy" )
+                        .address( "Liljeholmen" )
+                        .age( 54 )
+                        //._lock()
+                )
+        //._lock()
+
+        Map<String, Object> map = user._toMap()
+
+        assert map[ "id" ] == "tbs"
+        assert map[ "loginCount" ] == 9843
+        assert map[ "userInfo" ] instanceof Map
+        assert map[ "userInfo" ][ "name" ] == "Tommy"
+        assert map[ "userInfo" ][ "address" ] == "Liljeholmen"
+        assert map[ "userInfo" ][ "age" ] as int == 54
+    }
+
+    @Test
+    void verifySettingFromMap() {
+
+        Map<String, Object> userMap = [
+                "id"          : "tbs",
+                "loginCount": 9972,
+                "UserInfo"    : [ "name"   : "tommy svensson",
+                                  "address": "Liljeholmen",
+                                  "age"    : 55 ] as Map<String, Object> ] as Map<String, Object>
+
+        User user = Modelish.newFromMap( User.class as Class<Model>, userMap ) as User
+
+        assert user.id() == "tbs"
+        assert user.loginCount() == 9972
+        assert user.userInfo().name() == "tommy svensson"
+        assert user.userInfo().address() == "Liljeholmen"
+        assert user.userInfo().age() == 55
+    }
 }
