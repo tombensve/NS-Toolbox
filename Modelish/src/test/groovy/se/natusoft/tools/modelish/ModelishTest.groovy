@@ -373,9 +373,9 @@ class ModelishTest {
                         .name( "Tommy" )
                         .address( "Liljeholmen" )
                         .age( 54 )
-                        //._lock()
+                        ._lock()
                 )
-        //._lock()
+        ._lock()
 
         Map<String, Object> map = user._toMap()
 
@@ -390,18 +390,29 @@ class ModelishTest {
     @Test
     void verifySettingFromMap() {
 
+        // If the following line have "userMap" red underlined, you are using IDEA! Ignore it, this compiles.
+        //
+        // Notice that it also handles the inner userInfo map without casting!
+        //
+        // I believe this is so that you can use JSON:ish Map structures without forcing a lot of casts.
+        // That of course make it up to the developer to make sure it is correct! In this case other code
+        // will fail if you don't have correct data in the Map, which will cause test to fail.
+
         Map<String, Object> userMap = [
-                "id"          : "tbs",
+                "id"        : "tbs",
                 "loginCount": 9972,
-                "UserInfo"    : [ "name"   : "tommy svensson",
-                                  "address": "Liljeholmen",
-                                  "age"    : 55 ] as Map<String, Object> ] as Map<String, Object>
+                "userInfo"  : [
+                        "name"   : "Tommy Svensson",
+                        "address": "Liljeholmen",
+                        "age"    : 55
+                ]
+        ]
 
         User user = Modelish.newFromMap( User.class as Class<Model>, userMap ) as User
 
         assert user.id() == "tbs"
         assert user.loginCount() == 9972
-        assert user.userInfo().name() == "tommy svensson"
+        assert user.userInfo().name() == "Tommy Svensson"
         assert user.userInfo().address() == "Liljeholmen"
         assert user.userInfo().age() == 55
     }

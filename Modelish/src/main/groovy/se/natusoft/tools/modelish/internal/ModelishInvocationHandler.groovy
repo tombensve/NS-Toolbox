@@ -193,7 +193,7 @@ class ModelishInvocationHandler implements InvocationHandler {
                 // Note that this just replaces the default value map with provided one.
                 // This has a side effect when provided Map in turn contains a Map!
                 // In this case a Modelish instance is expected. This code tries to
-                // resolve that when getter is called.
+                // resolve that when getter is called. See getter handling below.
                 this.values = args[0] as Map<String, Object>
                 break
 
@@ -228,9 +228,11 @@ class ModelishInvocationHandler implements InvocationHandler {
                     result = this.values.get( calledMethod )
 
                     // Check if result is a sub model in Map form, in this case we need to clone.
+                    // See _provideMap above!
                     if (result instanceof Map<String, Object>) {
 
                         result = doClone( method.returnType, result )
+                        this.values[calledMethod] = result // Fix so this does not have to be done again!
                     }
 
                     result
