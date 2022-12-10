@@ -34,8 +34,10 @@
 package se.natusoft.tools.modelish
 
 import groovy.transform.CompileStatic
+import se.natusoft.tools.modelish.internal.Internal
 import se.natusoft.tools.modelish.internal.ModelishInvocationHandler
 
+import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 
 /**
@@ -51,12 +53,39 @@ import java.lang.reflect.Proxy
 @CompileStatic
 class Modelish<T> {
 
+    /**
+     * Creates a new empty model.
+     *
+     * @param api The model API to create.
+     *
+     * @return A new model instance.
+     */
     static <Model> Model create( Class<Model> api ) {
-        Class<?>[] interfaces = new Class[1]
-        interfaces[ 0 ] = api
+
+        Class<?>[] interfaces = [ api, Internal.class ]
 
         //noinspection unchecked
         return (Model) Proxy.newProxyInstance( api.getClassLoader(), interfaces, new ModelishInvocationHandler() )
 
     }
+
+    /**
+     * Creates a  new Model from a Map structure.
+     *
+     * CURRENTLY ONLY SUPPORTS ONE MODEL, NO SUB MODELS!
+     * NEEDS TO FIND SUB MODELS IN MODEL AND PASS ON THE MAPS MAP.
+     *
+     * @param map The Map to be converted into a model.
+     * @param model The type of model to create.
+     *
+     * @return a new model instance.
+     */
+    static Model<Model> newFromMap( Class<Model> api, Map<String, Object> map ) {
+
+        Model<Model> model = create( api )
+        ( model as Internal)._provideMap( map )
+
+        model
+    }
+
 }

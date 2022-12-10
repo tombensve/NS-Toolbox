@@ -59,4 +59,10 @@ interface Model<T> {
      * @return self.
      */
     T _recursiveLock()
+
+    /**
+     * @return a JSONish Map<String, Object> structure.
+     */
+    Map<String, Object> _toMap()
+
 }

@@ -1,26 +1,24 @@
 # Modelish 
 #### ( For the lack of a better name )
 
-This is a truly simple API for defining models as interfaces and have them dynamically implemented runtime. 
+This is a truly simple API for defining models as interfaces and have them dynamically implemented runtime.
 
-This supports the fluent ([https://dzone.com/articles/java-fluent-api-design](https://dzone.com/articles/java-fluent-api-design)) variant of models in addition to Java Bean standard properties.
+This is a very simple and small tool. It makes use of `java.lang.reflect.Proxy`.
 
-This is very a very simple and small tool. Jar file is ~6400 bytes and contains 6 classes, 3 of them interfaces.
-The only code generation done is by the JDK at runtime, `java.lang.reflect.Proxy` is used. 
+This does one and only one thing, defining data models, both JavaBean and fluent 
+([https://dzone.com/articles/java-fluent-api-design](https://dzone.com/articles/java-fluent-api-design)) 
+styles are supported. 
 
-This does one and only one thing, defining models with different data. 
-
-It will probably have problems with code trying to inspect models via reflection. They
-are proxy instances. 
+It might have problems with code trying to inspect models via reflection since they are proxy instances. 
 
 ## Latest Version
 
-### 3.0.3
+### 3.0.4
 
     <dependency>
         <groupId>se.natusoft.tools.toolbox</groupId>
         <artifactId>Modelish</artifactId>
-        <version>3.0.3</version>
+        <version>3.0.4</version>
     </dependency>
 
 
@@ -148,6 +146,49 @@ The setters however have to return the model type!
         JBTest setName( String name )
         String getName()
     }
+```
+
+## Since 3.0.4 Modelish -> Map and Map -> Modelish is possible!
+
+### Groovy
+
+The reason for the next 2 functionalities are to be able to use Groovys JSONSlurper or
+Jackson Jr and probably others that can convert between JSON and Map<String, Object> to
+easily be able to turn these models into JSON or create from JSON.
+
+#### Getting Map
+
+```groovy
+        User user = Modelish.create( User.class )
+                .id( "tbs" )
+                .loginCount( 9843 )
+                .userInfo( Modelish.create( UserInfo.class )
+                        .name( "Tommy" )
+                        .address( "Liljeholmen" )
+                        .age( 54 )
+                        ._lock()
+                )
+        ._lock()
+
+        Map<String, Object> map = user._toMap()
+
+```
+
+#### Creating from Map
+
+```groovy
+        Map<String, Object> userMap = [
+                "id"        : "tbs",
+                "loginCount": 9972,
+                "userInfo"  : [
+                        "name"   : "Tommy Svensson",
+                        "address": "Liljeholmen",
+                        "age"    : 55
+                ]
+        ]
+
+        User user = Modelish.newFromMap( User.class as Class<Model>, userMap ) as User
+
 ```
 
 ----

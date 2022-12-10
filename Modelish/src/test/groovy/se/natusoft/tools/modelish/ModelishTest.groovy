@@ -72,7 +72,7 @@ class ModelishTest {
                 .address( "Stockholm" )
                 ._lock()
 
-        assert userInfo.name() ==  "Tommy Svensson"
+        assert userInfo.name() == "Tommy Svensson"
         assert userInfo.age() == 53
         assert userInfo.address() == "Stockholm"
 
@@ -332,6 +332,7 @@ class ModelishTest {
     interface JBTest extends Model<JBTest> {
 
         JBTest setName( String name )
+
         String getName()
     }
 
@@ -362,4 +363,57 @@ class ModelishTest {
      * and I will not mess it up due to this little "issue".
      */
 
+    @Test
+    void verifyGetValueMap() {
+
+        User user = Modelish.create( User.class )
+                .id( "tbs" )
+                .loginCount( 9843 )
+                .userInfo( Modelish.create( UserInfo.class )
+                        .name( "Tommy" )
+                        .address( "Liljeholmen" )
+                        .age( 54 )
+                        ._lock()
+                )
+        ._lock()
+
+        Map<String, Object> map = user._toMap()
+
+        assert map[ "id" ] == "tbs"
+        assert map[ "loginCount" ] == 9843
+        assert map[ "userInfo" ] instanceof Map
+        assert map[ "userInfo" ][ "name" ] == "Tommy"
+        assert map[ "userInfo" ][ "address" ] == "Liljeholmen"
+        assert map[ "userInfo" ][ "age" ] as int == 54
+    }
+
+    @Test
+    void verifySettingFromMap() {
+
+        // If the following line have "userMap" red underlined, you are using IDEA! Ignore it, this compiles.
+        //
+        // Notice that it also handles the inner userInfo map without casting!
+        //
+        // I believe this is so that you can use JSON:ish Map structures without forcing a lot of casts.
+        // That of course make it up to the developer to make sure it is correct! In this case other code
+        // will fail if you don't have correct data in the Map, which will cause test to fail.
+
+        Map<String, Object> userMap = [
+                "id"        : "tbs",
+                "loginCount": 9972,
+                "userInfo"  : [
+                        "name"   : "Tommy Svensson",
+                        "address": "Liljeholmen",
+                        "age"    : 55
+                ]
+        ]
+
+        User user = Modelish.newFromMap( User.class as Class<Model>, userMap ) as User
+
+        assert user.id() == "tbs"
+        assert user.loginCount() == 9972
+        assert user.userInfo().name() == "Tommy Svensson"
+        assert user.userInfo().address() == "Liljeholmen"
+        assert user.userInfo().age() == 55
+    }
 }
