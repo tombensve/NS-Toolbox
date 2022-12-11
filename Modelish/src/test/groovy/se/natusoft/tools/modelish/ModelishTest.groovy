@@ -334,15 +334,20 @@ class ModelishTest {
         JBTest setName( String name )
 
         String getName()
+
+        JBTest setLocationId(int locationId )
+
+        int getLocationId()
     }
 
     @Test
     void verifyJavaBean() {
 
-        JBTest jbTest = Modelish.create( JBTest.class ).setName( "Nisse" )._lock()
+        JBTest jbTest = Modelish.create( JBTest.class ).setName( "Nisse" ).setLocationId(22)._lock()
 
         assert jbTest.getName() == "Nisse"
         assert jbTest.name == "Nisse" // Groovy property access work.
+        assert jbTest.getLocationId(  ) == 22
 
         try {
             jbTest.setName( "hult" )
@@ -408,7 +413,7 @@ class ModelishTest {
                 ]
         ]
 
-        User user = Modelish.newFromMap( User.class as Class<Model>, userMap ) as User
+        User user = Modelish.createFromMap( User.class as Class<Model>, userMap ) as User
 
         assert user.id() == "tbs"
         assert user.loginCount() == 9972

@@ -70,17 +70,14 @@ class Modelish<T> {
     }
 
     /**
-     * Creates a  new Model from a Map structure.
-     *
-     * CURRENTLY ONLY SUPPORTS ONE MODEL, NO SUB MODELS!
-     * NEEDS TO FIND SUB MODELS IN MODEL AND PASS ON THE MAPS MAP.
+     * Creates a new Model from a Map structure.
      *
      * @param map The Map to be converted into a model.
      * @param model The type of model to create.
      *
      * @return a new model instance.
      */
-    static Model<Model> newFromMap( Class<Model> api, Map<String, Object> map ) {
+    static Model<Model> createFromMap( Class<Model> api, Map<String, Object> map ) {
 
         Model<Model> model = create( api )
         ( model as Internal)._provideMap( map )

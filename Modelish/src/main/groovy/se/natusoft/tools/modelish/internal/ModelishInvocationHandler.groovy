@@ -68,7 +68,6 @@ class ModelishInvocationHandler implements InvocationHandler {
         this.values = copy
     }
 
-    // Kept the IDEA generated javadoc copy for invoke(...).
     /**
      * Processes a method invocation on a proxy instance and returns
      * the result.  This method will be invoked on an invocation handler
@@ -125,7 +124,8 @@ class ModelishInvocationHandler implements InvocationHandler {
         // Also handle Java Bean get/set methods.
         String calledMethod = method.name
         if (calledMethod.startsWith( "get" ) || calledMethod.startsWith( "set" )) {
-            calledMethod = calledMethod.substring( 3 ).toLowerCase()
+            calledMethod = calledMethod.substring( 3 )
+            calledMethod = calledMethod.substring( 0,1 ).toLowerCase() + calledMethod.substring( 1 )
         }
 
         //noinspection GroovyFallthrough
