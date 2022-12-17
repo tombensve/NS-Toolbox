@@ -13,6 +13,17 @@ It might have problems with code trying to inspect models via reflection since t
 
 ## Latest Version
 
+### 3.0.5
+
+    Changed _lock() to _immutable() and _recursiveLock() to _recursivelyImmutable(). Thought this
+    was clearer even though a little bit longer.
+
+    <dependency>
+        <groupId>se.natusoft.tools.toolbox</groupId>
+        <artifactId>Modelish</artifactId>
+        <version>3.0.5</version>
+    </dependency>
+
 ### 3.0.4
 
     <dependency>
@@ -77,7 +88,7 @@ Note that
             .name("Tommy Svensson")
             .age(53)
             .address("Stockholm")
-            ._lock();
+            ._immutable();
 
 ```
 
@@ -166,13 +177,16 @@ easily be able to turn these models into JSON or create from JSON.
                         .name( "Tommy" )
                         .address( "Liljeholmen" )
                         .age( 54 )
-                        ._lock()
+                        ._immutable()
                 )
-        ._lock()
+        ._immutable()
 
         Map<String, Object> map = user._toMap()
 
 ```
+**Note** here that even if the model is immutable, the Map of course is not, but changing the Map will not
+affect the original. A copy of all values are made in conversion to Map. And in the example below, creating 
+a new Model from a Map, it is a _new_ Map! It is impossible to set a Map on an existing instance.
 
 #### Creating from Map
 
@@ -190,6 +204,11 @@ easily be able to turn these models into JSON or create from JSON.
         User user = Modelish.newFromMap( User.class as Class<Model>, userMap ) as User
 
 ```
+
+Note here that the user instance here happens to be created using a Map, but this instance is just as it would
+have been creating it normally, and no data will be immutable without specifically telling the model that it
+should be! And again all data from the Map has been copied. Modifying the Map after model creation will not
+affect created model.
 
 ----
 

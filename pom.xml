@@ -48,10 +48,6 @@
     </description>
 
     <properties>
-        <copyrightYear>2022</copyrightYear>
-        <copyrightHolder>Natusoft AB</copyrightHolder>
-        <copyrightHolderWeb>https://www.natusoft.se/</copyrightHolderWeb>
-
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
 
@@ -155,7 +151,7 @@
         <plugins>
 
             <!--
-                Setup for java 8.
+                Setup Java version.
             -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

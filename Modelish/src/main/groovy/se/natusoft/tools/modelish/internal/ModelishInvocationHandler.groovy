@@ -131,18 +131,18 @@ class ModelishInvocationHandler implements InvocationHandler {
         //noinspection GroovyFallthrough
         switch ( calledMethod ) {
 
-            case "_lock":
+            case "_immutable":
                 this.locked = true
                 break
 
-            case "_recursiveLock":
+            case "_recursivelyImmutable":
                 this.locked = true
 
                 // Also lock any sub models.
                 for ( String key : this.values.keySet() ) {
                     Object value = this.values.get( key )
                     if ( value instanceof Model ) {
-                        ( (Model<?>) value )._recursiveLock()
+                        ( (Model<?>) value )._recursivelyImmutable()
                     }
                 }
                 break
