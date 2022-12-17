@@ -5,7 +5,7 @@
  *         Modelish
  *
  *     Description
- *         Provides a RPN Query against name value set of data (Properties, Map).
+ *         Builds models both fluent and Java Bean using only interfaces.
  *
  * COPYRIGHTS
  *     Copyright (C) 2022 by Natusoft AB All rights reserved.
