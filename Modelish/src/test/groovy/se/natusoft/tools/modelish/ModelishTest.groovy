@@ -70,7 +70,7 @@ class ModelishTest {
                 .name( "Tommy Svensson" )
                 .age( 53 )
                 .address( "Stockholm" )
-                ._lock()
+                ._immutable()
 
         assert userInfo.name() == "Tommy Svensson"
         assert userInfo.age() == 53
@@ -98,10 +98,10 @@ class ModelishTest {
                 .name( "Tommy Svensson" )
                 .age( 53 )
                 .address( "Stockholm" )
-                ._lock()
+                ._immutable()
 
         // Note that new model is not locked even if old one was.
-        UserInfo clonedModel = userInfo._clone().address( "Liljeholmen" )._lock()
+        UserInfo clonedModel = userInfo._clone().address( "Liljeholmen" )._immutable()
 
         // Make sure the original hasn't changed.
         assert userInfo.address() == "Stockholm"
@@ -155,9 +155,9 @@ class ModelishTest {
                         .name( "Tommy" )
                         .address( "Liljeholmen" )
                         .age( 53 )
-                        ._lock()
+                        ._immutable()
                 )
-                ._lock()
+                ._immutable()
 
         // Verify read access of model in model.
         assert user.userInfo().address() == "Liljeholmen"
@@ -179,7 +179,7 @@ class ModelishTest {
                         .age( 53 )
                         //._lock()
                 )
-                ._lock()
+                ._immutable()
 
         User user2 = user._clone()
 
@@ -210,7 +210,7 @@ class ModelishTest {
                         .address( "Liljeholmen" )
                         .age( 53 )
                 )
-                ._recursiveLock()
+                ._recursivelyImmutable()
 
         try {
             user.userInfo().age( 43 )
@@ -254,7 +254,7 @@ class ModelishTest {
                 .street( "Somewhere Street" )
                 .streetNumber( 44 )
                 .postalAddress( "Stockholm" )
-                ._lock()
+                ._immutable()
 
 
         // Note that these resulting objects are read only, only having getters.
@@ -292,10 +292,10 @@ class ModelishTest {
     @Test
     void verifyFactoryUse() {
 
-        Car carFactory = Modelish.create( Car.class ).age( 16 )._lock()
+        Car carFactory = Modelish.create( Car.class ).age( 16 )._immutable()
 
         // Note: _create() and _clone() are identical!! _create() just looks better when used as factory.
-        Car car = carFactory._create().model( "VW EOS" ).wheels( 4 )._lock()
+        Car car = carFactory._create().model( "VW EOS" ).wheels( 4 )._immutable()
 
         assert car.model() == "VW EOS"
         assert car.age() == 16
@@ -313,7 +313,7 @@ class ModelishTest {
         boolean threwException = false
 
         try {
-            Modelish.create( Car.class ).model( null ).age( 16 ).wheels( 4 )._lock()
+            Modelish.create( Car.class ).model( null ).age( 16 ).wheels( 4 )._immutable()
         } //  |
         catch ( IllegalArgumentException iae ) {
 
@@ -343,7 +343,7 @@ class ModelishTest {
     @Test
     void verifyJavaBean() {
 
-        JBTest jbTest = Modelish.create( JBTest.class ).setName( "Nisse" ).setLocationId(22)._lock()
+        JBTest jbTest = Modelish.create( JBTest.class ).setName( "Nisse" ).setLocationId(22)._immutable()
 
         assert jbTest.getName() == "Nisse"
         assert jbTest.name == "Nisse" // Groovy property access work.
@@ -378,9 +378,9 @@ class ModelishTest {
                         .name( "Tommy" )
                         .address( "Liljeholmen" )
                         .age( 54 )
-                        ._lock()
+                        ._immutable()
                 )
-        ._lock()
+        ._immutable()
 
         Map<String, Object> map = user._toMap()
 
@@ -409,9 +409,9 @@ class ModelishTest {
                 "userInfo"  : [
                         "name"   : "Tommy Svensson",
                         "address": "Liljeholmen",
-                        "age"    : 55
+                        "age"    : 54
                 ]
-        ]
+        ] as Map<String, Object>
 
         User user = Modelish.createFromMap( User.class as Class<Model>, userMap ) as User
 
@@ -419,6 +419,6 @@ class ModelishTest {
         assert user.loginCount() == 9972
         assert user.userInfo().name() == "Tommy Svensson"
         assert user.userInfo().address() == "Liljeholmen"
-        assert user.userInfo().age() == 55
+        assert user.userInfo().age() == 54
     }
 }
