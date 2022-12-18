@@ -10,6 +10,10 @@ Each tool has its own submodule. See Readme.md in each for more info.
 
 ----
 
+## Binaries
+
+[See here for how to get binaries](https://github.com/tombensve/About)
+
 ## Versioning 
 
 This is a set of different tools that belong to one git codebase even if they are separate freestanding tools. I did not want to create a separate repo for each, it would be too much. These are relatively small things. 
@@ -35,3 +39,4 @@ As of 4.x of Groovy you can decide what bytecode version to produce! I'm using 1
 - [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md)
 
 <!-- - [Filtering service loader](filtering-service-loader/README.md) -->
+
