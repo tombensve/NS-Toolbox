@@ -197,6 +197,28 @@ class ModelishInvocationHandler implements InvocationHandler {
                 this.values = args[0] as Map<String, Object>
                 break
 
+            case "toString":
+                // That this does not print key and does not look like JSON is intentional!
+                // If you want JSON do _toMap() and then use something like Jackson Jr to
+                // convert that to JSON. I think Goovys JSONSlurper handles Maps also.
+                StringBuffer sb = new StringBuffer()
+                sb.append "[ "
+                String comma = ""
+                this.values.each {
+                    sb.append(comma)
+                    sb.append( it.value.toString(  ) )
+                    comma=", "
+                }
+                sb.append(" ]")
+                result = sb.toString(  )
+                break
+
+            case "hashCode":
+                ArrayList<Object> members = new ArrayList()
+                this.values.each {members << it.value }
+                result = Objects.hash( members.toArray() )
+                break
+
             default:
 
                 // Validation of bad model interface. Can only be 0 or 1 argument.
