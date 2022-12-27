@@ -44,6 +44,16 @@ import groovy.transform.CompileStatic
 interface Model<T> {
 
     /**
+     * @return a String representation of this object.
+     */
+    String toString()
+
+    /**
+     * @return A hash code for this object.
+     */
+    int hashCode()
+
+    /**
      * This has to be called when all values have been set to make it impossible to modify
      * the objects content. A locked model cannot be unlocked.
      *

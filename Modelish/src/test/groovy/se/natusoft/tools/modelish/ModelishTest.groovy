@@ -84,6 +84,30 @@ class ModelishTest {
         catch ( IllegalArgumentException iae ) {
             assert iae.getMessage() == "Update of read only object not allowed!"
         }
+
+    }
+
+    @Test
+    void verifyToStringAndHashCode() {
+        UserInfo userInfo = Modelish.create( UserInfo.class )
+                .name( "Tommy Svensson" )
+                .age( 53 )
+                .address( "Stockholm" )
+
+        // I am assuming here that hashCode() will be the same independent of JVM and version ...
+        println "toString:"
+        println "  " + userInfo.toString()
+        println ""
+        println "hashCode:"
+        println "  " + userInfo.hashCode(  )
+
+        assert userInfo.toString(  ) == "[ Tommy Svensson, 53, Stockholm ]"
+        assert userInfo.hashCode(  ) == -1027867531
+
+        userInfo.name("Tommy Bengt Svensson")
+        println " new hashCode: " + userInfo.hashCode(  )
+
+        assert userInfo.hashCode(  ) == 1376967037
     }
 
 
@@ -335,7 +359,7 @@ class ModelishTest {
 
         String getName()
 
-        JBTest setLocationId(int locationId )
+        JBTest setLocationId( int locationId )
 
         int getLocationId()
     }
@@ -343,11 +367,11 @@ class ModelishTest {
     @Test
     void verifyJavaBean() {
 
-        JBTest jbTest = Modelish.create( JBTest.class ).setName( "Nisse" ).setLocationId(22)._immutable()
+        JBTest jbTest = Modelish.create( JBTest.class ).setName( "Nisse" ).setLocationId( 22 )._immutable()
 
         assert jbTest.getName() == "Nisse"
         assert jbTest.name == "Nisse" // Groovy property access work.
-        assert jbTest.getLocationId(  ) == 22
+        assert jbTest.getLocationId() == 22
 
         try {
             jbTest.setName( "hult" )
@@ -380,7 +404,7 @@ class ModelishTest {
                         .age( 54 )
                         ._immutable()
                 )
-        ._immutable()
+                ._immutable()
 
         Map<String, Object> map = user._toMap()
 

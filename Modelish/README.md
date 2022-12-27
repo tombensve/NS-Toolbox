@@ -13,6 +13,11 @@ It might have problems with code trying to inspect models via reflection since t
 
 ## Latest Version
 
+### 3.0.6
+
+Now supports toString() and hashCode(). As an afterthought I came to the decision that these might
+be useful ...
+
 ### 3.0.5
 
 Changed _lock() to _immutable() and _recursiveLock() to _recursivelyImmutable(). Thought this
