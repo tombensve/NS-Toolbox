@@ -18,6 +18,13 @@ It might have problems with code trying to inspect models via reflection since t
 Now supports toString() and hashCode(). As an afterthought I came to the decision that these might
 be useful ...
 
+    <dependency>
+        <groupId>se.natusoft.tools.toolbox</groupId>
+        <artifactId>Modelish</artifactId>
+        <version>3.0.6</version>
+    </dependency>
+
+
 ### 3.0.5
 
 Changed _lock() to _immutable() and _recursiveLock() to _recursivelyImmutable(). Thought this
