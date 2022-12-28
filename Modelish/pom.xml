@@ -14,14 +14,13 @@
 
     <properties>
         <byte-code>11</byte-code>
-        <groovy>4.0.6</groovy>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
-            <version>${groovy}</version>
+            <version>${groovy-version}</version>
         </dependency>
     </dependencies>
 
