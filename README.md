@@ -25,6 +25,8 @@ It took me 3 tries to come up with a versioning strategy that did not suck. The 
 Since Java went down with the sun, I have now decided from now on to use the Groovy JVM language instead of Java for my GitHub code. Groovy is a **far better** language than Java and 100% JVM / Java compatible. Groovy have been along for a very long time. Groovy had features from the start that Java didn't get until much later, and Groovy did them right. Different from Java, Groovy also has real functions, called closures! Java have lambdas, bound to single method interfaces creating a lot of limitations. In use they look similar, but in functionality they are quite different. 
 
 As of 4.x of Groovy you can decide what bytecode version to produce! I'm using 11 since it is the last backwards compatible JDK. 
+That said, it seems like Groovy 4 allows you to specify the byte code level to produce independent of your groovy code.
+So theoretically you can just produce binaries for any JDK level without changing any code.
 
 ----
 
