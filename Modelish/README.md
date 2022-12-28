@@ -10,6 +10,8 @@ This does one and only one thing, defining data models, both JavaBean and fluent
 styles are supported. 
 
 It might have problems with code trying to inspect models via reflection since they are proxy instances. 
+These will also be sligtly slower than a plain "java bean" due to being a proxy and storing values in 
+a HashMap. 
 
 ## Latest Version
 
