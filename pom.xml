@@ -44,14 +44,14 @@
     <inceptionYear>2022</inceptionYear>
 
     <description>
-        Provides a RPN Query against name value set of data (Properties, Map).
+        A set of individual tools too small to warrant own repo.
     </description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
 
-        <version-root>2.0.0</version-root>
+        <groovy-version>4.0.6</groovy-version>
     </properties>
 
     <developers>
