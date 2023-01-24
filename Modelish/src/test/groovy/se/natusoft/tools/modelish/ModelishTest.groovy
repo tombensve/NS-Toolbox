@@ -439,6 +439,8 @@ class ModelishTest {
 
         User user = Modelish.createFromMap( User.class as Class<Model>, userMap ) as User
 
+        user._validate(  )
+
         assert user.id() == "tbs"
         assert user.loginCount() == 9972
         assert user.userInfo().name() == "Tommy Svensson"

@@ -75,4 +75,9 @@ interface Model<T> {
      */
     Map<String, Object> _toMap()
 
+    /**
+     * Validates the model. This is intended for when a model have been created from a Map.
+     */
+    void _validate()
+
 }
