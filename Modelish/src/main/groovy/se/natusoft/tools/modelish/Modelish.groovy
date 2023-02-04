@@ -79,10 +79,58 @@ class Modelish<T> {
      */
     static Model<Model> createFromMap( Class<Model> api, Map<String, Object> map ) {
 
+        validate( api, map )
+
         Model<Model> model = create( api )
-        ( model as Internal)._provideMap( map )
+        ( model as Internal )._provideMap( map )
 
         model
     }
 
+    /**
+     * Validates the passed Map against method annotations.
+     *
+     * @param api The model API possibly containing @NotNull annotations.
+     * @param map The input Map to validate.
+     */
+    private static void validate( Class api, Map<String, Object> map ) {
+
+        List<Method> propMethods = [ ]
+
+        Class vApi = api
+        while ( vApi != null ) {
+
+            propMethods.addAll( api.methods )
+            vApi = vApi.superclass
+        }
+
+        propMethods.each { Method m ->
+
+            String propName
+
+            if ( m.parameterCount == 1 ) {
+
+                // Check not null
+
+                NoNull noNull = m.getAnnotation( NoNull.class )
+                if ( noNull != null ) {
+
+                    propName = m.name
+
+                    if (propName.startsWith( "get" ) || propName.startsWith( "set" )) {
+                        propName = propName.substring( 3 )
+                        propName = propName.substring( 0, 1 ).toLowerCase() + propName.substring( 1 )
+                    }
+
+                    if ( map[ propName ] == null ) {
+                        throw new IllegalArgumentException( "Property '${propName}' cannot be null!" )
+                    }
+                }
+
+                // Without adding more specific model annotations there is nothing more we can check.
+
+            }
+        }
+
+    }
 }
