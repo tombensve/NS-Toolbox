@@ -131,6 +131,32 @@ class ModelishInvocationHandler implements InvocationHandler {
         //noinspection GroovyFallthrough
         switch ( calledMethod ) {
 
+//            case "_validate":
+//                List<String> propertyNames = [ ]
+//                method.declaringClass.methods.each { Method m ->
+//                    String methodName = m.name
+//                    if ( methodName.startsWith( "set" ) ) {
+//                        methodName = methodName.substring( 3 )
+//                        methodName = methodName.substring( 0, 1 ).toLowerCase() + methodName.substring( 1 )
+//                        propertyNames << methodName
+//
+//                        Object value = this.values[ methodName ]
+//                        if ( value != null ) {
+//                            Annotation noNull = m.getAnnotation( NoNull.class )
+//                            if ( noNull != null && value == null ) {
+//                                throw new ModelishException( "${methodName} are not allowed to be null!!" )
+//                            }
+//                        }
+//                    }
+//
+//                    this.values.each { Map.Entry<String, Object> e ->
+//                        if ( !propertyNames.contains( e.key ) ) {
+//                            throw new ModelishException( "${e.key} is not a valid key!" )
+//                        }
+//                    }
+//                }
+//                break
+
             case "_immutable":
                 this.locked = true
                 break
@@ -190,6 +216,7 @@ class ModelishInvocationHandler implements InvocationHandler {
 
             // Completely internal call to overwrite values map with provided.
             case "_provideMap":
+
                 // Note that this just replaces the default value map with provided one.
                 // This has a side effect when provided Map in turn contains a Map!
                 // In this case a Modelish instance is expected. This code tries to
@@ -257,7 +284,6 @@ class ModelishInvocationHandler implements InvocationHandler {
                         this.values[calledMethod] = result // Fix so this does not have to be done again!
                     }
 
-                    result
                 }
                 // Bad model!
                 else {
@@ -267,7 +293,7 @@ class ModelishInvocationHandler implements InvocationHandler {
                 }
         }
 
-        return result
+        result
 
     }
 

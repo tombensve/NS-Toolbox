@@ -165,6 +165,7 @@ class ModelishTest {
 
         UserInfo userInfo();
 
+        @NoNull
         User userInfo( UserInfo userInfo )
 
     }
@@ -444,5 +445,25 @@ class ModelishTest {
         assert user.userInfo().name() == "Tommy Svensson"
         assert user.userInfo().address() == "Liljeholmen"
         assert user.userInfo().age() == 54
+    }
+
+    @Test
+    void verifyNotNullFromMap() {
+
+        Map<String, Object> userMap = [
+                "id"        : "tbs",
+                "loginCount": 9972
+        ] as Map<String, Object>
+
+        try {
+            User user = Modelish.createFromMap( User.class as Class<Model>, userMap ) as User
+
+            throw new RuntimeException("This should not happen!")
+        }
+        catch ( IllegalArgumentException iae ) {
+
+            assert iae.message == "Property 'userInfo' cannot be null!"
+        }
+
     }
 }

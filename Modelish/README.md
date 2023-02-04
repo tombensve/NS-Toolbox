@@ -15,6 +15,18 @@ a HashMap.
 
 ## Latest Version
 
+### 3.0.7
+
+Now does same validations when setting model values from Map as when setting values using
+models. That said, there currently is only @Nonull available.
+
+
+    <dependency>
+        <groupId>se.natusoft.tools.toolbox</groupId>
+        <artifactId>Modelish</artifactId>
+        <version>3.0.7</version>
+    </dependency>
+
 ### 3.0.6
 
 Now supports toString() and hashCode(). As an afterthought I came to the decision that these might
