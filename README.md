@@ -34,11 +34,14 @@ So theoretically you can just produce binaries for any JDK level without changin
 
 - [APIs](ns-toolbox-apis/README.md)
 
-- [Modelish](Modelish/README.md)
+- [Modelish](Modelish/README.md) Provides Java Bean and fluent (I think it's called) style property accessors
+using interfaces which gets a proxy implementation. Supports building and imutability.
 
-- [RPNQuery](RPNQuery/README.md)
+- [Dater](Dater/README.md) Parses JSON date format strings and provides java.time objects.
 
-- [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md)
+- [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md) Mixins for building Groovy 4. Other modules use this.
+
+- [RPNQuery](RPNQuery/README.md) Queries data using RPN (Reverse Polish Notation).
 
 <!-- - [Filtering service loader](filtering-service-loader/README.md) -->
 
