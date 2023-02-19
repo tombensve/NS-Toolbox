@@ -20,6 +20,7 @@
         <module>RPNQuery</module>
         <module>ns-toolbox-apis</module>
         <module>Modelish</module>
+        <module>Dater</module>
         <module>GroovyBuildMixin-BC11</module>
         <module>GroovyBuildMixin-BC1.8</module>
     </modules>
