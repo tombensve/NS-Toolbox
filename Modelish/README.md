@@ -15,6 +15,11 @@ a HashMap.
 
 ## Latest Version
 
+### 3.0.7
+
+Restored _lock() and recursiveLock() as alternatives to _immutable() and _recursivelyImmutable().
+Either can be used.
+
 ### 3.0.6
 
 Now supports toString() and hashCode(). As an afterthought I came to the decision that these might

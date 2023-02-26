@@ -132,10 +132,12 @@ class ModelishInvocationHandler implements InvocationHandler {
         switch ( calledMethod ) {
 
             case "_immutable":
+            case "_lock":
                 this.locked = true
                 break
 
             case "_recursivelyImmutable":
+            case "_recursiveLock":
                 this.locked = true
 
                 // Also lock any sub models.
