@@ -62,6 +62,7 @@ interface Model<T> {
      * @return self.
      */
     T _immutable()
+    T _lock()
 
     /**
      * Does the same as lock() but also recursively on sub models of model.
@@ -69,6 +70,7 @@ interface Model<T> {
      * @return self.
      */
     T _recursivelyImmutable()
+    T _recursiveLock()
 
     /**
      * @return a JSONish Map<String, Object> structure.

@@ -15,6 +15,10 @@ a HashMap.
 
 ## Latest Version
 
+### 3.0.8 
+
+Restored _lock() and _recursiveLock() as aliases to _immutable() and _recursivelyImmutable().
+
 ### 3.0.7
 
 Now does same validations when setting model values from Map as when setting values using
