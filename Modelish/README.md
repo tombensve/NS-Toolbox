@@ -15,6 +15,14 @@ a HashMap.
 
 ## Latest Version
 
+### 3.0.9
+
+Now only requires an annotation containing the strings "no" and "null" in the name (capitals
+allowed also) for requiring a non nullable value. Thereby more annotations than the supplied
+@NoNull will work, like JetBrains @NotNull annotation and any other containing the strings
+"no" and "null" in any case, like @NotNull in my Docutations project or one you make
+yourself.
+
 ### 3.0.8 
 
 Restored _lock() and _recursiveLock() as aliases to _immutable() and _recursivelyImmutable().
