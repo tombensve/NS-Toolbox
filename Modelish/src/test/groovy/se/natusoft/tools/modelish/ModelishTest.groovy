@@ -339,7 +339,7 @@ class ModelishTest {
 
         try {
             Modelish.create( Car.class ).model( null ).age( 16 ).wheels( 4 )._immutable()
-        } //  |
+        }
         catch ( IllegalArgumentException iae ) {
 
             assert iae.getMessage() == "null passed to non nullable 'model'!"

@@ -260,9 +260,26 @@ class ModelishInvocationHandler implements InvocationHandler {
                 // Setter
                 if ( args != null && args.length == 1 ) {
 
+                    boolean foundNotNull = false
+
+                    method.annotations.each { Annotation ann ->
+
+                        // Lets be flexible here! Any annotation containing the parts
+                        // "no" and "null" independent of case will be treated as a non
+                        // null value. So the internally provided annotation will work,
+                        // but so will JetBrains @NotNull, and my Docutations @NotNull
+                        // and any other annotation containing strings "no"and "null"
+                        // independent of case. And yes, "@NullNo" will also thereby
+                        // work! Just want to be flexible.
+                        String name = ann.toString().toLowerCase()
+
+                        if (name.contains("no") && name.contains("null")) {
+                            foundNotNull = true
+                        }
+                    }
+
                     // Validate nullability of setter.
-                    Annotation noNull = method.getAnnotation( NoNull.class )
-                    if ( noNull != null && args[ 0 ] == null ) {
+                    if ( foundNotNull && args[ 0 ] == null ) {
                         throw new ModelishException( "null passed to non nullable '${method.name}'!" )
                     }
 
