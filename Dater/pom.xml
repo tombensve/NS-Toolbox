@@ -46,4 +46,29 @@
         </plugins>
     </build>
 
+    <developers>
+        <developer>
+            <name>Tommy Svensson</name>
+            <email>tommy@natusoft.se</email>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/tombensve/NS-Toolbox</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:https://github.com/tombensve/NS-Toolbox.git</connection>
+        <url>scm:https://github.com/tombensve/NS-Toolbox.git</url>
+    </scm>
+
+
 </project>
