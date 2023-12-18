@@ -466,4 +466,26 @@ class ModelishTest {
         }
 
     }
+
+    interface MixedFormatTestData extends Cloneable<MixedFormatTestData> {
+
+        MixedFormatTestData someData(String data)
+        MixedFormatTestData setSomeData(String data)
+
+        String getSomeData()
+    }
+
+    @Test
+    void verifyMixedFormatSetterAndGetter() {
+
+        MixedFormatTestData mftd = Modelish.create(MixedFormatTestData.class)
+
+        mftd.someData("qwerty")
+        assert mftd.someData == "qwerty"
+        assert mftd.getSomeData() == "qwerty"
+
+        // The problem here is that you cannot chain setters!
+        mftd.someData = "asdf"
+        assert mftd.someData == "asdf"
+    }
 }
