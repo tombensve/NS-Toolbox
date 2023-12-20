@@ -15,6 +15,10 @@ a HashMap.
 
 ## Latest Version
 
+### 3.0.10
+
+Added @ModelishModel purely for documentation purposes.
+
 ### 3.0.9
 
 Now only requires an annotation containing the strings "no" and "null" in the name (capitals
