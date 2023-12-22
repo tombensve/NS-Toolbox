@@ -11,7 +11,7 @@
 
     <artifactId>groovy-build-mixin</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0_G4.0.1-BC1.8</version><!-- To indicate Groovy version and produced byte code version. -->
+    <version>1.0.0_G${groovy-version}-BC1.8</version><!-- To indicate Groovy version and produced byte code version. -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
