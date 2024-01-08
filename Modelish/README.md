@@ -15,9 +15,13 @@ a HashMap.
 
 ## Latest Version
 
+### 3.0.11
+
+Added `@ModelsihPropoerty`annotation purely for documentation purposes.
+
 ### 3.0.10
 
-Added @ModelishModel purely for documentation purposes.
+Added `@ModelishModel` purely for documentation purposes.
 
 ### 3.0.9
 
