@@ -16,7 +16,7 @@
         <dependency>
             <groupId>org.apache.groovy</groupId>
             <artifactId>groovy</artifactId>
-            <version>4.0.1</version>
+            <version>4.0.17</version>
         </dependency>
     </dependencies>
 
@@ -32,7 +32,7 @@
                         <mixin>
                             <groupId>se.natusoft.tools.toolbox</groupId>
                             <artifactId>groovy-build-mixin</artifactId>
-                            <version>1.0.0_G4.0.1-BC11</version>
+                            <version>1.0.0_G4.0.17-BC11</version>
                         </mixin>
                     </mixins>
                 </configuration>

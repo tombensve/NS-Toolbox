@@ -1,6 +1,6 @@
 # Groovy Build Mixin
 
-This provides Groovy 4.0.1 compilation of code with JDK 11 bytecode.
+This provides Groovy 4.0.17 compilation of code with JDK 11 bytecode.
 
 You must first add the following dependency:
 
@@ -8,7 +8,7 @@ You must first add the following dependency:
             <dependency>
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy</artifactId>
-                <version>4.0.1</version>
+                <version>4.0.17</version>
             </dependency>
         </dependencies>
 
@@ -27,9 +27,8 @@ So after adding the groovy dependency above, add the following config to the pom
                     <mixin>
                         <groupId>se.natusoft.tools.toolbox</groupId>
                         <artifactId>groovy-build-mixin</artifactId>
-                        <version>1.0.0_G4.0.1-BC11</version>
+                        <version>1.0.0_G4.0.17-BC11</version>
                     </mixin>
                 </mixins>
             </configuration>
         </plugin>
-

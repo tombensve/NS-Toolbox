@@ -88,11 +88,6 @@
             <url>https://repo.repsy.io/mvn/tombensve/natusoft-os</url>
         </repository>
 
-        <repository>
-            <id>ns-repo</id>
-            <name>ns-artifact-repository</name>
-            <url>https://download.natusoft.se/maven</url>
-        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -101,15 +96,6 @@
             <id>repsy</id>
             <name>repsy</name>
             <url>https://repo.repsy.io/mvn/tombensve/natusoft-os</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-
-        <pluginRepository>
-            <id>ns-plugin-repo</id>
-            <name>na-plugin-repository</name>
-            <url>https://download.natusoft.se/maven</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -153,7 +139,7 @@
                 <plugin>
                     <groupId>se.natusoft.tools.codelicmgr</groupId>
                     <artifactId>CodeLicenseManager-maven-plugin</artifactId>
-                    <version>2.2.3</version>
+                    <version>2.2.6</version>
                 </plugin>
 
                 <plugin>
@@ -169,7 +155,6 @@
 
             <!--
                 Setup Java version (currently no Java code here!).
-            -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -177,6 +162,7 @@
                     <target>1.11</target>
                 </configuration>
             </plugin>
+            -->
 
             <!--
                 Define project assemblies.
@@ -276,13 +262,6 @@
             <name>repsy</name>
             <url>https://repo.repsy.io/mvn/tombensve/natusoft-os</url>
         </repository>
-        <!--
-        <repository>
-            <id>download.natusoft.se</id>
-            <name>DownloadNatusoftSe-NS-Toolbox</name>
-            <url>ftp://${maven.repo.upload}/${maven.base.path}</url>
-        </repository>
-        -->
     </distributionManagement>
 
     <!--
