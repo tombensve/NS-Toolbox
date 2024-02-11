@@ -207,7 +207,14 @@ class ModelishInvocationHandler implements InvocationHandler {
                         if (entry.value instanceof java.lang.Cloneable) {
                             map[entry.key] = entry.value.clone()
                         }
+                        else if (entry.value instanceof String) {
+                            map[entry.key] = entry.value.toString()
+                        }
+                        else if (entry.value instanceof Number) {
+                            map[entry.key] = (Number)entry.value
+                        }
                         else {
+                            System.err.println("Modelish: Warning: Did fail to clone: " + entry.value)
                             map[entry.key] = entry.value
                         }
                     }

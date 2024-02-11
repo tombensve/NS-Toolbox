@@ -10,6 +10,15 @@
 
     <artifactId>groovy-build-mixin</artifactId>
     <packaging>pom</packaging>
+    <!--
+        Note that maven complains here due to the "${groovy-version}" reference. This is defined in the
+        top parent and maven does seem to accept this since it expands it correctly!
+
+        I'm using the maven-mixin-plugin from Ohad David to have some common setup for Groovy builds,
+        and I use this mixin for all my groovy projects, thus having one place to set it up and then
+        just reuse. I believe that the Maven people never considered the possibility of a "mixin"
+        plugin, but again, this works!
+    -->
     <version>1.0.0_G${groovy-version}-BC11</version><!-- To indicate Groovy version and produced byte code version. -->
 
     <properties>
