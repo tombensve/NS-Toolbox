@@ -253,14 +253,15 @@ class ModelishTest {
     // Giving it a more builder feel
     //
 
-    interface Address extends Cloneable<Address> {
+    interface SeagullModel<T> extends Cloneable<T> {}
 
-        String street()
+    interface Address extends SeagullModel<Address> {
 
-        int streetNumber()
+        String getStreet()
 
-        String postalAddress()
+        int getStreetNumber()
 
+        String getPostalAddress()
     }
 
     interface AddressBuilder extends Address {
@@ -287,9 +288,9 @@ class ModelishTest {
         // try to modify will fail due to the ending _lock() call.
         // But using the Address interface only gives you access to getters, thus looking
         // a bit cleaner.
-        assert address.street() == "Somewhere Street"
-        assert address.streetNumber() == 44
-        assert address.postalAddress() == "Stockholm"
+        assert address.street == "Somewhere Street"
+        assert address.streetNumber == 44
+        assert address.postalAddress == "Stockholm"
 
     }
 
@@ -393,6 +394,17 @@ class ModelishTest {
      * and I will not mess it up due to this little "issue".
      */
 
+    /*
+     * Note that the below test will produce the following warning:
+     *
+     * WARNING: An illegal reflective access operation has occurred
+     * WARNING: Illegal reflective access by org.codehaus.groovy.vmplugin.v9.Java9 (file:/Users/tommy/.m2/repository/org/apache/groovy/groovy/4.0.18/groovy-4.0.18.jar) to field java.lang.reflect.Proxy.h
+     * WARNING: Please consider reporting this to the maintainers of org.codehaus.groovy.vmplugin.v9.Java9
+     * WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+     * WARNING: All illegal access operations will be denied in a future release
+     *
+     *
+     */
     @Test
     void verifyGetValueMap() {
 
