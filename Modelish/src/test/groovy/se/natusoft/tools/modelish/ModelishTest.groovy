@@ -300,6 +300,11 @@ class ModelishTest {
 
     interface Car extends Factory<Car> {
 
+        // Do note that creating a factory instance like this will create one instance which is never used
+        // for anything else than providing default values.
+
+        static final Car FACTORY = Modelish.create(Car.class) // add possible defaults here ...
+
         String model();
 
         @NoNull
@@ -318,7 +323,7 @@ class ModelishTest {
     @Test
     void verifyFactoryUse() {
 
-        Car carFactory = Modelish.create( Car.class ).age( 16 )._immutable()
+        Car carFactory = Car.FACTORY._create().age( 16 )._immutable()
 
         // Note: _create() and _clone() are identical!! _create() just looks better when used as factory.
         Car car = carFactory._create().model( "VW EOS" ).wheels( 4 )._immutable()
@@ -328,6 +333,7 @@ class ModelishTest {
         assert car.wheels() == 4
 
     }
+
 
     //
     // Not null fields
