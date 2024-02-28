@@ -19,7 +19,7 @@
         just reuse. I believe that the Maven people never considered the possibility of a "mixin"
         plugin, but again, this works!
     -->
-    <version>1.0.0_G${groovy-version}-BC11</version><!-- To indicate Groovy version and produced byte code version. -->
+    <version>1.0.1_G${groovy-version}-BC11</version><!-- To indicate Groovy version and produced byte code version. -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.0.2</version>
 
                 <dependencies>
                     <dependency>
