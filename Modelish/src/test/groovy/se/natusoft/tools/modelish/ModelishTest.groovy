@@ -33,6 +33,7 @@
  */
 package se.natusoft.tools.modelish
 
+import com.sun.org.apache.xpath.internal.operations.Mod
 import groovy.transform.CompileStatic
 import org.junit.jupiter.api.Test
 
@@ -506,5 +507,78 @@ class ModelishTest {
         // The problem here is that you cannot chain setters!
         mftd.someData = "asdf"
         assert mftd.someData == "asdf"
+    }
+
+    interface NotEmptyTestModel extends Model<NotEmptyTestModel> {
+
+        @NotEmpty
+        NotEmptyTestModel setName( String name )
+
+        String getName()
+    }
+
+    @Test
+    void verifyNotEmptyValidation() {
+
+        NotEmptyTestModel netm = Modelish.create(NotEmptyTestModel.class)
+
+        netm.name = "Test"
+
+        try {
+            netm.name = ""
+            throw new RuntimeException("This should not happen!")
+        }
+        catch(ModelishException me) {
+            println("Expectedly threw Exception!")
+        }
+    }
+
+    // ------------------------------------------------------------------------------ //
+
+
+    interface ValidNumericRange extends Model<ValidNumericRange> {
+
+        @ValidRange(min = -32.0d, max = 200.0d)
+        ValidNumericRange setIntValue(int value)
+        int getIntValue()
+
+        @ValidRange(min = -10.0d, max = 10.0d)
+        ValidNumericRange setDoubleValue (double value)
+        double getDoubleValue()
+    }
+
+    @Test
+    void verifyRange() {
+
+        // ========== Int ========== //
+
+        ValidNumericRange vnr = Modelish.create(ValidNumericRange.class)
+
+        // OK
+        vnr.setIntValue(123)
+
+        // BAD
+        try {
+            vnr.setIntValue(532)
+            throw new RuntimeException("This should have failed!")
+        }
+        catch(ModelishException me) {
+            println("verifyRange(Int): Expectedly threw Exception!")
+        }
+
+        // ========== Double ========== //
+
+        // OK
+        vnr.setDoubleValue(-3.7d)
+
+        // Bad
+        try {
+            vnr.setDoubleValue(12.9d)
+            throw new RuntimeException("This should have failed!")
+        }
+        catch (ModelishException me) {
+            println("verifyRange(Double): Expectedly threw Exception!")
+        }
+
     }
 }

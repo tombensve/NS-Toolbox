@@ -15,6 +15,17 @@ a HashMap.
 
 ## Latest Version
 
+### 3.1.0
+
+New annotations:
+
+- @ValidRange: Now supports min and max range for numeric values. Note that the annotation values
+  are of type _double_! That said, it works for _int_, _long_, and _float_ values in models also! I did not
+  want 3 different annotations depending on type! Any user of this has to keep track of actual type to not
+  allow to big values! For "int":s and "long":s you should specify .0 as decimal.
+
+- @NotEmpty: Forces a required value. I.e null or "" is not accepted.
+
 ### 3.0.11
 
 Added `@ModelsihPropoerty`annotation purely for documentation purposes.

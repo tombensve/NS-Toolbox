@@ -5,7 +5,7 @@
  *         Modelish
  *
  *     Description
- *         Provides a RPN Query against name value set of data (Properties, Map).
+ *         Provides generic implementation of models defined as interfaces.
  *
  * COPYRIGHTS
  *     Copyright (C) 2022 by Natusoft AB All rights reserved.
@@ -31,6 +31,7 @@
  *         2022-02-11: Created!
  *
  */
+
 package se.natusoft.tools.modelish.internal
 
 import groovy.transform.CompileStatic
@@ -38,7 +39,7 @@ import se.natusoft.tools.modelish.Cloneable
 import se.natusoft.tools.modelish.ModelishException
 import se.natusoft.tools.modelish.Model
 import se.natusoft.tools.modelish.NoNull
-
+import se.natusoft.tools.modelish.ValidRange
 import java.lang.annotation.Annotation
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
@@ -69,6 +70,12 @@ class ModelishInvocationHandler implements InvocationHandler {
     }
 
     /**
+     * Handles method invocations.
+     *
+     * ----------------------------------------------------------------------------
+     *
+     * Copied from InvocationHandler:
+     *
      * Processes a method invocation on a proxy instance and returns
      * the result.  This method will be invoked on an invocation handler
      * when a method is invoked on a proxy instance that it is
@@ -130,32 +137,6 @@ class ModelishInvocationHandler implements InvocationHandler {
 
         //noinspection GroovyFallthrough
         switch ( calledMethod ) {
-
-//            case "_validate":
-//                List<String> propertyNames = [ ]
-//                method.declaringClass.methods.each { Method m ->
-//                    String methodName = m.name
-//                    if ( methodName.startsWith( "set" ) ) {
-//                        methodName = methodName.substring( 3 )
-//                        methodName = methodName.substring( 0, 1 ).toLowerCase() + methodName.substring( 1 )
-//                        propertyNames << methodName
-//
-//                        Object value = this.values[ methodName ]
-//                        if ( value != null ) {
-//                            Annotation noNull = m.getAnnotation( NoNull.class )
-//                            if ( noNull != null && value == null ) {
-//                                throw new ModelishException( "${methodName} are not allowed to be null!!" )
-//                            }
-//                        }
-//                    }
-//
-//                    this.values.each { Map.Entry<String, Object> e ->
-//                        if ( !propertyNames.contains( e.key ) ) {
-//                            throw new ModelishException( "${e.key} is not a valid key!" )
-//                        }
-//                    }
-//                }
-//                break
 
             case "_immutable":
             case "_lock":
@@ -268,6 +249,8 @@ class ModelishInvocationHandler implements InvocationHandler {
                 if ( args != null && args.length == 1 ) {
 
                     boolean foundNotNull = false
+                    boolean foundNotEmpty = false
+                    ValidRange validRange = null
 
                     method.annotations.each { Annotation ann ->
 
@@ -280,14 +263,37 @@ class ModelishInvocationHandler implements InvocationHandler {
                         // work! Just want to be flexible.
                         String name = ann.toString().toLowerCase()
 
-                        if (name.contains("no") && name.contains("null")) {
+                        if ( name.contains ( "no" ) && name.contains("null" ) ) {
                             foundNotNull = true
                         }
+
+                        if ( name.contains( "no" ) && name.contains( "empty" ) ) {
+                            foundNotEmpty = true
+                        }
+
+                        if ( name.contains( "validrange" ) ) {
+                            validRange = ann as ValidRange
+                        }
+
                     }
 
                     // Validate nullability of setter.
                     if ( foundNotNull && args[ 0 ] == null ) {
                         throw new ModelishException( "null passed to non nullable '${method.name}'!" )
+                    }
+
+                    if ( foundNotEmpty && args[0] instanceof String && (args[0] as String).size() == 0 ) {
+                        throw new ModelishException( "Empty string not allowed here! '(${method.name})'" )
+                    }
+
+                    if ( validRange != null && args[0] instanceof Number ) {
+                        Number value = args[0] as Number
+
+                        if ( value <  validRange.min() || value > validRange.max() ) {
+                            throw new ModelishException(
+                                    "Value out of valid range: ${validRange.min()}:${validRange.max()}!"
+                            )
+                        }
                     }
 
                     if ( this.locked ) {

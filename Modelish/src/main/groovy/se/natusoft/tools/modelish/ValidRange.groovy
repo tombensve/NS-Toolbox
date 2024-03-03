@@ -26,26 +26,25 @@
  *     limitations under the License.
  *
  * AUTHORS
- *     tommy ()
- *         Changes:
- *         2022-02-12: Created!
+ *     tommy
  *
  */
 package se.natusoft.tools.modelish
 
-import groovy.transform.CompileStatic
+import java.lang.annotation.ElementType
+import java.lang.annotation.Retention
+import java.lang.annotation.RetentionPolicy
+import java.lang.annotation.Target
 
 /**
- * Let your models extend this interface instead of ModelishModel directly to be able to clone them.
+ * This defines a minimum and maximum value range of a numeric property.
  *
- * @param <T> The top level model type. i.e the model type to return.
+ * The double will be cast to int, long, and float for such values.
  */
-@CompileStatic
-interface Cloneable<T> extends Model<T> {
+@Retention( RetentionPolicy.RUNTIME)
+@Target( ElementType.METHOD)
+@interface ValidRange {
 
-    /**
-     * @return A clone of current model. New model will not be locked, and neither will sub models!!
-     *         You have to lock clone and all its sub models manually if/when you want them locked.
-     */
-    T _clone()
+    double min()
+    double max()
 }
