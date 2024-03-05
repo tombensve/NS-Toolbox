@@ -33,10 +33,12 @@
  */
 package se.natusoft.tools.modelish
 
-import com.sun.org.apache.xpath.internal.operations.Mod
+
 import groovy.transform.CompileStatic
 import org.junit.jupiter.api.Test
-
+import se.natusoft.tools.modelish.annotations.validations.NoNull
+import se.natusoft.tools.modelish.annotations.validations.NotEmpty
+import se.natusoft.tools.modelish.annotations.validations.ValidRange
 
 /**
  * This doubles as test and example of usage.
@@ -538,7 +540,11 @@ class ModelishTest {
 
     interface ValidNumericRange extends Model<ValidNumericRange> {
 
-        @ValidRange(min = -32.0d, max = 200.0d)
+        // Internally these are double values for simplicity, but it is possible
+        // to coerce them into int values as below. Runtime the actual range values
+        // will still be doubles. But that doesn't matter! If that is a Java or a
+        // Groovy feature I don't know.
+        @ValidRange(min = -32, max = 200)
         ValidNumericRange setIntValue(int value)
         int getIntValue()
 

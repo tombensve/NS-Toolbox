@@ -15,6 +15,30 @@ a HashMap.
 
 ## Latest Version
 
+### 3.2.0
+
+Validators are no longer internal even though 3 are provided by default:
+
+- NoNullValidator
+- NotEmptyValidator
+- ValidRangeValidator
+
+The new  interface ModelishValidator defines the "Validator" API. Such can be implemented and
+then added to `ModelValidator.VALIDATORS`. This is a LinkedList of `ModelishValidator` implementations.
+
+So if you have a model made with Modelish and wan't to validate it for something, write an implementation
+and then add an instance of that implementation to `ModelValidator.VALIDATORS`. It is a static 
+`LinkedList` containing 3 validators by default.
+
+If you look at the 3 existing validators you can see that those identify annotations to check data
+for by name, not type! This makes it more flexible. 
+
+Do note that this static `LinkedList` is modifiable, which is why you can add validators to it.
+But this also allows you to remove validators from it! This includes the default ones. I would
+not recommend doing that, but it is possible!
+
+This just offers for easy own runtime validation of own models
+
 ### 3.1.0
 
 New annotations:

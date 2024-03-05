@@ -34,6 +34,7 @@
 package se.natusoft.tools.modelish
 
 import groovy.transform.CompileStatic
+import se.natusoft.tools.modelish.annotations.validations.NoNull
 import se.natusoft.tools.modelish.internal.Internal
 import se.natusoft.tools.modelish.internal.ModelishInvocationHandler
 
