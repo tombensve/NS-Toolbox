@@ -35,11 +35,12 @@ So theoretically you can just produce binaries for any JDK level without changin
 - [APIs](ns-toolbox-apis/README.md)
 
 - [Modelish](Modelish/README.md) Provides Java Bean and fluent (I think it's called) style property accessors
-using interfaces which gets a proxy implementation. Supports building and imutability.
+using interfaces which gets a proxy implementation. Supports building and imutability. This since 3.2.0 also supports validation of data in models
+based on annotations on setters. Possible to supply own validators that will be triggered on set of values.
+
+- [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md) Mixins for building Groovy 4. Other modules use this. There is one for JDK 1.8 bytecode and one for JDK 11 bytecode. Even though I believe that Groovy will handle the non backwards compatibility issues I'm sticking to 11 for now. No customer I've been at as a consultant in Sweden have used anything higher than 11. Testing all existing code for higher JDKs is not a small jobb!! 
 
 - [Dater](Dater/README.md) Parses JSON date format strings and provides java.time objects.
-
-- [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md) Mixins for building Groovy 4. Other modules use this.
 
 - [RPNQuery](RPNQuery/README.md) Queries data using RPN (Reverse Polish Notation).
 
