@@ -38,8 +38,8 @@ import groovy.transform.CompileStatic
 import se.natusoft.tools.modelish.Cloneable
 import se.natusoft.tools.modelish.ModelishException
 import se.natusoft.tools.modelish.Model
-import se.natusoft.tools.modelish.NoNull
-import se.natusoft.tools.modelish.ValidRange
+import se.natusoft.tools.modelish.ModelishValidator
+import se.natusoft.tools.modelish.annotations.validations.ValidRange
 import java.lang.annotation.Annotation
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
@@ -248,56 +248,17 @@ class ModelishInvocationHandler implements InvocationHandler {
                 // Setter
                 if ( args != null && args.length == 1 ) {
 
-                    boolean foundNotNull = false
-                    boolean foundNotEmpty = false
+                    if ( this.locked ) {
+                        throw new ModelishException( "Update of read only object not allowed!" )
+                    }
+
                     ValidRange validRange = null
 
                     method.annotations.each { Annotation ann ->
 
-                        // Lets be flexible here! Any annotation containing the parts
-                        // "no" and "null" independent of case will be treated as a non
-                        // null value. So the internally provided annotation will work,
-                        // but so will JetBrains @NotNull, and my Docutations @NotNull
-                        // and any other annotation containing strings "no"and "null"
-                        // independent of case. And yes, "@NullNo" will also thereby
-                        // work! Just want to be flexible.
-                        String name = ann.toString().toLowerCase()
-
-                        if ( name.contains ( "no" ) && name.contains("null" ) ) {
-                            foundNotNull = true
+                        ModelishValidator.VALIDATORS.each { ModelishValidator validator ->
+                            validator.validate(ann, args, "${method.name}")
                         }
-
-                        if ( name.contains( "no" ) && name.contains( "empty" ) ) {
-                            foundNotEmpty = true
-                        }
-
-                        if ( name.contains( "validrange" ) ) {
-                            validRange = ann as ValidRange
-                        }
-
-                    }
-
-                    // Validate nullability of setter.
-                    if ( foundNotNull && args[ 0 ] == null ) {
-                        throw new ModelishException( "null passed to non nullable '${method.name}'!" )
-                    }
-
-                    if ( foundNotEmpty && args[0] instanceof String && (args[0] as String).size() == 0 ) {
-                        throw new ModelishException( "Empty string not allowed here! '(${method.name})'" )
-                    }
-
-                    if ( validRange != null && args[0] instanceof Number ) {
-                        Number value = args[0] as Number
-
-                        if ( value <  validRange.min() || value > validRange.max() ) {
-                            throw new ModelishException(
-                                    "Value out of valid range: ${validRange.min()}:${validRange.max()}!"
-                            )
-                        }
-                    }
-
-                    if ( this.locked ) {
-                        throw new ModelishException( "Update of read only object not allowed!" )
                     }
 
                     this.values.put( calledMethod, args[ 0 ] )

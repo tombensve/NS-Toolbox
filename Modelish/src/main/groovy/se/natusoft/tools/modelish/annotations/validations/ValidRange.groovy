@@ -29,13 +29,22 @@
  *     tommy
  *
  */
-package se.natusoft.tools.modelish
+package se.natusoft.tools.modelish.annotations.validations
 
 import java.lang.annotation.ElementType
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 import java.lang.annotation.Target
 
+/**
+ * This defines a minimum and maximum value range of a numeric property.
+ *
+ * The double will be cast to int, long, and float for such values.
+ */
 @Retention( RetentionPolicy.RUNTIME)
 @Target( ElementType.METHOD)
-@interface NoNull {}
+@interface ValidRange {
+
+    double min()
+    double max()
+}

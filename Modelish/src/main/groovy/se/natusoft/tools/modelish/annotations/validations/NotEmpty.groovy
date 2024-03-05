@@ -1,4 +1,4 @@
-package se.natusoft.tools.modelish
+package se.natusoft.tools.modelish.annotations.validations
 
 import java.lang.annotation.ElementType
 import java.lang.annotation.Retention
