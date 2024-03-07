@@ -15,6 +15,11 @@ a HashMap.
 
 ## Latest Version
 
+### 3.2.1
+
+Tiny change: Validators are now passed Method object rather than just "${method.name}" This in hope
+of providing a bit more flexibility of what can be validated.
+
 ### 3.2.0
 
 Validators are no longer internal even though 3 are provided by default:
