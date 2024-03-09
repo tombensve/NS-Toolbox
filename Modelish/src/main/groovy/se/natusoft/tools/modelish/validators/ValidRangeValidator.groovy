@@ -5,6 +5,7 @@ import se.natusoft.tools.modelish.ModelishValidator
 import se.natusoft.tools.modelish.annotations.validations.ValidRange
 
 import java.lang.annotation.Annotation
+import java.lang.reflect.Method
 
 /**
  * Validates the range of numeric values, excluding BigDecimal!
@@ -16,12 +17,12 @@ class ValidRangeValidator implements ModelishValidator {
      *
      * @param ann a possible validation annotation to check.
      * @param args The arguments to validate.
-     * @param methodName The name of the method called.
+     * @param method The method called.
      *
      * @throws se.natusoft.tools.modelish.ModelishException if not valid.
      */
     @Override
-    void validate ( Annotation ann, Object[] args, String methodName ) throws ModelishException {
+    void validate ( Annotation ann, Object[] args, Method method ) throws ModelishException {
 
         //
         String annName = ann.toString ().toLowerCase ()

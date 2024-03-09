@@ -5,6 +5,7 @@ import se.natusoft.tools.modelish.validators.NotEmptyValidator
 import se.natusoft.tools.modelish.validators.ValidRangeValidator
 
 import java.lang.annotation.Annotation
+import java.lang.reflect.Method
 
 /**
  * Implementations of this can be passed to Modelish.
@@ -39,5 +40,5 @@ interface ModelishValidator {
      *
      * @throws ModelishException if not valid.
      */
-    void validate ( Annotation ann, Object[] args, String methodName ) throws ModelishException
+    void validate ( Annotation ann, Object[] args, Method method ) throws ModelishException
 }

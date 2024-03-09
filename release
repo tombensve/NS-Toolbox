@@ -1,0 +1,4 @@
+#!/bin/sh
+
+./mvnw -P apply-licence-info -P ftp-setup  clean deploy
+

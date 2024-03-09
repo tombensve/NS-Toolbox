@@ -252,12 +252,14 @@ class ModelishInvocationHandler implements InvocationHandler {
                         throw new ModelishException( "Update of read only object not allowed!" )
                     }
 
-                    ValidRange validRange = null
+                    // ValidRange validRange = null
 
                     method.annotations.each { Annotation ann ->
 
+                        // NOTE: When a validator find a failing validation it will throw an Exception
+                        // directly in the validator! This to keep things simple!
                         ModelishValidator.VALIDATORS.each { ModelishValidator validator ->
-                            validator.validate(ann, args, "${method.name}")
+                            validator.validate(ann, args, method)
                         }
                     }
 
