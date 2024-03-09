@@ -12,7 +12,7 @@ Each tool has its own submodule. See Readme.md in each for more info.
 
 ## Binaries
 
-[See here for how to get binaries](https://github.com/tombensve/About)
+[See here for how to get binaries](https://tombensve.github.io)
 
 ## Versioning 
 
@@ -35,13 +35,12 @@ So theoretically you can just produce binaries for any JDK level without changin
 - [APIs](ns-toolbox-apis/README.md)
 
 - [Modelish](Modelish/README.md) Provides Java Bean and fluent (I think it's called) style property accessors
-using interfaces which gets a proxy implementation. Supports building and imutability.
+using interfaces which gets a proxy implementation. Supports building and immutability.
 
 - [Dater](Dater/README.md) Parses JSON date format strings and provides java.time objects.
 
-- [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md) Mixins for building Groovy 4. Other modules use this.
+- [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md) Mixins for building Groovy 4. Other modules use this. Now also supports byte code 17.
 
 - [RPNQuery](RPNQuery/README.md) Queries data using RPN (Reverse Polish Notation).
 
 <!-- - [Filtering service loader](filtering-service-loader/README.md) -->
-
