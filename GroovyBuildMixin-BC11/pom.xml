@@ -11,8 +11,7 @@
     <artifactId>groovy-build-mixin</artifactId>
     <packaging>pom</packaging>
     <!--
-        Note that maven complains here due to the "${groovy-version}" reference. This is defined in the
-        top parent and maven does seem to accept this since it expands it correctly!
+        If you get complaints from your IDE about ${groovy-version}, ignore it.
 
         I'm using the maven-mixin-plugin from Ohad David to have some common setup for Groovy builds,
         and I use this mixin for all my groovy projects, thus having one place to set it up and then
@@ -53,12 +52,8 @@
                         <goals>
                             <goal>addSources</goal>
                             <goal>addTestSources</goal>
-                            <!--goal>generateStubs</goal-->
                             <goal>compile</goal>
-                            <!--goal>generateTestStubs</goal-->
                             <goal>compileTests</goal>
-                            <!--goal>removeStubs</goal-->
-                            <!--goal>removeTestStubs</goal-->
                         </goals>
                     </execution>
                 </executions>
