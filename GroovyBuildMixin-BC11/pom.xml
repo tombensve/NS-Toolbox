@@ -18,7 +18,7 @@
         just reuse. I believe that the Maven people never considered the possibility of a "mixin"
         plugin, but again, this works!
     -->
-    <version>1.0.1_G${groovy-version}-BC11</version><!-- To indicate Groovy version and produced byte code version. -->
+    <version>1.0.2_G${groovy-version}-BC11</version><!-- To indicate Groovy version and produced byte code version. -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -61,7 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.12.1</version>
             </plugin>
 
         </plugins>
