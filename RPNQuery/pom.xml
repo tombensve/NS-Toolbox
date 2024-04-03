@@ -11,65 +11,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>RPNQuery</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.0_${bytecode.version}</version>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>4.0.17</version>
-        </dependency>
 
         <dependency>
             <groupId>se.natusoft.tools.toolbox</groupId>
             <artifactId>toolbox-apis</artifactId>
-            <version>1.1.0</version>
+            <version>${version}</version>
             <scope>compile</scope>
         </dependency>
+
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.github.odavid.maven.plugins</groupId>
-                <artifactId>mixin-maven-plugin</artifactId>
-                <version>0.1-alpha-39</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <mixins>
-                        <mixin>
-                            <groupId>se.natusoft.tools.toolbox</groupId>
-                            <artifactId>groovy-build-mixin</artifactId>
-                            <version>1.0.0_G4.0.17-BC11</version>
-                        </mixin>
-                    </mixins>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-    <developers>
-        <developer>
-            <name>Tommy Svensson</name>
-            <email>tommy@natusoft.se</email>
-        </developer>
-    </developers>
-
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/tombensve/NS-Toolbox</url>
-    </issueManagement>
-
-    <licenses>
-        <license>
-            <name>Apache 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
-
-    <scm>
-        <connection>scm:https://github.com/tombensve/NS-Toolbox.git</connection>
-        <url>scm:https://github.com/tombensve/NS-Toolbox.git</url>
-    </scm>
 
 </project>

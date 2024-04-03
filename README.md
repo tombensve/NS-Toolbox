@@ -8,6 +8,8 @@ This will probably grow over time.
 
 Each tool has its own submodule. See Readme.md in each for more info.
 
+**NOTE** that maven versions of built binaries will now end with _(byte code level)! 
+
 ----
 
 ## Binaries
@@ -26,7 +28,8 @@ Since Java went down with the sun, I have now decided from now on to use the Gro
 
 As of 4.x of Groovy you can decide what bytecode version to produce! I'm using 11 since it is the last backwards compatible JDK. 
 That said, it seems like Groovy 4 allows you to specify the byte code level to produce independent of your groovy code.
-So theoretically you can just produce binaries for any JDK level without changing any code.
+I have now appended the byte-code level to the version, so packages for multiple bytecode versions can now
+be built and pushed that will have a version ending in "_(byte code version)". Default is still 11.
 
 ----
 
@@ -38,7 +41,3 @@ So theoretically you can just produce binaries for any JDK level without changin
 using interfaces which gets a proxy implementation. Supports building and immutability.
 
 - [Dater](Dater/README.md) Parses JSON date format strings and provides java.time objects.
-
-- [GroovyBuildMixin](GroovyBuildMixin-BC11/README.md) Mixins for building Groovy 4. Other modules use this. Now also supports byte code 17.
-
-- [RPNQuery](RPNQuery/README.md) Queries data using RPN (Reverse Polish Notation).

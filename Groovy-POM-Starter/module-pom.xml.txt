@@ -1,27 +1,67 @@
+<!--
+    This will build Groovy code!
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>toolbox</artifactId>
-        <groupId>se.natusoft.tools.toolbox</groupId>
-        <version>static</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>groovy-build-mixin</artifactId>
-    <packaging>pom</packaging>
+    <groupId>se.natusoft</groupId>
+    <artifactId></artifactId>
+    <version></version>
+
+    <parent>
+        <artifactId></artifactId>
+        <groupId></groupId>
+        <version></version>
+    </parent>
+
     <!--
-        If you get complaints from your IDE about ${groovy-version}, ignore it.
-
-        I'm using the maven-mixin-plugin from Ohad David to have some common setup for Groovy builds,
-        and I use this mixin for all my groovy projects, thus having one place to set it up and then
-        just reuse.
+        Configuration
     -->
-    <version>1.0.2_G${groovy-version}-BC17</version><!-- To indicate Groovy version and produced byte code version. -->
-
     <properties>
+
+        <!--
+            Version of Groovy to use.
+        -->
+        <groovy.version>4.0.20</groovy.version>
+
+        <!--
+            Version of byte-code to produce.
+        -->
+        <bytecode.version>11</bytecode.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
     </properties>
+
+    <developers>
+        <developer>
+            <name>Tommy Svensson</name>
+            <email>tommy@natusoft.se</email>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/tombensve/</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:https://github.com/tombensve/NS-Toolbox.git</connection>
+        <url>scm:https://github.com/tombensve/NS-Toolbox.git</url>
+    </scm>
+
+    <packaging>jar</packaging>
+
+    <!-- ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞ -->
 
     <build>
         <sourceDirectory>src/main/groovy</sourceDirectory>
@@ -38,12 +78,12 @@
                     <dependency>
                         <groupId>org.apache.groovy</groupId>
                         <artifactId>groovy</artifactId>
-                        <version>${groovy-version}</version>
+                        <version>${groovy.version}</version>
                     </dependency>
                 </dependencies>
 
                 <configuration>
-                    <targetBytecode>17</targetBytecode>
+                    <targetBytecode>${bytecode.version}</targetBytecode>
                 </configuration>
 
                 <executions>
@@ -57,6 +97,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
