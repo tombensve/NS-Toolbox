@@ -5,20 +5,45 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>se.natusoft.</groupId>
-    <artifactId>NS-ToolBox</artifactId>
+    <artifactId>artifact</artifactId>
     <packaging>pom</packaging>
-    <version>static</version>
+    <version>1.0.0</version>
 
     <url>https://github/tombensve/</url>
 
     <description>
-        NS-Toolbox Root
+
     </description>
 
     <organization>
         <name>Tommy Bengt Svensson</name>
         <url>https://github.com/tombensve/</url>
     </organization>
+
+    <modules>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.1</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <inceptionYear>20nn</inceptionYear>
+
+    <properties>
+        <groovy-version>4.0.20</groovy-version>
+    </properties>
 
     <developers>
         <developer>
@@ -39,79 +64,10 @@
         </license>
     </licenses>
 
-    <modules>
-        <module>Dater</module>
-        <module>Modelish</module>
-        <module>ns-toolbox-apis</module>
-        <!--module>RPNQuery</module-->
-        <!--
-            This was a bad idea, and I'm not using it! It also refused to accept things that other models
-            do accept, and I completely fail to comprehend WHY!!!
-        -->
-    </modules>
-
-    <!--
-        Configuration
-    -->
-    <properties>
-
-        <!--
-            Version of Groovy to use.
-        -->
-        <groovy.version>4.0.20</groovy.version>
-
-        <!--
-            Version of byte-code to produce.
-        -->
-        <bytecode.version>11</bytecode.version>
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.10.1</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>${groovy.version}</version>
-        </dependency>
-
-    </dependencies>
-
-    <inceptionYear>2021</inceptionYear>
-
     <scm>
         <connection>scm:https://github.com/tombensve/.git</connection>
-        <url>scm:https://github.com/tombensve/NS-Toolbox.git</url>
+        <url>scm:https://github.com/tombensve/.git</url>
     </scm>
-
-    <!--
-        The variables used here are in my personal setting.xml! I make binaries
-        available from my web server after bintray shut down.
-
-        See: https://github.com/tombensve/About
-    -->
-    <distributionManagement>
-        <repository>
-            <id>repsy</id>
-            <name>repsy</name>
-            <url>https://repo.repsy.io/mvn/tombensve/natusoft-os</url>
-        </repository>
-    </distributionManagement>
-
 
     <repositories>
         <repository>
@@ -136,8 +92,6 @@
     </pluginRepositories>
 
     <build>
-        <sourceDirectory>src/main/groovy</sourceDirectory>
-        <testSourceDirectory>src/test/groovy</testSourceDirectory>
 
         <extensions>
             <!-- Enabling the use of FTP -->
@@ -187,43 +141,8 @@
 
         <plugins>
 
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>3.0.2</version>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.groovy</groupId>
-                        <artifactId>groovy</artifactId>
-                        <version>${groovy.version}</version>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <targetBytecode>${bytecode.version}</targetBytecode>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>addSources</goal>
-                            <goal>addTestSources</goal>
-                            <goal>compile</goal>
-                            <goal>compileTests</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
-            </plugin>
-
             <!--
-                 Define project assemblies.
+                Define project assemblies.
             -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -274,8 +193,7 @@
 
                             <createLicensesMarkdown>true</createLicensesMarkdown>
                             <markdownTargetSubdir>lics</markdownTargetSubdir>
-                            <markdownLinkPrefix>https://github.com/tombensve/${artifactId}/blob/master/lics/
-                            </markdownLinkPrefix>
+                            <markdownLinkPrefix>https://github.com/tombensve/${artifactId}/blob/master/lics/</markdownLinkPrefix>
 
                         </configuration>
                     </execution>
@@ -304,44 +222,23 @@
                 <version>3.2.3</version>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>3.0.2</version>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.groovy</groupId>
-                        <artifactId>groovy</artifactId>
-                        <version>4.0.20</version>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <targetBytecode>${bytecode.version}</targetBytecode>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>addSources</goal>
-                            <goal>addTestSources</goal>
-                            <goal>compile</goal>
-                            <goal>compileTests</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
-            </plugin>
-
         </plugins>
 
     </build>
+
+    <!--
+        The variables used here are in my personal setting.xml! I make binaries
+        available from my web server after bintray shut down.
+
+        See: https://github.com/tombensve/About
+    -->
+    <distributionManagement>
+        <repository>
+            <id>repsy</id>
+            <name>repsy</name>
+            <url>https://repo.repsy.io/mvn/tombensve/natusoft-os</url>
+        </repository>
+    </distributionManagement>
 
     <!--
         Profiles
