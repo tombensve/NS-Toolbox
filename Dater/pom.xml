@@ -5,70 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>toolbox</artifactId>
-        <groupId>se.natusoft.tools.toolbox</groupId>
+        <groupId>se.natusoft.</groupId>
+        <artifactId>NS-ToolBox</artifactId>
         <version>static</version>
     </parent>
 
     <artifactId>Dater</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0_${bytecode.version}</version>
 
-    <properties>
-        <byte-code>11</byte-code>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.groovy</groupId>
-            <artifactId>groovy</artifactId>
-            <version>${groovy-version}</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.github.odavid.maven.plugins</groupId>
-                <artifactId>mixin-maven-plugin</artifactId>
-                <version>0.1-alpha-39</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <mixins>
-                        <mixin>
-                            <groupId>se.natusoft.tools.toolbox</groupId>
-                            <artifactId>groovy-build-mixin</artifactId>
-                            <version>1.0.0_G${groovy-version}-BC${byte-code}</version>
-                        </mixin>
-                    </mixins>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
-
-    <developers>
-        <developer>
-            <name>Tommy Svensson</name>
-            <email>tommy@natusoft.se</email>
-        </developer>
-    </developers>
-
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/tombensve/NS-Toolbox</url>
-    </issueManagement>
-
-    <licenses>
-        <license>
-            <name>Apache 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
-
-    <scm>
-        <connection>scm:https://github.com/tombensve/NS-Toolbox.git</connection>
-        <url>scm:https://github.com/tombensve/NS-Toolbox.git</url>
-    </scm>
-
+    <packaging>jar</packaging>
 
 </project>
