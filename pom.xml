@@ -42,12 +42,6 @@
     <modules>
         <module>Dater</module>
         <module>Modelish</module>
-        <module>ns-toolbox-apis</module>
-        <!--module>RPNQuery</module-->
-        <!--
-            This was a bad idea, and I'm not using it! It also refused to accept things that other models
-            do accept, and I completely fail to comprehend WHY!!!
-        -->
     </modules>
 
     <!--

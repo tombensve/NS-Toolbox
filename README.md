@@ -9,6 +9,14 @@ This will probably grow over time.
 Each tool has its own submodule. See Readme.md in each for more info.
 
 **NOTE** that maven versions of built binaries will now end with _(byte code level)! 
+This to be able to build for different byte code levels. Byte code level is specified
+with this property:
+
+    <bytecode.version>11</bytecode.version>
+
+Temporarily change this one to another byte code level and then do `./mvnw clean install`
+to build for that byte code level. The highest usable byte code level depends on what
+Groovy supports.
 
 ----
 
@@ -34,8 +42,6 @@ be built and pushed that will have a version ending in "_(byte code version)". D
 ----
 
 ## Current content
-
-- [APIs](ns-toolbox-apis/README.md)
 
 - [Modelish](Modelish/README.md) Provides Java Bean and fluent (I think it's called) style property accessors
 using interfaces which gets a proxy implementation. Supports building and immutability.
