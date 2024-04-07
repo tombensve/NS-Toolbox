@@ -10,51 +10,33 @@ For ease of use I'm also including them below.
 ## Root POM
 
     <?xml version="1.0" encoding="UTF-8"?>
+    
     <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+    
+        <modelVersion>4.0.0</modelVersion>
     
         <groupId>se.natusoft.</groupId>
-        <artifactId>artifact</artifactId>
+        <artifactId></artifactId>
         <packaging>pom</packaging>
         <version>1.0.0</version>
     
+        <!--
+            General project information.
+        -->
         <url>https://github/tombensve/</url>
     
         <description>
     
         </description>
     
+        <inceptionYear>20nn</inceptionYear>
+    
         <organization>
             <name>Tommy Bengt Svensson</name>
             <url>https://github.com/tombensve/</url>
         </organization>
-    
-        <modules>
-        </modules>
-    
-        <dependencies>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>5.10.1</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.10.1</version>
-                <scope>test</scope>
-            </dependency>
-    
-        </dependencies>
-    
-        <inceptionYear>20nn</inceptionYear>
-    
-        <properties>
-            <groovy-version>4.0.20</groovy-version>
-        </properties>
     
         <developers>
             <developer>
@@ -79,6 +61,37 @@ For ease of use I'm also including them below.
             <connection>scm:https://github.com/tombensve/.git</connection>
             <url>scm:https://github.com/tombensve/.git</url>
         </scm>
+    
+        <!--
+            Building setup
+        -->
+    
+        <properties>
+            <groovy-version>4.0.20</groovy-version>
+        </properties>
+    
+        <modules>
+        </modules>
+    
+        <!--
+            Common dependencies
+        -->
+    
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>5.10.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.10.1</version>
+                <scope>test</scope>
+            </dependency>
+    
+        </dependencies>
     
         <repositories>
             <repository>
@@ -237,12 +250,6 @@ For ease of use I'm also including them below.
     
         </build>
     
-        <!--
-            The variables used here are in my personal setting.xml! I make binaries
-            available from my web server after bintray shut down.
-    
-            See: https://github.com/tombensve/About
-        -->
         <distributionManagement>
             <repository>
                 <id>repsy</id>
@@ -254,6 +261,7 @@ For ease of use I'm also including them below.
         <!--
             Profiles
         -->
+    
         <profiles>
             <profile>
                 <id>apply-licence-info</id>
@@ -333,6 +341,7 @@ For ease of use I'm also including them below.
         </profiles>
     
     </project>
+
 
 ## Module POM
 
