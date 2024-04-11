@@ -52,7 +52,7 @@
         <!--
             Version of Groovy to use.
         -->
-        <groovy.version>4.0.20</groovy.version>
+        <groovy.version>4.0.21</groovy.version>
 
         <!--
             Version of byte-code to produce.
@@ -307,7 +307,7 @@
                     <dependency>
                         <groupId>org.apache.groovy</groupId>
                         <artifactId>groovy</artifactId>
-                        <version>4.0.20</version>
+                        <version>${groovy.version}</version>
                     </dependency>
                 </dependencies>
 
