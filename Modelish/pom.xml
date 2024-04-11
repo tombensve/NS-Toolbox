@@ -3,15 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>se.natusoft</groupId>
-    <artifactId>Modelish</artifactId>
-    <version>3.2.2_${bytecode.version}</version>
-
     <parent>
-        <groupId>se.natusoft.</groupId>
+        <groupId>se.natusoft.tools</groupId>
         <artifactId>NS-ToolBox</artifactId>
         <version>static</version>
     </parent>
+
+    <artifactId>Modelish</artifactId>
+    <!-- major.minor.bytecode  -->
+    <version>3.3.11</version>
 
     <packaging>jar</packaging>
 

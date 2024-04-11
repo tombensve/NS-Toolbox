@@ -8,18 +8,6 @@ This will probably grow over time.
 
 Each tool has its own submodule. See Readme.md in each for more info.
 
-**NOTE** that maven versions of built binaries will now end with _(byte code level)! 
-This to be able to build for different byte code levels. Byte code level is specified
-with this property:
-
-    <bytecode.version>11</bytecode.version>
-
-Temporarily change this one to another byte code level and then do `./mvnw clean install`
-to build for that byte code level. The highest usable byte code level depends on what
-Groovy supports.
-
-----
-
 ## Binaries
 
 [See here for how to get binaries](https://tombensve.github.io)
@@ -32,12 +20,25 @@ It took me 3 tries to come up with a versioning strategy that did not suck. The 
 
 ## Groovy
 
-Since Java went down with the sun, I have now decided from now on to use the Groovy JVM language instead of Java for my GitHub code. Groovy is a **far better** language than Java and 100% JVM / Java compatible. Groovy have been along for a very long time. Groovy had features from the start that Java didn't get until much later, and Groovy did them right. Different from Java, Groovy also has real functions, called closures! Java have lambdas, bound to single method interfaces creating a lot of limitations. In use they look similar, but in functionality they are quite different. 
+Since Java went down with the sun, I have now decided from now on to use the Groovy JVM language instead of Java for my GitHub code. Groovy is a **far better** language than Java and 100% JVM / Java compatible. Groovy have been along for a very long time. Groovy had features from the start that Java didn't get until much later, and Groovy did them right. Different from Java, Groovy also has real functions, called closures! Java have lambdas, bound to single method interfaces creates a lot of limitations. In use they look similar, but in functionality they are quite different.
 
-As of 4.x of Groovy you can decide what bytecode version to produce! I'm using 11 since it is the last backwards compatible JDK. 
-That said, it seems like Groovy 4 allows you to specify the byte code level to produce independent of your groovy code.
-I have now appended the byte-code level to the version, so packages for multiple bytecode versions can now
-be built and pushed that will have a version ending in "_(byte code version)". Default is still 11.
+### Byte Code
+
+Groovy can now can produce byte code up to 23 as of Groovy 4.0.21, which is currently used!
+
+The byte code level is specified with this property in the pom.xml:
+
+    <bytecode.version>11</bytecode.version>
+
+This is currently the default byte code level I have decided to use, since I believe that many are still using this JDK version due to not having time to test all code against higher versions. Even if you have good unit tests they might not test for the kind of things that causes incompatibilities, and you will have to ensure that the test coverage is really good to feel save moving on over 11! So far, as a consultant I have seen no one go over version 11! That said, I stopped in April working 2023.
+
+I'm now only using the first 2 of the standard maven 3 digit version as version of this code, and the third digit as byte code version, which in master will now be **11**.
+
+I will also create a main_23 branch that will have bytecode level 23. All other code
+will be identical to standard _main_!
+
+I will push  both of these versions to my Repsy repo! See [tombensve.github.io](https://tombensve.github.io)
+for setup of Repsy repo.
 
 ----
 
