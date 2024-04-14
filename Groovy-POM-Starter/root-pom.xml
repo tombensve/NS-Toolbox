@@ -86,8 +86,6 @@
 
     </dependencies>
 
-    <inceptionYear>2021</inceptionYear>
-
     <scm>
         <connection>scm:https://github.com/tombensve/.git</connection>
         <url>scm:https://github.com/tombensve/NS-Toolbox.git</url>
