@@ -10,28 +10,22 @@ For ease of use I'm also including them below.
 ## Root POM
 
     <?xml version="1.0" encoding="UTF-8"?>
-    
     <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     
-        <modelVersion>4.0.0</modelVersion>
-    
-        <groupId>se.natusoft.</groupId>
+        <groupId></groupId>
         <artifactId></artifactId>
-        <packaging>pom</packaging>
         <version>1.0.0</version>
     
-        <!--
-            General project information.
-        -->
+        <packaging>pom</packaging>
+    
         <url>https://github/tombensve/</url>
     
         <description>
-    
+            NS-Toolbox Root
         </description>
-    
-        <inceptionYear>20nn</inceptionYear>
     
         <organization>
             <name>Tommy Bengt Svensson</name>
@@ -57,25 +51,27 @@ For ease of use I'm also including them below.
             </license>
         </licenses>
     
-        <scm>
-            <connection>scm:https://github.com/tombensve/.git</connection>
-            <url>scm:https://github.com/tombensve/.git</url>
-        </scm>
-    
-        <!--
-            Building setup
-        -->
-    
-        <properties>
-            <groovy-version>4.0.20</groovy-version>
-        </properties>
-    
         <modules>
         </modules>
     
         <!--
-            Common dependencies
+            Configuration
         -->
+        <properties>
+    
+            <!--
+                Version of Groovy to use.
+            -->
+            <groovy.version>4.0.21</groovy.version>
+    
+            <!--
+                Version of byte-code to produce.
+            -->
+            <bytecode.version>11</bytecode.version>
+    
+            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+        </properties>
     
         <dependencies>
             <dependency>
@@ -91,7 +87,35 @@ For ease of use I'm also including them below.
                 <scope>test</scope>
             </dependency>
     
+            <dependency>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+    
         </dependencies>
+    
+        <inceptionYear>2021</inceptionYear>
+    
+        <scm>
+            <connection>scm:https://github.com/tombensve/.git</connection>
+            <url>scm:https://github.com/tombensve/NS-Toolbox.git</url>
+        </scm>
+    
+        <!--
+            The variables used here are in my personal setting.xml! I make binaries
+            available from my web server after bintray shut down.
+    
+            See: https://github.com/tombensve/About
+        -->
+        <distributionManagement>
+            <repository>
+                <id>repsy</id>
+                <name>repsy</name>
+                <url>https://repo.repsy.io/mvn/tombensve/natusoft-os</url>
+            </repository>
+        </distributionManagement>
+    
     
         <repositories>
             <repository>
@@ -116,6 +140,8 @@ For ease of use I'm also including them below.
         </pluginRepositories>
     
         <build>
+            <sourceDirectory>src/main/groovy</sourceDirectory>
+            <testSourceDirectory>src/test/groovy</testSourceDirectory>
     
             <extensions>
                 <!-- Enabling the use of FTP -->
@@ -165,8 +191,43 @@ For ease of use I'm also including them below.
     
             <plugins>
     
+                <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>3.0.2</version>
+    
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.groovy</groupId>
+                            <artifactId>groovy</artifactId>
+                            <version>${groovy.version}</version>
+                        </dependency>
+                    </dependencies>
+    
+                    <configuration>
+                        <targetBytecode>${bytecode.version}</targetBytecode>
+                    </configuration>
+    
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>addSources</goal>
+                                <goal>addTestSources</goal>
+                                <goal>compile</goal>
+                                <goal>compileTests</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+    
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.12.1</version>
+                </plugin>
+    
                 <!--
-                    Define project assemblies.
+                     Define project assemblies.
                 -->
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
@@ -217,7 +278,8 @@ For ease of use I'm also including them below.
     
                                 <createLicensesMarkdown>true</createLicensesMarkdown>
                                 <markdownTargetSubdir>lics</markdownTargetSubdir>
-                                <markdownLinkPrefix>https://github.com/tombensve/${artifactId}/blob/master/lics/</markdownLinkPrefix>
+                                <markdownLinkPrefix>https://github.com/tombensve/${artifactId}/blob/master/lics/
+                                </markdownLinkPrefix>
     
                             </configuration>
                         </execution>
@@ -246,22 +308,48 @@ For ease of use I'm also including them below.
                     <version>3.2.3</version>
                 </plugin>
     
+                <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>3.0.2</version>
+    
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.apache.groovy</groupId>
+                            <artifactId>groovy</artifactId>
+                            <version>${groovy.version}</version>
+                        </dependency>
+                    </dependencies>
+    
+                    <configuration>
+                        <targetBytecode>${bytecode.version}</targetBytecode>
+                    </configuration>
+    
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>addSources</goal>
+                                <goal>addTestSources</goal>
+                                <goal>compile</goal>
+                                <goal>compileTests</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+    
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.12.1</version>
+                </plugin>
+    
             </plugins>
     
         </build>
     
-        <distributionManagement>
-            <repository>
-                <id>repsy</id>
-                <name>repsy</name>
-                <url>https://repo.repsy.io/mvn/tombensve/natusoft-os</url>
-            </repository>
-        </distributionManagement>
-    
         <!--
             Profiles
         -->
-    
         <profiles>
             <profile>
                 <id>apply-licence-info</id>
