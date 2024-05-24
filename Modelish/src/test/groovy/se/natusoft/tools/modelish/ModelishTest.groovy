@@ -33,7 +33,6 @@
  */
 package se.natusoft.tools.modelish
 
-
 import groovy.transform.CompileStatic
 import org.junit.jupiter.api.Test
 import se.natusoft.tools.modelish.annotations.validations.NoNull
@@ -50,49 +49,59 @@ class ModelishTest {
     // Simple Usage
     //
 
-    interface UserInfo extends Cloneable<UserInfo> {
+    // This also demonstrates possible separation of creation / update and reading!
+    interface UserInfoBuilder extends UserInfo, Cloneable<UserInfoBuilder> {
+
+        UserInfoBuilder name( String name )
+
+        UserInfoBuilder age( int age )
+
+        UserInfoBuilder address( String address )
+    }
+
+    // Those with only this interface can only read information!
+    interface UserInfo {
 
         String name()
 
-        UserInfo name( String name )
-
         int age();
 
-        UserInfo age( int age )
-
         String address();
-
-        UserInfo address( String address )
-
     }
 
     @Test
     void verifyModelishNormalUsage() {
 
-        UserInfo userInfo = Modelish.create( UserInfo.class )
+        UserInfo userInfoBuilder = Modelish.create( UserInfoBuilder.class )
                 .name( "Tommy Svensson" )
                 .age( 53 )
                 .address( "Stockholm" )
                 ._immutable()
 
+        UserInfo userInfo = (UserInfo)userInfoBuilder
+
         assert userInfo.name() == "Tommy Svensson"
         assert userInfo.age() == 53
         assert userInfo.address() == "Stockholm"
 
+        boolean assureAssert = false
         try {
-            userInfo.name( "qwerty" )
+            userInfoBuilder.name( "qwerty" )
             // This because shit can ALWAYS happen!
             throw new RuntimeException( "This should not happen since model is locked." )
         }
         catch ( IllegalArgumentException iae ) {
+            assureAssert = true
             assert iae.getMessage() == "Update of read only object not allowed!"
         }
+
+        assert assureAssert == true
 
     }
 
     @Test
     void verifyToStringAndHashCode() {
-        UserInfo userInfo = Modelish.create( UserInfo.class )
+        UserInfoBuilder userInfo = Modelish.create( UserInfoBuilder.class )
                 .name( "Tommy Svensson" )
                 .age( 53 )
                 .address( "Stockholm" )
@@ -121,7 +130,7 @@ class ModelishTest {
     @Test
     void verifyCloningModel() {
 
-        UserInfo userInfo = Modelish.create( UserInfo.class )
+        UserInfoBuilder userInfo = Modelish.create( UserInfoBuilder.class )
                 .name( "Tommy Svensson" )
                 .age( 53 )
                 .address( "Stockholm" )
@@ -179,7 +188,7 @@ class ModelishTest {
         User user = Modelish.create( User.class )
                 .id( "tbs" )
                 .loginCount( 9843 )
-                .userInfo( Modelish.create( UserInfo.class )
+                .userInfo( Modelish.create( UserInfoBuilder.class )
                         .name( "Tommy" )
                         .address( "Liljeholmen" )
                         .age( 53 )
@@ -201,7 +210,7 @@ class ModelishTest {
         User user = Modelish.create( User.class )
                 .id( "tbs" )
                 .loginCount( 9843 )
-                .userInfo( Modelish.create( UserInfo.class )
+                .userInfo( Modelish.create( UserInfoBuilder.class )
                         .name( "Tommy" )
                         .address( "Liljeholmen" )
                         .age( 53 )
@@ -215,7 +224,7 @@ class ModelishTest {
         assert user2.userInfo().address() == "Liljeholmen"
 
         // Modify original address
-        user.userInfo().address( "Stockholm" )
+        (user.userInfo() as UserInfoBuilder).address( "Stockholm" )
         assert user.userInfo().address() == "Stockholm"
 
         // Make sure address of clone is not modified.
@@ -233,7 +242,7 @@ class ModelishTest {
         User user = Modelish.create( User.class )
                 .id( "tbs" )
                 .loginCount( 9843 )
-                .userInfo( Modelish.create( UserInfo.class )
+                .userInfo( Modelish.create( UserInfoBuilder.class )
                         .name( "Tommy" )
                         .address( "Liljeholmen" )
                         .age( 53 )
@@ -241,7 +250,7 @@ class ModelishTest {
                 ._recursivelyImmutable()
 
         try {
-            user.userInfo().age( 43 )
+            (user.userInfo() as UserInfoBuilder).age( 43 )
 
             throw new IllegalArgumentException( "Update allowed! Should have caused an exception!" )
 
@@ -421,7 +430,7 @@ class ModelishTest {
         User user = Modelish.create( User.class )
                 .id( "tbs" )
                 .loginCount( 9843 )
-                .userInfo( Modelish.create( UserInfo.class )
+                .userInfo( Modelish.create( UserInfoBuilder.class )
                         .name( "Tommy" )
                         .address( "Liljeholmen" )
                         .age( 54 )

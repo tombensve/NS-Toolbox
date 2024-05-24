@@ -299,35 +299,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>3.0.2</version>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.groovy</groupId>
-                        <artifactId>groovy</artifactId>
-                        <version>${groovy.version}</version>
-                    </dependency>
-                </dependencies>
-
-                <configuration>
-                    <targetBytecode>${bytecode.version}</targetBytecode>
-                </configuration>
-
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>addSources</goal>
-                            <goal>addTestSources</goal>
-                            <goal>compile</goal>
-                            <goal>compileTests</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.12.1</version>
