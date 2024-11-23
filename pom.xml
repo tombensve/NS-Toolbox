@@ -133,15 +133,6 @@
         <sourceDirectory>src/main/groovy</sourceDirectory>
         <testSourceDirectory>src/test/groovy</testSourceDirectory>
 
-        <extensions>
-            <!-- Enabling the use of FTP -->
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>2.3</version>
-            </extension>
-        </extensions>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -162,12 +153,6 @@
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>3.6.0</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>se.natusoft.tools.codelicmgr</groupId>
-                    <artifactId>CodeLicenseManager-maven-plugin</artifactId>
-                    <version>2.2.6</version>
                 </plugin>
 
                 <plugin>
@@ -239,44 +224,6 @@
             </plugin>
 
             <!--
-                Copy relevant license files to target on install.
-            -->
-            <plugin>
-                <groupId>se.natusoft.tools.codelicmgr</groupId>
-                <artifactId>CodeLicenseManager-maven-plugin</artifactId>
-
-                <executions>
-                    <execution>
-                        <id>install-licence-info</id>
-                        <goals>
-                            <goal>install</goal>
-                        </goals>
-                        <phase>install</phase>
-                        <configuration>
-
-                            <installOptions>
-                                <verbose>true</verbose>
-                                <licenseDir>target/license</licenseDir>
-                                <thirdpartyLicenseDir>target/license/thirdparty</thirdpartyLicenseDir>
-                            </installOptions>
-
-                            <!--
-                                Here we add those that are not auto resolved.
-                            -->
-                            <thirdpartyLicenses>
-                            </thirdpartyLicenses>
-
-                            <createLicensesMarkdown>true</createLicensesMarkdown>
-                            <markdownTargetSubdir>lics</markdownTargetSubdir>
-                            <markdownLinkPrefix>https://github.com/tombensve/${artifactId}/blob/master/lics/
-                            </markdownLinkPrefix>
-
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--
                 Package sources.
             -->
             <plugin>
@@ -307,86 +254,5 @@
         </plugins>
 
     </build>
-
-    <!--
-        Profiles
-    -->
-    <profiles>
-        <profile>
-            <id>apply-licence-info</id>
-            <build>
-                <plugins>
-                    <plugin>
-
-                        <groupId>se.natusoft.tools.codelicmgr</groupId>
-                        <artifactId>CodeLicenseManager-maven-plugin</artifactId>
-                        <version>2.2.6</version>
-
-                        <dependencies>
-                            <dependency>
-                                <groupId>se.natusoft.tools.codelicmgr</groupId>
-                                <artifactId>CodeLicenseManager-licenses-common-opensource</artifactId>
-                                <version>2.2.6</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>se.natusoft.tools.codelicmgr</groupId>
-                                <artifactId>CodeLicenseManager-source-updater-slashstar-comment</artifactId>
-                                <version>2.2.6</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>se.natusoft.tools.codelicmgr</groupId>
-                                <artifactId>CodeLicenseManager-source-updater-html-xml</artifactId>
-                                <version>2.2.6</version>
-                            </dependency>
-                        </dependencies>
-
-                        <configuration>
-                            <project>
-                                <codeVersion>${project.version}</codeVersion>
-                            </project>
-                            <!-- All options are optional. -->
-                            <codeOptions>
-                                <verbose>true</verbose>
-                                <!-- If not set uses extension on source file to resolve. -->
-                                <codeLanguage><!-- by source extension. -->
-                                    Groovy
-                                </codeLanguage>
-                                <!-- If true updates the license information in source code. -->
-                                <updateLicenseInfo>true</updateLicenseInfo>
-                                <!-- If true updates the copyright information in source code. -->
-                                <updateCopyright>true</updateCopyright>
-                                <!-- If true updates the project information in source code. -->
-                                <updateProject>true</updateProject>
-                                <!-- If true will add authors information to source files that does not have it. This is not always implemented! -->
-                                <addAuthorsBlock>true</addAuthorsBlock>
-                                <!-- The directories to scan for source code to update with project & license information. -->
-                                <sourceCodeDirs>
-                                    src/main/groovy/**/.*.groovy,src/test/groovy/**/.*.groovy,src/assembly/**/.*.xml
-                                </sourceCodeDirs>
-
-                            </codeOptions>
-
-                            <userData>
-                                <!--name></name>
-                                <value></value-->
-                            </userData>
-
-                        </configuration>
-
-                        <executions>
-                            <execution>
-                                <id>apply-licence-info</id>
-                                <goals>
-                                    <goal>apply</goal>
-                                </goals>
-                                <phase>generate-sources</phase>
-                            </execution>
-                        </executions>
-
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>
