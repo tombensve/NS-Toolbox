@@ -20,7 +20,7 @@ It took me 3 tries to come up with a versioning strategy that did not suck. The 
 
 ## Groovy
 
-Since Java went down with the sun, I have now decided from now on to use the Groovy JVM language instead of Java for my GitHub code. Groovy is a **far better** language than Java and 100% JVM / Java compatible. Groovy have been along for a very long time. Groovy had features from the start that Java didn't get until much later, and Groovy did them right. Different from Java, Groovy also has real functions, called closures! Java have lambdas, bound to single method interfaces creates a lot of limitations. In use they look similar, but in functionality they are quite different.
+Since Java went down with the sun, I have now decided from now on to use the very nice Groovy JVM language instead of Java for my GitHub code. Groovy is a **far better** language than Java and 100% JVM / Java compatible. Groovy have been along for a very long time. Groovy had features from the start that Java didn't get until much later, and Groovy did them right. Different from Java, Groovy also has real functions, called closures! Java have lambdas, bound to single method interfaces creates a lot of limitations. In use they look similar, but in functionality they are quite different.
 
 ### Byte Code
 
@@ -30,19 +30,19 @@ The byte code level is specified with this property in the pom.xml:
 
     <bytecode.version>11</bytecode.version>
 
-This is currently the default byte code level I have decided to use, since I believe that many are still using this JDK version due to not having time to test all code against higher versions. Even if you have good unit tests they might not test for the kind of things that causes incompatibilities, and you will have to ensure that the test coverage is really good to feel save moving on over 11! So far, as a consultant I have seen no one go over version 11! That said, I stopped in April working 2023.
+This is currently the default byte code level I have decided to use, since I believe that many are still using this JDK version due to not having time to test all code against higher versions. Even if you have good unit tests they might not test for the kind of things that causes incompatibilities, and you will have to ensure that the test coverage is really good, to feel safe moving on over 11!
 
-I'm now only using the first 2 of the standard maven 3 digit version as version of this code, and the third digit as byte code version, which in master will now be **11**.
+### Version standard
 
-I will also create a main_23 branch that will have bytecode level 23. All other code
-will be identical to standard _main_!
+My current version standard that I will use is:
 
-I will push  both of these versions to my Repsy repo! See [tombensve.github.io](https://tombensve.github.io)
-for setup of Repsy repo.
+    1.2.3-BC11
 
 ----
 
 ## Current content
+
+- [ASFLicAnnotation](ASFLicAnnotation/README.md)
 
 - [Modelish](Modelish/README.md) Provides Java Bean and fluent (I think it's called) style property accessors
 using interfaces which gets a proxy implementation. Supports building and immutability.
