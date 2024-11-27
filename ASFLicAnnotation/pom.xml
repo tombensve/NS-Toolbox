@@ -18,4 +18,15 @@
         <!--project.build.sourceEncoding>UTF-8</project.build.sourceEncoding-->
     </properties>
 
+    <!--
+        To Use:
+
+     <dependency>
+         <group>se.natusoft.tools</group>
+         <artifactId>ASFLicAnnotation</artifactId>
+        <version>1.0.0-BC11</version>
+    </dependency>
+
+    -->
+
 </project>
