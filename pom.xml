@@ -42,7 +42,6 @@
     <modules>
         <module>Dater</module>
         <module>Modelish</module>
-        <module>ASFLicAnnotation</module>
     </modules>
 
     <!--
@@ -53,7 +52,7 @@
         <!--
             Version of Groovy to use.
         -->
-        <groovy.version>4.0.21</groovy.version>
+        <groovy.version>4.0.23</groovy.version>
 
         <!--
             Version of byte-code to produce.
@@ -134,6 +133,15 @@
         <sourceDirectory>src/main/groovy</sourceDirectory>
         <testSourceDirectory>src/test/groovy</testSourceDirectory>
 
+        <extensions>
+            <!-- Enabling the use of FTP -->
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>2.3</version>
+            </extension>
+        </extensions>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -154,12 +162,6 @@
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>3.6.0</version>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.8</version>
                 </plugin>
 
             </plugins>
@@ -199,7 +201,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.13.0</version>
             </plugin>
 
             <!--
@@ -224,6 +226,7 @@
                 </configuration>
             </plugin>
 
+
             <!--
                 Package sources.
             -->
@@ -246,14 +249,9 @@
                 <version>3.2.3</version>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
-            </plugin>
-
         </plugins>
 
     </build>
+
 
 </project>
