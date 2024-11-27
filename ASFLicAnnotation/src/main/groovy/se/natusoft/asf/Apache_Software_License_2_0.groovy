@@ -1,4 +1,4 @@
-package com.github.tombensve.asf
+package se.natusoft.asf
 
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
