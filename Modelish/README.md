@@ -15,6 +15,17 @@ a HashMap.
 
 ## Latest Version
 
+### 4.0.0-BC11
+
+Adapted to new version standard for my github code: `1.2.3-BC<byte code>`. 
+
+Bumped major version to lessen confusion.
+
+This was originally part of NS-Toolbox, but then for some reason, which I cannot remember
+nor comprehend, I moved it out to separate repo. Now I backed it back to where it belongs.
+
+To lessen the confusion, and to be clear I bumped the major version! Avoid any version below 4.0.0-BC11!
+
 ### 3.2.1
 
 Tiny change: Validators are now passed Method object rather than just "${method.name}" This in hope

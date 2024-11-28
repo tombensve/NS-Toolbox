@@ -11,7 +11,7 @@
 
     <artifactId>Modelish</artifactId>
     <!-- major.minor.bytecode  -->
-    <version>3.3.0-BC11</version>
+    <version>4.0.0-BC11</version>
 
     <packaging>jar</packaging>
 
