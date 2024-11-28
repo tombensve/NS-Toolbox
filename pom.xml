@@ -40,7 +40,7 @@
     </licenses>
 
     <modules>
-        <module>ASFLicAnnotation</module>
+        <module>LicAnnotations</module>
         <module>Dater</module>
         <module>Modelish</module>
     </modules>

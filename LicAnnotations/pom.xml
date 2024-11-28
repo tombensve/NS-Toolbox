@@ -9,8 +9,8 @@
         <version>static</version>
     </parent>
 
-    <artifactId>ASFLicAnnotation</artifactId>
-    <version>1.0.0-BC11</version>
+    <artifactId>LicAnnotations</artifactId>
+    <version>1.1.0-BC11</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -23,8 +23,8 @@
 
      <dependency>
          <group>se.natusoft.tools</group>
-         <artifactId>ASFLicAnnotation</artifactId>
-        <version>1.0.0-BC11</version>
+         <artifactId>LicAnnotations</artifactId>
+        <version>1.1.0-BC11</version>
     </dependency>
 
     -->
