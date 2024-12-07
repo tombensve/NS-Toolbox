@@ -1,10 +1,10 @@
-# ASFLicAnnotation
+# ASF Licence Annotation
 
 This jar contains one annotation `@Apache_Software_Licence_2_0`. All classes, interfaces, 
 etc should be annotated with this. The annotation will be retained in the binary, but only 
 once of course. 
 
-In IDEs like IDEA you can Alt/COMMAND/... click the annotation and get the annotation text i
+In IDEs like IDEA you can Alt/COMMAND/... click the annotation and get the annotation text 
 within the annotation.
 
 The idea here is to make it much easier to include this text on each file by use
@@ -14,8 +14,12 @@ the text.
 
 ----
 
-**NOTE: I'm not entirely 100% sure that the licence rules have taken such in consideration!** 
+**!!! DO NOTE THAT I'M NOT SURE THAT THIS WORKS LEGALLY !!!**
 
 ----
+
+**I'm not an expert here! But I find this easier, and you get this text included once in binary jar!**
+
+**You should always include the actual license document also! This is only intended to replace the comment header in each source file.**
 
 With this however the licence text will exist within each binary jar file! 

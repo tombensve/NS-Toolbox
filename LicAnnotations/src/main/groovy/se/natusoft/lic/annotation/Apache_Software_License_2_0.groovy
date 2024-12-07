@@ -1,4 +1,4 @@
-package com.github.tombensve.asf
+package se.natusoft.lic.annotation
 
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
@@ -6,8 +6,7 @@ import java.lang.annotation.RetentionPolicy
 @Retention( RetentionPolicy.RUNTIME)
 @interface Apache_Software_License_2_0 {
 
-    String licenseText() default "Apache 2.0 (Open Source)\n" +
-            "\n" +
+    String licenseText() default "" +
             "        Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
             "        you may not use this file except in compliance with the License.\n" +
             "        You may obtain a copy of the License at\n" +

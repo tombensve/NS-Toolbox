@@ -9,13 +9,24 @@
         <version>static</version>
     </parent>
 
-    <artifactId>ASFLicAnnotation</artifactId>
-    <version>1.0.0-BC11</version>
+    <artifactId>LicAnnotations</artifactId>
+    <version>1.1.0-BC11</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <!--project.build.sourceEncoding>UTF-8</project.build.sourceEncoding-->
     </properties>
+
+    <!--
+        To Use:
+
+     <dependency>
+         <group>se.natusoft.tools</group>
+         <artifactId>LicAnnotations</artifactId>
+        <version>1.1.0-BC11</version>
+    </dependency>
+
+    -->
 
 </project>
