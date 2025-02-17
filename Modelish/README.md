@@ -196,7 +196,7 @@ Note that
             .name("Tommy Svensson")
             .age(53)
             .address("Stockholm")
-            ._lock()
+            ._lock() // Identical to imutable()! Just a matter of taste ...
 
 ```
 
