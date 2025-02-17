@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy
 /**
  * This annotation points out where
  */
-@interface SourcesAvailableAt {
+@interface SourceAvailableAt {
 
     String value() default "https://github.com/tombensve/"
 }
