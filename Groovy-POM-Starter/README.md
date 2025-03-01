@@ -1,6 +1,6 @@
 # Groovy-POM-Starter
 
-This folder contains 2 pom.xml files, as .txt files to not confuse maven. These can be copied, pasted, and renamed
+This folder contains 2 pom.xml files. These can be copied, pasted, and renamed
 to use for building Groovy code. 
 
 **Note** that these are for me, contains personal config! Anyone else that might find them useful can copy and modify them.   
