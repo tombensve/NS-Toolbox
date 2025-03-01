@@ -150,29 +150,29 @@
 
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.1.2</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>3.3.1</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.7.0</version>
                 </plugin>
 
                 <plugin>
                     <groupId>se.natusoft.tools.codelicmgr</groupId>
                     <artifactId>CodeLicenseManager-maven-plugin</artifactId>
-                    <version>2.2.6</version>
+                    <version>3.0.0-BC11</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.8</version>
+                    <version>3.6.0</version>
                 </plugin>
 
             </plugins>
@@ -183,7 +183,7 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>4.0.1</version>
 
                 <dependencies>
                     <dependency>
@@ -212,7 +212,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.13.0</version>
             </plugin>
 
             <!--
@@ -220,7 +220,7 @@
             -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.7.0</version>
             </plugin>
 
             <!--
@@ -231,7 +231,7 @@
             -->
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.1.2</version>
                 <configuration>
                     <!--createChecksum>true</createChecksum-->
                 </configuration>
@@ -329,7 +329,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>3.13.0</version>
             </plugin>
 
         </plugins>
@@ -348,23 +348,23 @@
 
                         <groupId>se.natusoft.tools.codelicmgr</groupId>
                         <artifactId>CodeLicenseManager-maven-plugin</artifactId>
-                        <version>2.2.6</version>
+                        <version>3.0.0-BC11</version>
 
                         <dependencies>
                             <dependency>
                                 <groupId>se.natusoft.tools.codelicmgr</groupId>
                                 <artifactId>CodeLicenseManager-licenses-common-opensource</artifactId>
-                                <version>2.2.6</version>
+                                <version>3.0.0-BC11</version>
                             </dependency>
                             <dependency>
                                 <groupId>se.natusoft.tools.codelicmgr</groupId>
                                 <artifactId>CodeLicenseManager-source-updater-slashstar-comment</artifactId>
-                                <version>2.2.6</version>
+                                <version>3.0.0-BC11</version>
                             </dependency>
                             <dependency>
                                 <groupId>se.natusoft.tools.codelicmgr</groupId>
                                 <artifactId>CodeLicenseManager-source-updater-html-xml</artifactId>
-                                <version>2.2.6</version>
+                                <version>3.0.0-BC11</version>
                             </dependency>
                         </dependencies>
 
