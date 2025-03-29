@@ -43,6 +43,7 @@
         <module>LicAnnotations</module>
         <module>Dater</module>
         <module>Modelish</module>
+        <module>JSON</module>
     </modules>
 
     <!--
@@ -53,15 +54,17 @@
         <!--
             Version of Groovy to use.
         -->
-        <groovy.version>4.0.23</groovy.version>
-
-        <!--
-            Version of byte-code to produce.
-        -->
-        <bytecode.version>11</bytecode.version>
+        <groovy.version>4.0.25</groovy.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+
+        <!--
+            Version of byte-code to produce.
+
+            For some reason
+        -->
+        <bytecode.version>11</bytecode.version>
     </properties>
 
     <dependencies>
@@ -111,7 +114,7 @@
     <repositories>
         <repository>
             <id>repsy</id>
-            <name>My Private Maven Repository on Repsy</name>
+            <name>My public Maven Repository on Repsy</name>
             <url>https://repo.repsy.io/mvn/tombensve/natusoft-os</url>
         </repository>
 
@@ -130,39 +133,31 @@
 
     </pluginRepositories>
 
+
     <build>
         <sourceDirectory>src/main/groovy</sourceDirectory>
         <testSourceDirectory>src/test/groovy</testSourceDirectory>
-
-        <extensions>
-            <!-- Enabling the use of FTP -->
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>2.3</version>
-            </extension>
-        </extensions>
 
         <pluginManagement>
             <plugins>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.12.1</version>
+                    <version>3.13.0</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.1.2</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>3.3.1</version>
                 </plugin>
 
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.7.0</version>
                 </plugin>
 
             </plugins>
@@ -173,7 +168,7 @@
             <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>4.0.1</version>
 
                 <dependencies>
                     <dependency>
@@ -183,8 +178,17 @@
                     </dependency>
                 </dependencies>
 
+                <!--
+                    Putting the byte code version in a config value and using here
+                    produces a warning that expressions are not allowed here, but
+                    it works!!! Maybe that feature is going away so I have to set
+                    it here!
+
+                    That said I think that not being allowed to use a variable
+                    here REALLY, REALLY MEGA SUCKS!!!
+                 -->
                 <configuration>
-                    <targetBytecode>${bytecode.version}</targetBytecode>
+                    <targetBytecode>11</targetBytecode>
                 </configuration>
 
                 <executions>
@@ -205,25 +209,22 @@
                 <version>3.13.0</version>
             </plugin>
 
-            <!--
-                 Define project assemblies.
-            -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.7.0</version>
             </plugin>
 
             <!--
                 Force checksums when installing to repository.
-                I suspect that this might be unneccesarry since I think
+                I suspect that this might be unnecessary since I think
                 deploy creates checksums anyhow when deploying to external
                 repository.
             -->
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.1.2</version>
                 <configuration>
-                    <!--createChecksum>true</createChecksum-->
+
                 </configuration>
             </plugin>
 
@@ -247,7 +248,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.3.1</version>
             </plugin>
 
         </plugins>

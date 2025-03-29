@@ -3,8 +3,16 @@
 This folder contains 2 pom.xml files. These can be copied, pasted, and renamed
 to use for building Groovy code. 
 
-**Note** that these are for me, contains personal config! Anyone else that might find them useful can copy and modify them.   
+**Note** that these are for me, contains personal config! Anyone else that might find them useful can copy and 
+modify them. 
 
+----
+DO NOT use the actual version of this on my Repsy account!!!  
+This can change at any time and possibly break things! So if
+anyone wants a setup based on this, copy the below pom text,
+change it to your own needs, and push to your repo and use
+that!
+----
 For ease of use I'm also including them below.
 
 ## Root POM
