@@ -43,7 +43,6 @@
         <module>LicAnnotations</module>
         <module>Dater</module>
         <module>Modelish</module>
-        <module>JSON</module>
     </modules>
 
     <!--
