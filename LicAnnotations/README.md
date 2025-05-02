@@ -43,5 +43,5 @@ Note that, except for the license annotation, these are for me to copy and paste
 ## HSF
 
     @Human_Software_License_1_0
-    @interface SourceAvailableAt("https://github.com/tombensve/")
+    @SourceAvailableAt("https://github.com/tombensve/")
     @BinariesAvailableAt("https://repo.repsy.io/mvn/tombensve/natusoft-os/)
