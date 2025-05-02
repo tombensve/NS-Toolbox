@@ -29,3 +29,19 @@ in binary jar!**
 replace the comment header in each source file.**
 
 With this, however, the license text will exist within each binary jar file! 
+
+# Templates
+
+Note that, except for the license annotation, these are for me to copy and paste!
+
+## ASF
+
+    @Apache_Software_License_2_0
+    @interface SourceAvailableAt("https://github.com/tombensve/")
+    @BinariesAvailableAt("https://repo.repsy.io/mvn/tombensve/natusoft-os/)
+
+## HSF
+
+    @Human_Software_License_1_0
+    @interface SourceAvailableAt("https://github.com/tombensve/")
+    @BinariesAvailableAt("https://repo.repsy.io/mvn/tombensve/natusoft-os/)
