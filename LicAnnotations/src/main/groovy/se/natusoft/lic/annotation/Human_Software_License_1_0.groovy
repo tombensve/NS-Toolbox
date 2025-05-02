@@ -3,6 +3,7 @@ package se.natusoft.lic.annotation
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
+/* extends */@Apache_Software_License_2_0
 @Retention( RetentionPolicy.RUNTIME)
 @interface Human_Software_License_1_0 {
 
