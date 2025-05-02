@@ -18,7 +18,9 @@ the text.
 
 ----
 
-**!!! DO NOTE THAT I'M NOT SURE THAT THIS WORKS LEGALLY FOR ALL LICENSES!!!**
+**!!! DO NOTE THAT I'M NOT SURE THAT THIS WORKS LEGALLY BY USING ANNOTATIONS!**
+
+But I also don't see why it should't! 
 
 ----
 

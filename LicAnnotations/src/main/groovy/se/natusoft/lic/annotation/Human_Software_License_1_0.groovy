@@ -3,7 +3,15 @@ package se.natusoft.lic.annotation
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
-/* extends */@Apache_Software_License_2_0
+/**
+ * This is an annotation for the Human Software License (HSL)!
+ * HSL extends the ASL (Apache Software License) To make this
+ * very clear this annotation is annotated with @Apache_Software_License_2_0.
+ * There is also an "extend" field that have "Apache Software License 2.0"
+ * to be very clear! I tried to make one annotation extend
+ * another but that failed, failed, and failed.
+ */
+@Apache_Software_License_2_0
 @Retention( RetentionPolicy.RUNTIME)
 @interface Human_Software_License_1_0 {
 
@@ -19,4 +27,6 @@ import java.lang.annotation.RetentionPolicy
             "        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n" +
             "        See the License for the specific language governing permissions and\n" +
             "        limitations under the License.\n";
+
+    String extend() default "Apache Software License 2.0"
 }
