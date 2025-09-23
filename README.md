@@ -2,9 +2,8 @@
 
 This is a project of tools that I use in other projects.
 
-It is made up of several jars rather than one fat jar, so only what is needed can be used.
-
-This will probably grow over time.
+It is made up of several jars rather than one fat jar, so only what is needed can be used. My original thinking was that these were just small projects, and I'll just put them in same repo! In hindsight that might not been entirely thought through!!
+However these produce own jars for each tool. And when pushed to my Repsy repo they will be "free" from ech other.
 
 Each tool has its own submodule. See Readme.md in each for more info.
 
