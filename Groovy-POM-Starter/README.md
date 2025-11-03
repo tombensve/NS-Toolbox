@@ -104,7 +104,7 @@ For ease of use I'm also including them below.
     
         <!--
             The variables used here are in my personal setting.xml! I make binaries
-            available from my web server after bintray shut down.
+            available on repsy now.
     
             See: https://github.com/tombensve/About
         -->
