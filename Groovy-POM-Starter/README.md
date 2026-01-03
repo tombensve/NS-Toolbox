@@ -1,3 +1,8 @@
+# Warning
+
+This is rather old now, and the stuff in this file might be out of date!
+This was and is intended for personal use. 
+
 # Groovy-POM-Starter
 
 This folder contains 2 pom.xml files. These can be copied, pasted, and renamed
